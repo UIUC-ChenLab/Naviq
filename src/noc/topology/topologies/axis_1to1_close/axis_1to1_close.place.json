@@ -1,0 +1,9 @@
+{
+  "kind": "naviq.placement",
+  "version": 1,
+  "name": "axis_1to1_close",
+  "placements": {
+    "tg_0.m_axis": "NOC_NMU512_X3Y0",
+    "sink_0.s_axis": "NOC_NSU512_X3Y0"
+  }
+}

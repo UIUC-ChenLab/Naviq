@@ -1,0 +1,71 @@
+{
+  "description": "Node configuration for pcap_strm topology - AxisRandomTrafficGenerator (NMU) -> AxisFifoNode -> AxisSinkNode (NSU)",
+  "nodes": [
+    {
+      "node_type": "AxisRandomTrafficGenerator",
+      "connections": [
+        {
+          "connectTo": "NMU",
+          "clock_domain": 100,
+          "connectLoc": "NOC_NMU512_X0Y0",
+          "protocol": "AXIS"
+        }
+      ],
+      "parameters": {
+        "max_gap_cycles": 0,
+        "data_width": 512,
+        "max_tid": 0,
+        "max_tdest": 0,
+        "max_packets": 100
+      }
+    },
+    {
+      "node_type": "AxisFifoNode",
+      "connections": [
+        {
+          "connectTo": "NSU",
+          "clock_domain": 100,
+          "connectLoc": "NOC_NSU512_X3Y0",
+          "protocol": "AXIS"
+        },
+        {
+          "connectTo": "NMU",
+          "clock_domain": 100,
+          "connectLoc": "NOC_NMU512_X3Y1",
+          "protocol": "AXIS"
+        }
+      ],
+      "parameters": {
+        "sim_cycles": 10000000000000000,
+        "fifo_depth": 1024,
+        "delay": 10,
+        "ready_percent": 100,
+        "expected_packets": 99,
+        "print_data": false,
+        "data_width": 512,
+        "id_width": 16,
+        "dest_width": 12
+      }
+    },
+    {
+      "node_type": "AxisSinkNode",
+      "connections": [
+        {
+          "connectTo": "NSU",
+          "clock_domain": 100,
+          "connectLoc": "NOC_NSU512_X3Y8",
+          "protocol": "AXIS"
+        }
+      ],
+      "parameters": {
+        "sim_cycles": 10000000000000000,
+        "ready_percent": 100,
+        "expected_packets": 99,
+        "print_data": false,
+        "data_width": 512,
+        "id_width": 16,
+        "dest_width": 12
+      }
+    }
+  ]
+}

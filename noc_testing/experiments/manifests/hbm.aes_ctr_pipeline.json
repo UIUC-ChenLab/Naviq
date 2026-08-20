@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "id": "hbm.aes_ctr_pipeline",
+  "title": "HBM AES-CTR DMA pipeline",
+  "status": "planned",
+  "runner": null,
+  "default_args": [],
+  "requires": ["gem5-x86", "external-rtl"],
+  "inputs": ["src/noc/testing/experiments/hbm/aes_ctr_pipeline/manifest.json"],
+  "reference_paths": [],
+  "validation": "Do not promote this campaign until the planned AES correctness, completion, byte-count, and scaling criteria are all met."
+}

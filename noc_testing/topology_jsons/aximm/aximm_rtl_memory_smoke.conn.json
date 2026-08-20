@@ -1,0 +1,41 @@
+{
+  "kind": "naviq.connections",
+  "version": 1,
+  "name": "aximm_rtl_memory_smoke",
+  "components": {
+    "tg_0": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "params": {
+        "address_distribution": "INCREMENT",
+        "align_addresses": true
+      },
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "rtl_memory": {
+      "node_type": "AximmMemorySmokeRtlNode",
+      "params": {
+        "data_width": 512,
+        "id_width": 4,
+        "addr_width": 32,
+        "reset_cycles": 4
+      },
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm"
+        }
+      }
+    }
+  },
+  "connections": [
+    {
+      "from": "tg_0.m_axi",
+      "to": "rtl_memory.s_axi"
+    }
+  ]
+}

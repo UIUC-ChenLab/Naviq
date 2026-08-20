@@ -1,0 +1,30 @@
+# Keep CSV plans tracked (no ignore rule for sweep_plans/)
+# Ignore generated stuff:
+artifacts/
+vivado_proj/
+noc_tg_sweep/
+latency_modeling/comparisons
+
+# Vivado clutter
+*.jou
+*.log
+*.str
+*.wdb
+xsim.dir/
+*.cache/
+*.gen/
+*.hw/
+*.ip_user_files/
+*.runs/
+*.sim/
+*.srcs/
+*.data/
+*.dcp
+.vivado.begin.rst
+.vivado.end.rst
+*.pb
+*.ini*
+
+# Python cache
+__pycache__/
+*.pyc

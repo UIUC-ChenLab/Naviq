@@ -1,0 +1,33 @@
+name,num_write_transactions_cfg,topology_json,placement_json,sim_mode,USER_C_AXIS_PKT_LEN
+pos_2hop_64pkt_rtl,64,topology_jsons/placement_tests/1nmu_to_1nsu_axis.conn.json,topology_jsons/placement_tests/1to1_2hop_pos.place.json,rtl,7
+pos_2hop_256pkt_rtl,256,topology_jsons/placement_tests/1nmu_to_1nsu_axis.conn.json,topology_jsons/placement_tests/1to1_2hop_pos.place.json,rtl,7
+pos_2hop_1024pkt_rtl,1024,topology_jsons/placement_tests/1nmu_to_1nsu_axis.conn.json,topology_jsons/placement_tests/1to1_2hop_pos.place.json,rtl,7
+pos_2hop_2048pkt_rtl,2048,topology_jsons/placement_tests/1nmu_to_1nsu_axis.conn.json,topology_jsons/placement_tests/1to1_2hop_pos.place.json,rtl,7
+pos_8hop_64pkt_rtl,64,topology_jsons/placement_tests/1nmu_to_1nsu_axis.conn.json,topology_jsons/placement_tests/1to1_8hop_pos.place.json,rtl,7
+pos_8hop_256pkt_rtl,256,topology_jsons/placement_tests/1nmu_to_1nsu_axis.conn.json,topology_jsons/placement_tests/1to1_8hop_pos.place.json,rtl,7
+pos_8hop_1024pkt_rtl,1024,topology_jsons/placement_tests/1nmu_to_1nsu_axis.conn.json,topology_jsons/placement_tests/1to1_8hop_pos.place.json,rtl,7
+pos_8hop_2048pkt_rtl,2048,topology_jsons/placement_tests/1nmu_to_1nsu_axis.conn.json,topology_jsons/placement_tests/1to1_8hop_pos.place.json,rtl,7
+pos_16hop_64pkt_rtl,64,topology_jsons/placement_tests/1nmu_to_1nsu_axis.conn.json,topology_jsons/placement_tests/1to1_16hop_pos.place.json,rtl,7
+pos_16hop_256pkt_rtl,256,topology_jsons/placement_tests/1nmu_to_1nsu_axis.conn.json,topology_jsons/placement_tests/1to1_16hop_pos.place.json,rtl,7
+pos_16hop_1024pkt_rtl,1024,topology_jsons/placement_tests/1nmu_to_1nsu_axis.conn.json,topology_jsons/placement_tests/1to1_16hop_pos.place.json,rtl,7
+pos_16hop_2048pkt_rtl,2048,topology_jsons/placement_tests/1nmu_to_1nsu_axis.conn.json,topology_jsons/placement_tests/1to1_16hop_pos.place.json,rtl,7
+pos_32hop_64pkt_rtl,64,topology_jsons/placement_tests/1nmu_to_1nsu_axis.conn.json,topology_jsons/placement_tests/1to1_32hop_pos.place.json,rtl,7
+pos_32hop_256pkt_rtl,256,topology_jsons/placement_tests/1nmu_to_1nsu_axis.conn.json,topology_jsons/placement_tests/1to1_32hop_pos.place.json,rtl,7
+pos_32hop_1024pkt_rtl,1024,topology_jsons/placement_tests/1nmu_to_1nsu_axis.conn.json,topology_jsons/placement_tests/1to1_32hop_pos.place.json,rtl,7
+pos_32hop_2048pkt_rtl,2048,topology_jsons/placement_tests/1nmu_to_1nsu_axis.conn.json,topology_jsons/placement_tests/1to1_32hop_pos.place.json,rtl,7
+# pos_2hop_64pkt_tlm,64,topology_jsons/placement_tests/1nmu_to_1nsu_axis.conn.json,topology_jsons/placement_tests/1to1_2hop_pos.place.json,tlm,7
+# pos_2hop_256pkt_tlm,256,topology_jsons/placement_tests/1nmu_to_1nsu_axis.conn.json,topology_jsons/placement_tests/1to1_2hop_pos.place.json,tlm,7
+# pos_2hop_1024pkt_tlm,1024,topology_jsons/placement_tests/1nmu_to_1nsu_axis.conn.json,topology_jsons/placement_tests/1to1_2hop_pos.place.json,tlm,7
+# pos_2hop_2048pkt_tlm,2048,topology_jsons/placement_tests/1nmu_to_1nsu_axis.conn.json,topology_jsons/placement_tests/1to1_2hop_pos.place.json,tlm,7
+# pos_8hop_64pkt_tlm,64,topology_jsons/placement_tests/1nmu_to_1nsu_axis.conn.json,topology_jsons/placement_tests/1to1_8hop_pos.place.json,tlm,7
+# pos_8hop_256pkt_tlm,256,topology_jsons/placement_tests/1nmu_to_1nsu_axis.conn.json,topology_jsons/placement_tests/1to1_8hop_pos.place.json,tlm,7
+# pos_8hop_1024pkt_tlm,1024,topology_jsons/placement_tests/1nmu_to_1nsu_axis.conn.json,topology_jsons/placement_tests/1to1_8hop_pos.place.json,tlm,7
+# pos_8hop_2048pkt_tlm,2048,topology_jsons/placement_tests/1nmu_to_1nsu_axis.conn.json,topology_jsons/placement_tests/1to1_8hop_pos.place.json,tlm,7
+# pos_16hop_64pkt_tlm,64,topology_jsons/placement_tests/1nmu_to_1nsu_axis.conn.json,topology_jsons/placement_tests/1to1_16hop_pos.place.json,tlm,7
+# pos_16hop_256pkt_tlm,256,topology_jsons/placement_tests/1nmu_to_1nsu_axis.conn.json,topology_jsons/placement_tests/1to1_16hop_pos.place.json,tlm,7
+# pos_16hop_1024pkt_tlm,1024,topology_jsons/placement_tests/1nmu_to_1nsu_axis.conn.json,topology_jsons/placement_tests/1to1_16hop_pos.place.json,tlm,7
+# pos_16hop_2048pkt_tlm,2048,topology_jsons/placement_tests/1nmu_to_1nsu_axis.conn.json,topology_jsons/placement_tests/1to1_16hop_pos.place.json,tlm,7
+# pos_32hop_64pkt_tlm,64,topology_jsons/placement_tests/1nmu_to_1nsu_axis.conn.json,topology_jsons/placement_tests/1to1_32hop_pos.place.json,tlm,7
+# pos_32hop_256pkt_tlm,256,topology_jsons/placement_tests/1nmu_to_1nsu_axis.conn.json,topology_jsons/placement_tests/1to1_32hop_pos.place.json,tlm,7
+# pos_32hop_1024pkt_tlm,1024,topology_jsons/placement_tests/1nmu_to_1nsu_axis.conn.json,topology_jsons/placement_tests/1to1_32hop_pos.place.json,tlm,7
+# pos_32hop_2048pkt_tlm,2048,topology_jsons/placement_tests/1nmu_to_1nsu_axis.conn.json,topology_jsons/placement_tests/1to1_32hop_pos.place.json,tlm,7

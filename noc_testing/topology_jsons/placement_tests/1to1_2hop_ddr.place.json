@@ -1,0 +1,9 @@
+{
+  "kind": "naviq.placement",
+  "version": 1,
+  "name": "1to1_2hop_ddr",
+  "placements": {
+    "tg_0.m_axi": "NOC_NMU512_X0Y0",
+    "ddr0_port0.s_axi": "DDRMC_X1Y0"
+  }
+}

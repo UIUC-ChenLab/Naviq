@@ -1,0 +1,11 @@
+{
+    "master_placement": {
+        "tg_0": "NOC_NMU512_X0Y18",
+        "tg_1": "NOC_NMU512_X0Y17"
+    },
+    "slave_placement": {
+        "bram_0": "NOC_NSU512_X0Y18",
+        "bram_1": "NOC_NSU512_X0Y17",
+        "ddrmc_0": "DDRMC_X0Y0"
+    }
+}

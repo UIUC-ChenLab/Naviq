@@ -1,0 +1,5 @@
+name,connections_json,placement_json,beat_count,beat_bytes,num_transactions,tg_mode,bandwidth_MBps,data_width_bits,endpoint_data_width_bits,noc_clk_mhz,sim_mode
+2hop_aximm_rw_512B_1000txn_unlimited,topology_jsons/placement_tests/1nmu_to_1nsu.conn.json,topology_jsons/placement_tests/1to1_2hop_pos.place.json,7,64,1000,INTERLEAVED,0,512,512,1000,rtl
+8hop_aximm_rw_512B_1000txn_unlimited,topology_jsons/placement_tests/1nmu_to_1nsu.conn.json,topology_jsons/placement_tests/1to1_8hop_pos.place.json,7,64,1000,INTERLEAVED,0,512,512,1000,rtl
+16hop_aximm_rw_512B_1000txn_unlimited,topology_jsons/placement_tests/1nmu_to_1nsu.conn.json,topology_jsons/placement_tests/1to1_16hop_pos.place.json,7,64,1000,INTERLEAVED,0,512,512,1000,rtl
+32hop_aximm_rw_512B_1000txn_unlimited,topology_jsons/placement_tests/1nmu_to_1nsu.conn.json,topology_jsons/placement_tests/1to1_32hop_pos.place.json,7,64,1000,INTERLEAVED,0,512,512,1000,rtl

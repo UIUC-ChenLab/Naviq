@@ -1,0 +1,3 @@
+#!/bin/bash
+echo "Spawning interactive login prompt on ttyS0..."
+exec /sbin/getty -L ttyS0 115200 vt100

@@ -1,0 +1,57 @@
+{
+  "kind": "naviq.connections",
+  "version": 1,
+  "name": "axis_1to1",
+  "components": {
+    "src0": {
+      "node_type": "AxisRandomTrafficGenerator",
+      "ports": {
+        "m_axis": {
+          "role": "master",
+          "protocol": "axis"
+        }
+      },
+      "params": {
+        "data_width": 512,
+        "tid_width": 16,
+        "tdest_width": 12,
+        "tuser_width": 16,
+        "max_packets": 4,
+        "packet_size_distribution": "FIXED",
+        "min_packet_size_bytes": 64,
+        "max_packet_size_bytes": 64,
+        "gap_distribution": "FIXED",
+        "min_gap_cycles": 0,
+        "max_gap_cycles": 0,
+        "tdest_distribution": "FIXED",
+        "min_tdest": 0,
+        "max_tdest": 0
+      }
+    },
+    "sink0": {
+      "node_type": "AxisSinkNode",
+      "ports": {
+        "s_axis": {
+          "role": "slave",
+          "protocol": "axis"
+        }
+      },
+      "params": {
+        "data_width": 512,
+        "id_width": 16,
+        "dest_width": 12,
+        "expected_packets": 4,
+        "ready_percent": 100,
+        "print_data": false
+      }
+    }
+  },
+  "connections": [
+    {
+      "from": "src0.m_axis",
+      "to": "sink0.s_axis",
+      "RequiredBW": 500,
+      "RequiredLatency": 300
+    }
+  ]
+}

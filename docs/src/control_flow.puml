@@ -1,0 +1,75 @@
+@startuml naviq_control
+' left to right direction
+skinparam componentStyle rectangle
+skinparam linetype ortho
+skinparam shadowing true
+skinparam arrowThickness 5
+skinparam DefaultFontSize 32
+
+' title Verilator Flow for NoC Integration
+
+' Define colors
+skinparam package {
+    BackgroundColor #E8F4F8
+    BorderColor #4A90A4
+}
+
+skinparam component {
+    BackgroundColor #FFF4E6
+    BorderColor #D4A574
+}
+
+skinparam file {
+    BackgroundColor #F0F0F0
+    BorderColor #808080
+}
+
+
+rectangle "Enter simulation" as enter #FFF4E6 {
+}
+
+frame "Update" as update #E8F4F8 {
+    class "NoC Interfaces" as NoCInterfacesUpdate
+    class "NoC Nodes" as NoCNodesUpdate
+
+
+    NoCInterfacesUpdate <-down-> NoCNodesUpdate 
+}
+
+note top of update
+    Interfaces and nodes pass
+    each other their current states
+end note
+
+frame "Tick" as tick #E8F4F8 {
+    class "NoC Interfaces" as NoCInterfacesTick
+    class "NoC Nodes" as NoCNodesTick
+
+
+
+    NoCInterfacesTick -[hidden]-> NoCNodesTick 
+    ' NoCNodesTick -up-> NoCInterfacesTick
+}
+
+note top of tick
+    Called to update current 
+    state to next state
+end note
+
+rectangle "Exit simulation" as exit #FFF4E6 {
+}
+
+note top of exit 
+Exit simulation once all 
+master nodes are done
+endnote
+
+enter -left-> update
+
+update <-left-> tick
+' tick <-left-> update 
+
+
+tick -left-> exit 
+
+@enduml

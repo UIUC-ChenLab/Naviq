@@ -1,0 +1,12 @@
+{
+  "NOC_NPS_VNOC_X0Y3": { "x": 349, "y": 542 },
+  "NOC_NPS_VNOC_X0Y2": { "x": 363, "y": 542 },
+  "NOC_NPS_VNOC_X0Y4": { "x": 363, "y": 535 },
+  "NOC_NPS_VNOC_X0Y5": { "x": 349, "y": 535 },
+  "NOC_NPS_VNOC_X3Y1": { "x": 1186, "y": 556 },
+  "NOC_NPS_VNOC_X3Y0": { "x": 1201, "y": 556 },
+  "NOC_NPS_VNOC_X3Y26": { "x": 1201, "y": 174 },
+  "NOC_NPS_VNOC_X3Y27": { "x": 1186, "y": 174 },
+  "NOC_NPS_VNOC_X3Y28": { "x": 1201, "y": 167 },
+  "NOC_NPS_VNOC_X3Y29": { "x": 1186, "y": 167 }
+}

@@ -1,0 +1,16 @@
+{
+  "kind": "naviq.placement",
+  "version": 1,
+  "name": "cpu_hbm_dma_ppe_base_axis",
+  "placements": {
+    "hbm0_port0.s_axi": "HBM_MC_X0Y0",
+    "cpu_mem.s_axi": "NOC_NSU512_X0Y1",
+    "dma_ctrl.s_axi": "NOC_NSU512_X0Y0",
+    "checker.s_axis": "NOC_NSU512_X0Y0",
+    "ppe_in.s_axis": "NOC_NSU512_X1Y0",
+    "cpu_aximm.m_axi": "NOC_NMU512_X0Y0",
+    "dma_aximm.m_axi": "NOC_NMU512_X1Y0",
+    "dma_axis.m_axis": "NOC_NMU512_X0Y0",
+    "ppe_out.m_axis": "NOC_NMU512_X1Y0"
+  }
+}

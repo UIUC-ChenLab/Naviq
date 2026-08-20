@@ -1,0 +1,15 @@
+{
+  "kind": "naviq.placement",
+  "version": 1,
+  "name": "exp4_near_distributed_targets",
+  "placements": {
+    "tg_0.m_axi": "NOC_NMU512_X0Y4",
+    "tg_1.m_axi": "NOC_NMU512_X1Y4",
+    "tg_2.m_axi": "NOC_NMU512_X2Y4",
+    "tg_3.m_axi": "NOC_NMU512_X3Y4",
+    "bram_0.s_axi": "NOC_NSU512_X0Y6",
+    "bram_1.s_axi": "NOC_NSU512_X1Y6",
+    "bram_2.s_axi": "NOC_NSU512_X2Y6",
+    "bram_3.s_axi": "NOC_NSU512_X3Y6"
+  }
+}

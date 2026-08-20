@@ -1,0 +1,9 @@
+{
+  "kind": "naviq.placement",
+  "version": 1,
+  "name": "axis_1to1_2hop",
+  "placements": {
+    "src0.m_axis": "NOC_NMU512_X3Y0",
+    "sink0.s_axis": "NOC_NSU512_X3Y0"
+  }
+}

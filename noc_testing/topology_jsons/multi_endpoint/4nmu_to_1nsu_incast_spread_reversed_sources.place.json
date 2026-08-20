@@ -1,0 +1,12 @@
+{
+  "kind": "naviq.placement",
+  "version": 1,
+  "name": "4nmu_to_1nsu_incast_spread_reversed_sources",
+  "placements": {
+    "tg_0.m_axi": "NOC_NMU512_X3Y18",
+    "tg_1.m_axi": "NOC_NMU512_X2Y18",
+    "tg_2.m_axi": "NOC_NMU512_X1Y18",
+    "tg_3.m_axi": "NOC_NMU512_X0Y18",
+    "bram_0.s_axi": "NOC_NSU512_X1Y0"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "kind": "naviq.placement",
+  "version": 1,
+  "name": "aximm_axis_shared_write_vc",
+  "placements": {
+    "aximm_tg_0.m_axi": "NOC_NMU512_X0Y1",
+    "aximm_bram_0.s_axi": "NOC_NSU512_X0Y2",
+    "axis_tg_0.m_axis": "NOC_NMU512_X0Y2",
+    "axis_sink_0.s_axis": "NOC_NSU512_X0Y1"
+  }
+}

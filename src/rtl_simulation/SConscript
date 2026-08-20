@@ -1,0 +1,82 @@
+import os
+import glob
+
+# Import the environment and Source from the parent build system
+Import('env', 'Source')
+from SCons.Script import File, Dir
+
+# Get the current source directory (source node - where this SConscript lives)
+source_dir = Dir('.').srcnode()
+
+# Add verilator include paths to CPPPATH
+verilator_include_path = '/usr/local/share/verilator/include'
+dpi_include_path = '/usr/local/share/verilator/include/vltstd'
+if os.path.exists(verilator_include_path):
+    env.Append(CPPPATH=[verilator_include_path])
+if os.path.exists(dpi_include_path):
+    env.Append(CPPPATH=[dpi_include_path])
+
+# Link the Verilator runtime once for any generated models we build.
+Source('verilator_runtime/verilated_runtime.cpp')
+Source('verilator_runtime/verilated_threads_runtime.cpp')
+
+# Add noc_rtl_bridge.h location to CPPPATH (it's in the source directory)
+env.Append(CPPPATH=[source_dir])
+
+# The build directory is where build_rtl_models.py outputs files
+# For SCons, the variant_dir is build/NULL/rtl_simulation, so we look for files there
+# But the actual files are in src/rtl_simulation/build/<design_name> (relative to source)
+# We need to check both locations - the variant_dir and the source build directory
+
+# Check source directory build location (where build_rtl_models.py puts files)
+source_build_dir = source_dir.Dir('build')
+
+# Also check the variant_dir (build/NULL/rtl_simulation) in case files are copied/linked there
+variant_build_dir = Dir('.')
+
+# Find all design directories by looking for verilated.stamp files
+design_dirs = []
+
+# Check source build directory first
+if os.path.exists(source_build_dir.abspath):
+    for item in os.listdir(source_build_dir.abspath):
+        design_path = os.path.join(source_build_dir.abspath, item)
+        stamp_file = os.path.join(design_path, 'verilated.stamp')
+        if os.path.isdir(design_path) and os.path.exists(stamp_file):
+            design_dirs.append(item)
+
+# Also check variant_dir
+if os.path.exists(variant_build_dir.abspath):
+    for item in os.listdir(variant_build_dir.abspath):
+        design_path = os.path.join(variant_build_dir.abspath, item)
+        stamp_file = os.path.join(design_path, 'verilated.stamp')
+        if os.path.isdir(design_path) and os.path.exists(stamp_file) and item not in design_dirs:
+            design_dirs.append(item)
+
+if design_dirs:
+    print(f"RTL Simulation: Found {len(design_dirs)} verilated design(s): {', '.join(design_dirs)}")
+
+# Register all generated files for each design
+for design_name in design_dirs:
+    # Try source build directory first
+    output_dir = source_build_dir.Dir(design_name)
+    output_path = output_dir.abspath
+    
+    # If not found, try variant_dir
+    if not os.path.exists(output_path):
+        output_dir = variant_build_dir.Dir(design_name)
+        output_path = output_dir.abspath
+    
+    if not os.path.exists(output_path):
+        continue
+    
+    # Add output directory to CPPPATH so headers can be found
+    env.Append(CPPPATH=[output_dir])
+    
+    # Recursively find and register all .cpp files
+    cpp_pattern = os.path.join(output_path, '**', '*.cpp')
+    cpp_files = glob.glob(cpp_pattern, recursive=True)
+    
+    for cpp_file_path in cpp_files:
+        cpp_file = File(cpp_file_path)
+        Source(cpp_file_path)

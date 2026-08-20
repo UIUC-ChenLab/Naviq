@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "id": "evaluation.experiment1",
+  "title": "Evaluation Experiment 1: topology and traffic baseline",
+  "status": "maintained",
+  "runner": "noc_testing/experiments/evaluation/run_experiment1.py",
+  "default_args": ["--mode", "plan-only"],
+  "output_argument": "--artifact-root",
+  "requires": ["gem5-null"],
+  "inputs": ["noc_testing/experiments/evaluation"],
+  "reference_paths": ["tests/gem5/noc/trusted_results"],
+  "validation": "The runner writes a case manifest; compare retained metrics only through the documented analysis step."
+}

@@ -1,0 +1,54 @@
+{
+  "SystemProperties": {
+    "DeviceName": "xcv80"
+  },
+  "LogicalInstances": [
+    {
+      "Name": "axi_noc_0/inst/S00_AXI_nmu",
+      "DesignName": "/axi_noc_0/S00_AXI",
+      "IsMaster": true,
+      "CompType": "PL_NMU",
+      "Protocol": "AXI_MM",
+      "ReadTC": "BE",
+      "WriteTC": "BE",
+      "AxiDataWidth": 512,
+      "SysAddresses": [],
+      "SimMetaData": {
+        "IPName": "bd_gen_S00_AXI_nmu_0"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/M00_AXI_nsu",
+      "DesignName": "/axi_noc_0/M00_AXI",
+      "IsMaster": false,
+      "CompType": "PL_NSU",
+      "Protocol": "AXI_MM",
+      "AxiDataWidth": 512,
+      "SysAddresses": [
+        {
+          "Base": "0x00000000",
+          "Size": "0x10000"
+        }
+      ],
+      "SimMetaData": {
+        "IPName": "bd_gen_M00_AXI_nsu_0"
+      }
+    }
+  ],
+  "Paths": [
+    {
+      "Phase": 0,
+      "From": "axi_noc_0/inst/S00_AXI_nmu",
+      "To": "axi_noc_0/inst/M00_AXI_nsu",
+      "Port": "PORT0",
+      "CommType": "MM_ReadWrite",
+      "ReadBW": 500,
+      "ReadLatency": 300,
+      "ReadAvgBurst": 4,
+      "WriteBW": 500,
+      "WriteLatency": 300,
+      "WriteAvgBurst": 4,
+      "WriteOrder": "strict"
+    }
+  ]
+}

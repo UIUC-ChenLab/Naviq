@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "id": "ddr.chapter4",
+  "title": "DDR Chapter 4 stress-intensity comparison",
+  "status": "manual",
+  "runner": "src/noc/testing/ddr/chapter4_ddr_stress_intensity_compare.py",
+  "default_args": [],
+  "requires": ["gem5-x86"],
+  "inputs": ["src/noc/testing/ddr/chapter4_ddr_stress_intensity_compare.py"],
+  "reference_paths": [],
+  "validation": "All four traffic intensities must report valid measurements and pass the driver's comparison checks."
+}

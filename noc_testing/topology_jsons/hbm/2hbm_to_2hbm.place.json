@@ -1,0 +1,13 @@
+{
+  "kind": "naviq.placement",
+  "version": 1,
+  "name": "2hbm_to_2hbm",
+  "placements": {
+    "hbm_tg_0.m_axi": "NOC_NMU512_X0Y18",
+    "hbm_tg_1.m_axi": "NOC_NMU512_X1Y18",
+    "hbm0_port0.s_axi": "HBM_MC_X0Y0",
+    "hbm0_port1.s_axi": "HBM_MC_X0Y0",
+    "hbm1_port0.s_axi": "HBM_MC_X1Y0",
+    "hbm1_port1.s_axi": "HBM_MC_X1Y0"
+  }
+}

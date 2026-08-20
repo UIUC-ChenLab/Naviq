@@ -1,0 +1,9 @@
+{
+  "description": "Tracing options for hbm_1stack_16GB. Use record_mode_interfaces for NMU outstanding writes; record_hbm for per-port/pseudo-channel HBM stats.",
+  "record_mode_interfaces": 1,
+  "record_hbm": 1,
+  "record_hbm_gap_cycles": 100,
+  "record_nps": 0,
+  "record_nps_gap_cycles": 200,
+  "noc_probes": []
+}

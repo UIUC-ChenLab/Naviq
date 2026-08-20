@@ -1,0 +1,10 @@
+{
+  "kind": "naviq.placement",
+  "version": 1,
+  "name": "hbm_shared_controller",
+  "placements": {
+    "hbm_tg_0.m_axi": "NOC_NMU512_X0Y18",
+    "hbm0_port0.s_axi": "HBM_MC_X0Y0",
+    "hbm0_port2.s_axi": "HBM_MC_X0Y0"
+  }
+}

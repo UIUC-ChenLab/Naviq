@@ -1,0 +1,11 @@
+name,tg_mode,num_axi_tg,num_axi_bram,axi_write_len_beats,axi_write_size_bytes,axi_write_bandwidth_cfg_MBps,num_write_transactions_cfg,tg_axi_data_width_bits,bram_data_width,noc_axi_clk_mhz
+rw_default_tg16_bram16_len1_size2,rw_interleaved,16,16,1,2,300,1000,512,512,1000
+rw_default_tg16_bram16_len1_size4,rw_interleaved,16,16,1,4,300,1000,512,512,1000
+rw_default_tg16_bram16_len1_size8,rw_interleaved,16,16,1,8,300,1000,512,512,1000
+rw_default_tg16_bram16_len1_size16,rw_interleaved,16,16,1,16,300,1000,512,512,1000
+rw_default_tg16_bram16_len1_size32,rw_interleaved,16,16,1,32,300,1000,512,512,1000
+rw_default_tg16_bram16_len1_size64,rw_interleaved,16,16,1,64,300,1000,512,512,1000
+rw_default_tg16_bram16_len2_size64,rw_interleaved,16,16,2,64,300,1000,512,512,1000
+rw_default_tg16_bram16_len4_size64,rw_interleaved,16,16,4,64,300,1000,512,512,1000
+rw_default_tg16_bram16_len8_size64,rw_interleaved,16,16,8,64,300,1000,512,512,1000
+rw_default_tg16_bram16_len16_size64,rw_interleaved,16,16,16,64,300,1000,512,512,1000

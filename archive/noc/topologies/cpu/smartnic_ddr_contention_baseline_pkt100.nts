@@ -1,0 +1,230 @@
+{
+  "SystemProperties": {
+    "DeviceName": "xcv80"
+  },
+  "LogicalInstances": [
+    {
+      "Name": "axi_noc_0/inst/S00_AXI_nmu",
+      "DesignName": "/axi_noc_0/S00_AXI",
+      "IsMaster": true,
+      "CompType": "PL_NMU",
+      "Protocol": "AXI_MM",
+      "ReadTC": "BE",
+      "WriteTC": "BE",
+      "AxiDataWidth": 512,
+      "SysAddresses": [],
+      "SimMetaData": {
+        "IPName": "bd_gen_S00_AXI_nmu_0"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/S01_AXI_nmu",
+      "DesignName": "/axi_noc_0/S01_AXI",
+      "IsMaster": true,
+      "CompType": "PL_NMU",
+      "Protocol": "AXI_MM",
+      "ReadTC": "BE",
+      "WriteTC": "BE",
+      "AxiDataWidth": 512,
+      "SysAddresses": [],
+      "SimMetaData": {
+        "IPName": "bd_gen_S01_AXI_nmu_0"
+      }
+    },
+    {
+      "Name": "axis_noc_0/inst/S00_AXIS_nmu",
+      "DesignName": "/axis_noc_0/S00_AXIS",
+      "IsMaster": true,
+      "CompType": "PL_NMU",
+      "Protocol": "AXI_STRM",
+      "ReadTC": "BE",
+      "WriteTC": "BE",
+      "AxiDataWidth": 512,
+      "SysAddresses": [],
+      "SimMetaData": {
+        "IPName": "bd_gen_S00_AXIS_nmu_0"
+      }
+    },
+    {
+      "Name": "axis_noc_0/inst/S01_AXIS_nmu",
+      "DesignName": "/axis_noc_0/S01_AXIS",
+      "IsMaster": true,
+      "CompType": "PL_NMU",
+      "Protocol": "AXI_STRM",
+      "ReadTC": "BE",
+      "WriteTC": "BE",
+      "AxiDataWidth": 512,
+      "SysAddresses": [],
+      "SimMetaData": {
+        "IPName": "bd_gen_S01_AXIS_nmu_0"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/MC0_ddrc",
+      "DesignName": "/axi_noc_0/ddrmc",
+      "IsMaster": false,
+      "CompType": "DDRC",
+      "Protocol": "AXI_MM",
+      "Ports": [
+        "PORT0"
+      ],
+      "SysAddresses": [
+        {
+          "Base": "0x0",
+          "Size": "0x100000000"
+        }
+      ],
+      "MemoryParams": {
+        "CONTROLLERTYPE": "DDR4_SDRAM",
+        "MC_ADD_CMD_DELAY": "0",
+        "MC_ADD_CMD_DELAY_EN": "Disable",
+        "MC_BA_WIDTH": "2",
+        "MC_BG_WIDTH": "2",
+        "MC_BURST_LENGTH": "8",
+        "MC_CASLATENCY": "24",
+        "MC_CASWRITELATENCY": "16",
+        "MC_CA_MIRROR": "false",
+        "MC_CHAN_REGION0": "DDR_LOW0",
+        "MC_CHAN_REGION0_BASEADDR": "0x0",
+        "MC_CHAN_REGION0_RANGE": "0x100000000",
+        "MC_CLA": "0",
+        "MC_CLAMSHELL": "false",
+        "MC_COLUMNADDRESSWIDTH": "10",
+        "MC_COMPONENT_DENSITY": "8Gb",
+        "MC_COMPONENT_WIDTH": "x8",
+        "MC_CONFIG_NUM": "config11",
+        "MC_DATAWIDTH": "64",
+        "MC_DEVICE_TYPE": "NON_S80",
+        "MC_ECC": "false",
+        "MC_F0_MR0": "0x0000D54",
+        "MC_F0_MR1": "0x0000301",
+        "MC_F0_MR2": "0x00000E8",
+        "MC_F0_MR3": "0x0000020",
+        "MC_MEMORY_CAPACITY": "8GB",
+        "MC_MEMORY_DENSITY": "8GB",
+        "MC_MEMORY_SPEEDGRADE": "DDR4-3200AC(24-24-24)",
+        "MC_NO_CHANNELS": "Single",
+        "MC_RANK": "1",
+        "MC_SLOT": "Single",
+        "MC_STACKHEIGHT": "1",
+        "NUM_MC": "1",
+        "Component_Name": "bd_gen_MC0_ddrc_0",
+        "MC_MAIN_MODULE_NAME": "DDRMC_MAIN_0",
+        "MC_NOC_MODULE_NAME": "DDRMC_NOC_0"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/M01_AXI_nsu",
+      "DesignName": "/axi_noc_0/M01_AXI",
+      "IsMaster": false,
+      "CompType": "PL_NSU",
+      "Protocol": "AXI_MM",
+      "AxiDataWidth": 512,
+      "SysAddresses": [
+        {
+          "Base": "0x40000000",
+          "Size": "0x1000"
+        }
+      ],
+      "SimMetaData": {
+        "IPName": "bd_gen_M01_AXI_nsu_0"
+      }
+    },
+    {
+      "Name": "axis_noc_0/inst/M00_AXIS_nsu",
+      "DesignName": "/axis_noc_0/M00_AXIS",
+      "IsMaster": false,
+      "CompType": "PL_NSU",
+      "Protocol": "AXI_STRM",
+      "AxiDataWidth": 512,
+      "SysAddresses": [],
+      "SimMetaData": {
+        "IPName": "bd_gen_M00_AXIS_nsu_0"
+      }
+    },
+    {
+      "Name": "axis_noc_0/inst/M01_AXIS_nsu",
+      "DesignName": "/axis_noc_0/M01_AXIS",
+      "IsMaster": false,
+      "CompType": "PL_NSU",
+      "Protocol": "AXI_STRM",
+      "AxiDataWidth": 512,
+      "SysAddresses": [],
+      "SimMetaData": {
+        "IPName": "bd_gen_M01_AXIS_nsu_0"
+      }
+    }
+  ],
+  "Paths": [
+    {
+      "Phase": 0,
+      "From": "axi_noc_0/inst/S00_AXI_nmu",
+      "To": "axi_noc_0/inst/MC0_ddrc",
+      "Port": "PORT0",
+      "CommType": "MM_ReadWrite",
+      "ReadBW": 500,
+      "ReadLatency": 300,
+      "ReadAvgBurst": 4,
+      "WriteBW": 500,
+      "WriteLatency": 300,
+      "WriteAvgBurst": 4,
+      "WriteOrder": "strict"
+    },
+    {
+      "Phase": 0,
+      "From": "axi_noc_0/inst/S01_AXI_nmu",
+      "To": "axi_noc_0/inst/MC0_ddrc",
+      "Port": "PORT0",
+      "CommType": "MM_ReadWrite",
+      "ReadBW": 500,
+      "ReadLatency": 300,
+      "ReadAvgBurst": 4,
+      "WriteBW": 500,
+      "WriteLatency": 300,
+      "WriteAvgBurst": 4,
+      "WriteOrder": "strict"
+    },
+    {
+      "Phase": 0,
+      "From": "axi_noc_0/inst/S00_AXI_nmu",
+      "To": "axi_noc_0/inst/M01_AXI_nsu",
+      "Port": "PORT0",
+      "CommType": "MM_ReadWrite",
+      "ReadBW": 500,
+      "ReadLatency": 300,
+      "ReadAvgBurst": 4,
+      "WriteBW": 500,
+      "WriteLatency": 300,
+      "WriteAvgBurst": 4,
+      "WriteOrder": "strict"
+    },
+    {
+      "Phase": 0,
+      "From": "axis_noc_0/inst/S00_AXIS_nmu",
+      "To": "axis_noc_0/inst/M01_AXIS_nsu",
+      "Port": "PORT0",
+      "CommType": "STRM",
+      "ReadBW": 0,
+      "ReadLatency": 0,
+      "ReadAvgBurst": 0,
+      "WriteBW": 500,
+      "WriteLatency": 300,
+      "WriteAvgBurst": 4,
+      "WriteOrder": "strict"
+    },
+    {
+      "Phase": 0,
+      "From": "axis_noc_0/inst/S01_AXIS_nmu",
+      "To": "axis_noc_0/inst/M00_AXIS_nsu",
+      "Port": "PORT0",
+      "CommType": "STRM",
+      "ReadBW": 0,
+      "ReadLatency": 0,
+      "ReadAvgBurst": 0,
+      "WriteBW": 500,
+      "WriteLatency": 300,
+      "WriteAvgBurst": 4,
+      "WriteOrder": "strict"
+    }
+  ]
+}

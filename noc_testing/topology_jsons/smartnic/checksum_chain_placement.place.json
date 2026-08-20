@@ -1,0 +1,11 @@
+{
+  "kind": "naviq.placement",
+  "version": 1,
+  "name": "checksum_chain_placement",
+  "placements": {
+    "packet_src.m_axis": "NOC_NMU512_X0Y0",
+    "checksum0.m_axis": "NOC_NMU512_X1Y0",
+    "packet_sink.s_axis": "NOC_NSU512_X0Y0",
+    "checksum0.s_axis": "NOC_NSU512_X1Y0"
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "kind": "naviq.connections",
+  "version": 1,
+  "name": "2to2_aximm",
+  "components": {
+    "first_dummy": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "tg_1": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "bram_0": {
+      "node_type": "BramEndpoint",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "not_you_two": {
+      "node_type": "BramEndpoint",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm"
+        }
+      }
+    }
+  },
+  "connections": [
+    {
+      "from": "first_dummy.m_axi",
+      "to": "bram_0.s_axi"
+    },
+    {
+      "from": "first_dummy.m_axi",
+      "to": "not_you_two.s_axi"
+    },
+    {
+      "from": "tg_1.m_axi",
+      "to": "bram_0.s_axi"
+    },
+    {
+      "from": "tg_1.m_axi",
+      "to": "not_you_two.s_axi"
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+name,tg_mode,topology_json,axi_write_len_beats,axi_write_size_bytes,axi_write_bandwidth_cfg_MBps,num_write_transactions_cfg,tg_axi_data_width_bits,bram_data_width,noc_axi_clk_mhz
+1_packets,rw_interleaved,topology_jsons/aximm_all_to_all/1to1_aximm.conn.json,16,32,800,1,512,512,1000
+10_packets,rw_interleaved,topology_jsons/aximm_all_to_all/1to1_aximm.conn.json,16,32,800,10,512,512,1000
+50_packets,rw_interleaved,topology_jsons/aximm_all_to_all/1to1_aximm.conn.json,16,32,800,50,512,512,1000
+100_packets,rw_interleaved,topology_jsons/aximm_all_to_all/1to1_aximm.conn.json,16,32,800,100,512,512,1000

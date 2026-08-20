@@ -1,0 +1,31 @@
+{
+  "kind": "naviq.connections",
+  "version": 1,
+  "name": "1to1_axis",
+  "components": {
+    "axis_tg_0": {
+      "node_type": "AxisRandomTrafficGenerator",
+      "ports": {
+        "m_axis": {
+          "role": "master",
+          "protocol": "axis"
+        }
+      }
+    },
+    "axis_end_0": {
+      "node_type": "AxisSinkNode",
+      "ports": {
+        "s_axis": {
+          "role": "slave",
+          "protocol": "axis"
+        }
+      }
+    }
+  },
+  "connections": [
+    {
+      "from": "axis_tg_0.m_axis",
+      "to": "axis_end_0.s_axis"
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "kind": "naviq.connections",
+  "version": 1,
+  "name": "axis_module_smoke",
+  "components": {
+    "packet_sink": {
+      "node_type": "AxisPacketCheckerSink",
+      "ports": {
+        "s_axis": {
+          "role": "slave",
+          "protocol": "axis"
+        }
+      },
+      "params": {}
+    },
+    "packet_src": {
+      "node_type": "AxisPacketTrafficGenerator",
+      "ports": {
+        "m_axis": {
+          "role": "master",
+          "protocol": "axis"
+        }
+      },
+      "params": {}
+    },
+    "module_in": {
+      "node_type": "AxisRtlIngress",
+      "ports": {
+        "s_axis": {
+          "role": "slave",
+          "protocol": "axis"
+        }
+      },
+      "params": {}
+    },
+    "module_out": {
+      "node_type": "AxisRtlEgress",
+      "ports": {
+        "m_axis": {
+          "role": "master",
+          "protocol": "axis"
+        }
+      },
+      "params": {}
+    }
+  },
+  "connections": [
+    {
+      "from": "packet_src.m_axis",
+      "to": "module_in.s_axis",
+      "RequiredBW": 500,
+      "RequiredLatency": 300
+    },
+    {
+      "from": "module_out.m_axis",
+      "to": "packet_sink.s_axis",
+      "RequiredBW": 500,
+      "RequiredLatency": 300
+    }
+  ]
+}

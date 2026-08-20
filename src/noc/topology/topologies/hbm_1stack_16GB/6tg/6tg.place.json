@@ -1,0 +1,18 @@
+{
+  "kind": "naviq.placement",
+  "version": 1,
+  "placements": {
+    "hbm_sat_tg_00.m_axi": "NOC_NMU_HBM2E_X4Y0",
+    "hbm_sat_tg_01.m_axi": "NOC_NMU_HBM2E_X5Y0",
+    "hbm_sat_tg_02.m_axi": "NOC_NMU_HBM2E_X6Y0",
+    "hbm_sat_tg_03.m_axi": "NOC_NMU_HBM2E_X7Y0",
+    "hbm_sat_tg_04.m_axi": "NOC_NMU_HBM2E_X2Y0",
+    "hbm_sat_tg_05.m_axi": "NOC_NMU_HBM2E_X3Y0",
+    "hbm0_port0.s_axi": "HBM_MC_X0Y0",
+    "hbm0_port1.s_axi": "HBM_MC_X0Y0",
+    "hbm0_port2.s_axi": "HBM_MC_X0Y0",
+    "hbm0_port3.s_axi": "HBM_MC_X0Y0",
+    "hbm1_port0.s_axi": "HBM_MC_X1Y0",
+    "hbm1_port1.s_axi": "HBM_MC_X1Y0"
+  }
+}

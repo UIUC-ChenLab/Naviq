@@ -1,0 +1,2 @@
+name,tg_mode,num_axi_tg,axi_write_len_beats,axi_write_size_bytes,num_write_transactions_cfg,tg_axi_data_width_bits,noc_axi_clk_mhz
+axis_write_only_test,write_only,1,16,16,50,512,1000

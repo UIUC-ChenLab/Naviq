@@ -1,0 +1,80 @@
+{
+  "kind": "naviq.connections",
+  "version": 1,
+  "name": "4nmu_to_1nsu_incast_aximm_same_base",
+  "components": {
+    "tg_0": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm",
+          "base_address": "0x0000020100000000",
+          "high_address": "0x000002010000FFFF"
+        }
+      }
+    },
+    "tg_1": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm",
+          "base_address": "0x0000020100000000",
+          "high_address": "0x000002010000FFFF"
+        }
+      }
+    },
+    "tg_2": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm",
+          "base_address": "0x0000020100000000",
+          "high_address": "0x000002010000FFFF"
+        }
+      }
+    },
+    "tg_3": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm",
+          "base_address": "0x0000020100000000",
+          "high_address": "0x000002010000FFFF"
+        }
+      }
+    },
+    "bram_0": {
+      "node_type": "BramEndpoint",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm",
+          "base_address": "0x0000020100000000",
+          "size": "0x00010000"
+        }
+      }
+    }
+  },
+  "connections": [
+    {
+      "from": "tg_0.m_axi",
+      "to": "bram_0.s_axi"
+    },
+    {
+      "from": "tg_1.m_axi",
+      "to": "bram_0.s_axi"
+    },
+    {
+      "from": "tg_2.m_axi",
+      "to": "bram_0.s_axi"
+    },
+    {
+      "from": "tg_3.m_axi",
+      "to": "bram_0.s_axi"
+    }
+  ]
+}

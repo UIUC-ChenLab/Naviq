@@ -1,0 +1,21 @@
+{
+  "workload_case": "exp2_reverse_high_overlap",
+  "shortest_metrics": {
+    "avg_hop": 12,
+    "max_hop": 15,
+    "max_flows": 4,
+    "avg_pair": 0.3571937321937322,
+    "score": 1.4287749287749287,
+    "shared_fraction": 0.7333333333333333
+  },
+  "path_diverse_metrics": {
+    "avg_hop": 12,
+    "max_hop": 15,
+    "max_flows": 2,
+    "avg_pair": 0.12608225108225107,
+    "score": 0.25216450216450215,
+    "shared_fraction": 0.4444444444444444
+  },
+  "selection_rule_id": "min_overlap_under_hop_cap_v1",
+  "k_shortest_paths_considered_per_direction": 4
+}

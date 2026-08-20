@@ -1,0 +1,94 @@
+{
+  "kind": "naviq.connections",
+  "version": 1,
+  "name": "2hbm_to_2hbm",
+  "components": {
+    "hbm_tg_0": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "hbm_tg_1": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "hbm0_port0": {
+      "node_type": "tileNSU_HBM",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm",
+          "type": "hbm",
+          "base_address": "0x00000000",
+          "size": "0x10000"
+        }
+      }
+    },
+    "hbm1_port0": {
+      "node_type": "tileNSU_HBM",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm",
+          "type": "hbm",
+          "base_address": "0x00000000",
+          "size": "0x10000"
+        }
+      }
+    },
+    "hbm0_port1": {
+      "node_type": "tileNSU_HBM",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm",
+          "type": "hbm",
+          "base_address": "0x00000000",
+          "size": "0x10000"
+        }
+      }
+    },
+    "hbm1_port1": {
+      "node_type": "tileNSU_HBM",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm",
+          "type": "hbm",
+          "base_address": "0x00000000",
+          "size": "0x10000"
+        }
+      }
+    }
+  },
+  "connections": [
+    {
+      "from": "hbm_tg_0.m_axi",
+      "to": "hbm0_port0.s_axi"
+    },
+    {
+      "from": "hbm_tg_0.m_axi",
+      "to": "hbm1_port0.s_axi"
+    },
+    {
+      "from": "hbm_tg_1.m_axi",
+      "to": "hbm0_port1.s_axi"
+    },
+    {
+      "from": "hbm_tg_1.m_axi",
+      "to": "hbm1_port1.s_axi"
+    }
+  ],
+  "hbm_settings": {
+    "num_pc": 4
+  }
+}

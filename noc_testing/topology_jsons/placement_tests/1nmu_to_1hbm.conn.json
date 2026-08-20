@@ -1,0 +1,37 @@
+{
+  "kind": "naviq.connections",
+  "version": 1,
+  "name": "1nmu_to_1hbm",
+  "components": {
+    "tg_0": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "hbm0_port0": {
+      "node_type": "tileNSU_HBM",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm",
+          "type": "hbm",
+          "base_address": "0x00000000",
+          "size": "0x10000"
+        }
+      }
+    }
+  },
+  "connections": [
+    {
+      "from": "tg_0.m_axi",
+      "to": "hbm0_port0.s_axi"
+    }
+  ],
+  "hbm_settings": {
+    "num_pc": 2
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "kind": "naviq.connections",
+  "version": 1,
+  "name": "aximm_1to1_close",
+  "components": {
+    "tg_0": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "params": {
+        "address_distribution": "INCREMENT",
+        "align_addresses": false,
+        "nsu_min_addrs": ["0x20100000000"],
+        "nsu_address_spaces": ["0x10000"],
+        "min_transaction_size_bytes": 512,
+        "max_transaction_size_bytes": 512,
+        "max_write_commands": 1000
+      },
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "bram_0": {
+      "node_type": "BramBuggyNode",
+      "params": {
+        "sim_cycles": 10000000,
+        "base_addr": "0x20100000000",
+        "memory_size": 65536,
+        "read_latency": 1,
+        "write_latency": 1,
+        "awready_percentage": 100,
+        "wready_percentage": 100,
+        "arready_percentage": 100,
+        "mutate_response_axi_id_percentage": 0,
+        "mutate_axi_id_val": 0
+      },
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm"
+        }
+      }
+    }
+  },
+  "connections": [
+    {
+      "from": "tg_0.m_axi",
+      "to": "bram_0.s_axi"
+    }
+  ]
+}

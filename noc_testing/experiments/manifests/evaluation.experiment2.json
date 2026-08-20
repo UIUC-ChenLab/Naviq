@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "id": "evaluation.experiment2",
+  "title": "Evaluation Experiment 2: routing overlap",
+  "status": "maintained",
+  "runner": "noc_testing/experiments/evaluation/run_experiment2.py",
+  "default_args": ["--mode", "plan-only"],
+  "output_argument": "--artifact-root",
+  "requires": ["gem5-null", "python-networkx"],
+  "inputs": ["noc_testing/experiments/evaluation"],
+  "reference_paths": ["tests/gem5/noc/trusted_results"],
+  "validation": "Regenerate all low/high route pairs and require the runner's declared hop-match and overlap-separation checks to pass."
+}

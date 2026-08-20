@@ -1,0 +1,31 @@
+{
+  "kind": "naviq.connections",
+  "version": 1,
+  "name": "1nmu_to_1nsu_aximm",
+  "components": {
+    "tg_0": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "bram_0": {
+      "node_type": "BramEndpoint",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm"
+        }
+      }
+    }
+  },
+  "connections": [
+    {
+      "from": "tg_0.m_axi",
+      "to": "bram_0.s_axi"
+    }
+  ]
+}

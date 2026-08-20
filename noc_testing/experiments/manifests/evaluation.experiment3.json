@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "id": "evaluation.experiment3",
+  "title": "Evaluation Experiment 3: topology recommendation",
+  "status": "maintained",
+  "runner": "noc_testing/experiments/evaluation/run_experiment3.py",
+  "default_args": ["--mode", "plan-only"],
+  "output_argument": "--artifact-root",
+  "requires": ["gem5-null", "python-networkx"],
+  "inputs": ["noc_testing/experiments/evaluation"],
+  "reference_paths": ["tests/gem5/noc/trusted_results"],
+  "validation": "Require the runner's topology and route-overlap validation to pass."
+}

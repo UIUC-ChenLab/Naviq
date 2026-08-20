@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "id": "smartnic.packet_modules",
+  "title": "SmartNIC AXIS packet-module smoke suite",
+  "status": "maintained",
+  "runner": "tests/main.py",
+  "working_directory": "tests",
+  "default_args": ["run", "--skip-build", "--length=quick", "--isa=NULL", "--variant=opt", "gem5/noc"],
+  "requires": ["gem5-null"],
+  "inputs": ["tests/gem5/noc/test.py", "src/noc/testing/smartnic/modules"],
+  "reference_paths": ["tests/gem5/noc/trusted_results"],
+  "validation": "The quick TestLib NoC suite must pass; the dedicated AXIS tests cover packet boundaries and backpressure."
+}

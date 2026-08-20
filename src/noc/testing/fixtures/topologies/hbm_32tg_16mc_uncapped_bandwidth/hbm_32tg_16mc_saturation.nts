@@ -1,0 +1,1417 @@
+{
+  "SystemProperties": {
+    "DeviceName": "xcv80"
+  },
+  "LogicalInstances": [
+    {
+      "Name": "axi_noc_0/inst/S00_AXI_nmu",
+      "DesignName": "/axi_noc_0/S00_AXI",
+      "IsMaster": true,
+      "CompType": "PL_NMU",
+      "Protocol": "AXI_MM",
+      "ReadTC": "BE",
+      "WriteTC": "BE",
+      "AxiDataWidth": 512,
+      "SysAddresses": [],
+      "SimMetaData": {
+        "IPName": "bd_gen_S00_AXI_nmu_0"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/S01_AXI_nmu",
+      "DesignName": "/axi_noc_0/S01_AXI",
+      "IsMaster": true,
+      "CompType": "PL_NMU",
+      "Protocol": "AXI_MM",
+      "ReadTC": "BE",
+      "WriteTC": "BE",
+      "AxiDataWidth": 512,
+      "SysAddresses": [],
+      "SimMetaData": {
+        "IPName": "bd_gen_S01_AXI_nmu_0"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/S02_AXI_nmu",
+      "DesignName": "/axi_noc_0/S02_AXI",
+      "IsMaster": true,
+      "CompType": "PL_NMU",
+      "Protocol": "AXI_MM",
+      "ReadTC": "BE",
+      "WriteTC": "BE",
+      "AxiDataWidth": 512,
+      "SysAddresses": [],
+      "SimMetaData": {
+        "IPName": "bd_gen_S02_AXI_nmu_0"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/S03_AXI_nmu",
+      "DesignName": "/axi_noc_0/S03_AXI",
+      "IsMaster": true,
+      "CompType": "PL_NMU",
+      "Protocol": "AXI_MM",
+      "ReadTC": "BE",
+      "WriteTC": "BE",
+      "AxiDataWidth": 512,
+      "SysAddresses": [],
+      "SimMetaData": {
+        "IPName": "bd_gen_S03_AXI_nmu_0"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/S04_AXI_nmu",
+      "DesignName": "/axi_noc_0/S04_AXI",
+      "IsMaster": true,
+      "CompType": "PL_NMU",
+      "Protocol": "AXI_MM",
+      "ReadTC": "BE",
+      "WriteTC": "BE",
+      "AxiDataWidth": 512,
+      "SysAddresses": [],
+      "SimMetaData": {
+        "IPName": "bd_gen_S04_AXI_nmu_0"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/S05_AXI_nmu",
+      "DesignName": "/axi_noc_0/S05_AXI",
+      "IsMaster": true,
+      "CompType": "PL_NMU",
+      "Protocol": "AXI_MM",
+      "ReadTC": "BE",
+      "WriteTC": "BE",
+      "AxiDataWidth": 512,
+      "SysAddresses": [],
+      "SimMetaData": {
+        "IPName": "bd_gen_S05_AXI_nmu_0"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/S06_AXI_nmu",
+      "DesignName": "/axi_noc_0/S06_AXI",
+      "IsMaster": true,
+      "CompType": "PL_NMU",
+      "Protocol": "AXI_MM",
+      "ReadTC": "BE",
+      "WriteTC": "BE",
+      "AxiDataWidth": 512,
+      "SysAddresses": [],
+      "SimMetaData": {
+        "IPName": "bd_gen_S06_AXI_nmu_0"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/S07_AXI_nmu",
+      "DesignName": "/axi_noc_0/S07_AXI",
+      "IsMaster": true,
+      "CompType": "PL_NMU",
+      "Protocol": "AXI_MM",
+      "ReadTC": "BE",
+      "WriteTC": "BE",
+      "AxiDataWidth": 512,
+      "SysAddresses": [],
+      "SimMetaData": {
+        "IPName": "bd_gen_S07_AXI_nmu_0"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/S08_AXI_nmu",
+      "DesignName": "/axi_noc_0/S08_AXI",
+      "IsMaster": true,
+      "CompType": "PL_NMU",
+      "Protocol": "AXI_MM",
+      "ReadTC": "BE",
+      "WriteTC": "BE",
+      "AxiDataWidth": 512,
+      "SysAddresses": [],
+      "SimMetaData": {
+        "IPName": "bd_gen_S08_AXI_nmu_0"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/S09_AXI_nmu",
+      "DesignName": "/axi_noc_0/S09_AXI",
+      "IsMaster": true,
+      "CompType": "PL_NMU",
+      "Protocol": "AXI_MM",
+      "ReadTC": "BE",
+      "WriteTC": "BE",
+      "AxiDataWidth": 512,
+      "SysAddresses": [],
+      "SimMetaData": {
+        "IPName": "bd_gen_S09_AXI_nmu_0"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/S10_AXI_nmu",
+      "DesignName": "/axi_noc_0/S10_AXI",
+      "IsMaster": true,
+      "CompType": "PL_NMU",
+      "Protocol": "AXI_MM",
+      "ReadTC": "BE",
+      "WriteTC": "BE",
+      "AxiDataWidth": 512,
+      "SysAddresses": [],
+      "SimMetaData": {
+        "IPName": "bd_gen_S10_AXI_nmu_0"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/S11_AXI_nmu",
+      "DesignName": "/axi_noc_0/S11_AXI",
+      "IsMaster": true,
+      "CompType": "PL_NMU",
+      "Protocol": "AXI_MM",
+      "ReadTC": "BE",
+      "WriteTC": "BE",
+      "AxiDataWidth": 512,
+      "SysAddresses": [],
+      "SimMetaData": {
+        "IPName": "bd_gen_S11_AXI_nmu_0"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/S12_AXI_nmu",
+      "DesignName": "/axi_noc_0/S12_AXI",
+      "IsMaster": true,
+      "CompType": "PL_NMU",
+      "Protocol": "AXI_MM",
+      "ReadTC": "BE",
+      "WriteTC": "BE",
+      "AxiDataWidth": 512,
+      "SysAddresses": [],
+      "SimMetaData": {
+        "IPName": "bd_gen_S12_AXI_nmu_0"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/S13_AXI_nmu",
+      "DesignName": "/axi_noc_0/S13_AXI",
+      "IsMaster": true,
+      "CompType": "PL_NMU",
+      "Protocol": "AXI_MM",
+      "ReadTC": "BE",
+      "WriteTC": "BE",
+      "AxiDataWidth": 512,
+      "SysAddresses": [],
+      "SimMetaData": {
+        "IPName": "bd_gen_S13_AXI_nmu_0"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/S14_AXI_nmu",
+      "DesignName": "/axi_noc_0/S14_AXI",
+      "IsMaster": true,
+      "CompType": "PL_NMU",
+      "Protocol": "AXI_MM",
+      "ReadTC": "BE",
+      "WriteTC": "BE",
+      "AxiDataWidth": 512,
+      "SysAddresses": [],
+      "SimMetaData": {
+        "IPName": "bd_gen_S14_AXI_nmu_0"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/S15_AXI_nmu",
+      "DesignName": "/axi_noc_0/S15_AXI",
+      "IsMaster": true,
+      "CompType": "PL_NMU",
+      "Protocol": "AXI_MM",
+      "ReadTC": "BE",
+      "WriteTC": "BE",
+      "AxiDataWidth": 512,
+      "SysAddresses": [],
+      "SimMetaData": {
+        "IPName": "bd_gen_S15_AXI_nmu_0"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/S16_AXI_nmu",
+      "DesignName": "/axi_noc_0/S16_AXI",
+      "IsMaster": true,
+      "CompType": "PL_NMU",
+      "Protocol": "AXI_MM",
+      "ReadTC": "BE",
+      "WriteTC": "BE",
+      "AxiDataWidth": 512,
+      "SysAddresses": [],
+      "SimMetaData": {
+        "IPName": "bd_gen_S16_AXI_nmu_0"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/S17_AXI_nmu",
+      "DesignName": "/axi_noc_0/S17_AXI",
+      "IsMaster": true,
+      "CompType": "PL_NMU",
+      "Protocol": "AXI_MM",
+      "ReadTC": "BE",
+      "WriteTC": "BE",
+      "AxiDataWidth": 512,
+      "SysAddresses": [],
+      "SimMetaData": {
+        "IPName": "bd_gen_S17_AXI_nmu_0"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/S18_AXI_nmu",
+      "DesignName": "/axi_noc_0/S18_AXI",
+      "IsMaster": true,
+      "CompType": "PL_NMU",
+      "Protocol": "AXI_MM",
+      "ReadTC": "BE",
+      "WriteTC": "BE",
+      "AxiDataWidth": 512,
+      "SysAddresses": [],
+      "SimMetaData": {
+        "IPName": "bd_gen_S18_AXI_nmu_0"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/S19_AXI_nmu",
+      "DesignName": "/axi_noc_0/S19_AXI",
+      "IsMaster": true,
+      "CompType": "PL_NMU",
+      "Protocol": "AXI_MM",
+      "ReadTC": "BE",
+      "WriteTC": "BE",
+      "AxiDataWidth": 512,
+      "SysAddresses": [],
+      "SimMetaData": {
+        "IPName": "bd_gen_S19_AXI_nmu_0"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/S20_AXI_nmu",
+      "DesignName": "/axi_noc_0/S20_AXI",
+      "IsMaster": true,
+      "CompType": "PL_NMU",
+      "Protocol": "AXI_MM",
+      "ReadTC": "BE",
+      "WriteTC": "BE",
+      "AxiDataWidth": 512,
+      "SysAddresses": [],
+      "SimMetaData": {
+        "IPName": "bd_gen_S20_AXI_nmu_0"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/S21_AXI_nmu",
+      "DesignName": "/axi_noc_0/S21_AXI",
+      "IsMaster": true,
+      "CompType": "PL_NMU",
+      "Protocol": "AXI_MM",
+      "ReadTC": "BE",
+      "WriteTC": "BE",
+      "AxiDataWidth": 512,
+      "SysAddresses": [],
+      "SimMetaData": {
+        "IPName": "bd_gen_S21_AXI_nmu_0"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/S22_AXI_nmu",
+      "DesignName": "/axi_noc_0/S22_AXI",
+      "IsMaster": true,
+      "CompType": "PL_NMU",
+      "Protocol": "AXI_MM",
+      "ReadTC": "BE",
+      "WriteTC": "BE",
+      "AxiDataWidth": 512,
+      "SysAddresses": [],
+      "SimMetaData": {
+        "IPName": "bd_gen_S22_AXI_nmu_0"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/S23_AXI_nmu",
+      "DesignName": "/axi_noc_0/S23_AXI",
+      "IsMaster": true,
+      "CompType": "PL_NMU",
+      "Protocol": "AXI_MM",
+      "ReadTC": "BE",
+      "WriteTC": "BE",
+      "AxiDataWidth": 512,
+      "SysAddresses": [],
+      "SimMetaData": {
+        "IPName": "bd_gen_S23_AXI_nmu_0"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/S24_AXI_nmu",
+      "DesignName": "/axi_noc_0/S24_AXI",
+      "IsMaster": true,
+      "CompType": "PL_NMU",
+      "Protocol": "AXI_MM",
+      "ReadTC": "BE",
+      "WriteTC": "BE",
+      "AxiDataWidth": 512,
+      "SysAddresses": [],
+      "SimMetaData": {
+        "IPName": "bd_gen_S24_AXI_nmu_0"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/S25_AXI_nmu",
+      "DesignName": "/axi_noc_0/S25_AXI",
+      "IsMaster": true,
+      "CompType": "PL_NMU",
+      "Protocol": "AXI_MM",
+      "ReadTC": "BE",
+      "WriteTC": "BE",
+      "AxiDataWidth": 512,
+      "SysAddresses": [],
+      "SimMetaData": {
+        "IPName": "bd_gen_S25_AXI_nmu_0"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/S26_AXI_nmu",
+      "DesignName": "/axi_noc_0/S26_AXI",
+      "IsMaster": true,
+      "CompType": "PL_NMU",
+      "Protocol": "AXI_MM",
+      "ReadTC": "BE",
+      "WriteTC": "BE",
+      "AxiDataWidth": 512,
+      "SysAddresses": [],
+      "SimMetaData": {
+        "IPName": "bd_gen_S26_AXI_nmu_0"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/S27_AXI_nmu",
+      "DesignName": "/axi_noc_0/S27_AXI",
+      "IsMaster": true,
+      "CompType": "PL_NMU",
+      "Protocol": "AXI_MM",
+      "ReadTC": "BE",
+      "WriteTC": "BE",
+      "AxiDataWidth": 512,
+      "SysAddresses": [],
+      "SimMetaData": {
+        "IPName": "bd_gen_S27_AXI_nmu_0"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/S28_AXI_nmu",
+      "DesignName": "/axi_noc_0/S28_AXI",
+      "IsMaster": true,
+      "CompType": "PL_NMU",
+      "Protocol": "AXI_MM",
+      "ReadTC": "BE",
+      "WriteTC": "BE",
+      "AxiDataWidth": 512,
+      "SysAddresses": [],
+      "SimMetaData": {
+        "IPName": "bd_gen_S28_AXI_nmu_0"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/S29_AXI_nmu",
+      "DesignName": "/axi_noc_0/S29_AXI",
+      "IsMaster": true,
+      "CompType": "PL_NMU",
+      "Protocol": "AXI_MM",
+      "ReadTC": "BE",
+      "WriteTC": "BE",
+      "AxiDataWidth": 512,
+      "SysAddresses": [],
+      "SimMetaData": {
+        "IPName": "bd_gen_S29_AXI_nmu_0"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/S30_AXI_nmu",
+      "DesignName": "/axi_noc_0/S30_AXI",
+      "IsMaster": true,
+      "CompType": "PL_NMU",
+      "Protocol": "AXI_MM",
+      "ReadTC": "BE",
+      "WriteTC": "BE",
+      "AxiDataWidth": 512,
+      "SysAddresses": [],
+      "SimMetaData": {
+        "IPName": "bd_gen_S30_AXI_nmu_0"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/S31_AXI_nmu",
+      "DesignName": "/axi_noc_0/S31_AXI",
+      "IsMaster": true,
+      "CompType": "PL_NMU",
+      "Protocol": "AXI_MM",
+      "ReadTC": "BE",
+      "WriteTC": "BE",
+      "AxiDataWidth": 512,
+      "SysAddresses": [],
+      "SimMetaData": {
+        "IPName": "bd_gen_S31_AXI_nmu_0"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/MC_hbmc/inst/hbm_st0/I_hbm_chnl0",
+      "DesignName": "/axi_noc_0/HBM0",
+      "IsMaster": false,
+      "CompType": "HBMMC",
+      "Protocol": "AXI_MM",
+      "Ports": [
+        "PORT0",
+        "PORT1",
+        "PORT2",
+        "PORT3"
+      ],
+      "SysAddresses": [
+        {
+          "Base": "0x0",
+          "Size": "0x40000000"
+        },
+        {
+          "Base": "0x40000000",
+          "Size": "0x40000000"
+        }
+      ],
+      "MemoryParams": {
+        "Frequency": "1600",
+        "HBM_DENSITY_PER_CHNL": "2G",
+        "HBM_NUM_CHNL": "16",
+        "HBM_START_CHNL": "0",
+        "HBM_START_PHYSICAL_CHNL": "-1",
+        "ChannelNumber": "0",
+        "StackNumber": "0"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/MC_hbmc/inst/hbm_st0/I_hbm_chnl1",
+      "DesignName": "/axi_noc_0/HBM1",
+      "IsMaster": false,
+      "CompType": "HBMMC",
+      "Protocol": "AXI_MM",
+      "Ports": [
+        "PORT0",
+        "PORT1",
+        "PORT2",
+        "PORT3"
+      ],
+      "SysAddresses": [
+        {
+          "Base": "0x80000000",
+          "Size": "0x40000000"
+        },
+        {
+          "Base": "0xC0000000",
+          "Size": "0x40000000"
+        }
+      ],
+      "MemoryParams": {
+        "Frequency": "1600",
+        "HBM_DENSITY_PER_CHNL": "2G",
+        "HBM_NUM_CHNL": "16",
+        "HBM_START_CHNL": "0",
+        "HBM_START_PHYSICAL_CHNL": "-1",
+        "ChannelNumber": "1",
+        "StackNumber": "0"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/MC_hbmc/inst/hbm_st0/I_hbm_chnl2",
+      "DesignName": "/axi_noc_0/HBM2",
+      "IsMaster": false,
+      "CompType": "HBMMC",
+      "Protocol": "AXI_MM",
+      "Ports": [
+        "PORT0",
+        "PORT1",
+        "PORT2",
+        "PORT3"
+      ],
+      "SysAddresses": [
+        {
+          "Base": "0x100000000",
+          "Size": "0x40000000"
+        },
+        {
+          "Base": "0x140000000",
+          "Size": "0x40000000"
+        }
+      ],
+      "MemoryParams": {
+        "Frequency": "1600",
+        "HBM_DENSITY_PER_CHNL": "2G",
+        "HBM_NUM_CHNL": "16",
+        "HBM_START_CHNL": "0",
+        "HBM_START_PHYSICAL_CHNL": "-1",
+        "ChannelNumber": "2",
+        "StackNumber": "0"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/MC_hbmc/inst/hbm_st0/I_hbm_chnl3",
+      "DesignName": "/axi_noc_0/HBM3",
+      "IsMaster": false,
+      "CompType": "HBMMC",
+      "Protocol": "AXI_MM",
+      "Ports": [
+        "PORT0",
+        "PORT1",
+        "PORT2",
+        "PORT3"
+      ],
+      "SysAddresses": [
+        {
+          "Base": "0x180000000",
+          "Size": "0x40000000"
+        },
+        {
+          "Base": "0x1C0000000",
+          "Size": "0x40000000"
+        }
+      ],
+      "MemoryParams": {
+        "Frequency": "1600",
+        "HBM_DENSITY_PER_CHNL": "2G",
+        "HBM_NUM_CHNL": "16",
+        "HBM_START_CHNL": "0",
+        "HBM_START_PHYSICAL_CHNL": "-1",
+        "ChannelNumber": "3",
+        "StackNumber": "0"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/MC_hbmc/inst/hbm_st0/I_hbm_chnl4",
+      "DesignName": "/axi_noc_0/HBM4",
+      "IsMaster": false,
+      "CompType": "HBMMC",
+      "Protocol": "AXI_MM",
+      "Ports": [
+        "PORT0",
+        "PORT1",
+        "PORT2",
+        "PORT3"
+      ],
+      "SysAddresses": [
+        {
+          "Base": "0x200000000",
+          "Size": "0x40000000"
+        },
+        {
+          "Base": "0x240000000",
+          "Size": "0x40000000"
+        }
+      ],
+      "MemoryParams": {
+        "Frequency": "1600",
+        "HBM_DENSITY_PER_CHNL": "2G",
+        "HBM_NUM_CHNL": "16",
+        "HBM_START_CHNL": "0",
+        "HBM_START_PHYSICAL_CHNL": "-1",
+        "ChannelNumber": "4",
+        "StackNumber": "0"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/MC_hbmc/inst/hbm_st0/I_hbm_chnl5",
+      "DesignName": "/axi_noc_0/HBM5",
+      "IsMaster": false,
+      "CompType": "HBMMC",
+      "Protocol": "AXI_MM",
+      "Ports": [
+        "PORT0",
+        "PORT1",
+        "PORT2",
+        "PORT3"
+      ],
+      "SysAddresses": [
+        {
+          "Base": "0x280000000",
+          "Size": "0x40000000"
+        },
+        {
+          "Base": "0x2C0000000",
+          "Size": "0x40000000"
+        }
+      ],
+      "MemoryParams": {
+        "Frequency": "1600",
+        "HBM_DENSITY_PER_CHNL": "2G",
+        "HBM_NUM_CHNL": "16",
+        "HBM_START_CHNL": "0",
+        "HBM_START_PHYSICAL_CHNL": "-1",
+        "ChannelNumber": "5",
+        "StackNumber": "0"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/MC_hbmc/inst/hbm_st0/I_hbm_chnl6",
+      "DesignName": "/axi_noc_0/HBM6",
+      "IsMaster": false,
+      "CompType": "HBMMC",
+      "Protocol": "AXI_MM",
+      "Ports": [
+        "PORT0",
+        "PORT1",
+        "PORT2",
+        "PORT3"
+      ],
+      "SysAddresses": [
+        {
+          "Base": "0x300000000",
+          "Size": "0x40000000"
+        },
+        {
+          "Base": "0x340000000",
+          "Size": "0x40000000"
+        }
+      ],
+      "MemoryParams": {
+        "Frequency": "1600",
+        "HBM_DENSITY_PER_CHNL": "2G",
+        "HBM_NUM_CHNL": "16",
+        "HBM_START_CHNL": "0",
+        "HBM_START_PHYSICAL_CHNL": "-1",
+        "ChannelNumber": "6",
+        "StackNumber": "0"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/MC_hbmc/inst/hbm_st0/I_hbm_chnl7",
+      "DesignName": "/axi_noc_0/HBM7",
+      "IsMaster": false,
+      "CompType": "HBMMC",
+      "Protocol": "AXI_MM",
+      "Ports": [
+        "PORT0",
+        "PORT1",
+        "PORT2",
+        "PORT3"
+      ],
+      "SysAddresses": [
+        {
+          "Base": "0x380000000",
+          "Size": "0x40000000"
+        },
+        {
+          "Base": "0x3C0000000",
+          "Size": "0x40000000"
+        }
+      ],
+      "MemoryParams": {
+        "Frequency": "1600",
+        "HBM_DENSITY_PER_CHNL": "2G",
+        "HBM_NUM_CHNL": "16",
+        "HBM_START_CHNL": "0",
+        "HBM_START_PHYSICAL_CHNL": "-1",
+        "ChannelNumber": "7",
+        "StackNumber": "0"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/MC_hbmc/inst/hbm_st1/I_hbm_chnl0",
+      "DesignName": "/axi_noc_0/HBM8",
+      "IsMaster": false,
+      "CompType": "HBMMC",
+      "Protocol": "AXI_MM",
+      "Ports": [
+        "PORT0",
+        "PORT1",
+        "PORT2",
+        "PORT3"
+      ],
+      "SysAddresses": [
+        {
+          "Base": "0x400000000",
+          "Size": "0x40000000"
+        },
+        {
+          "Base": "0x440000000",
+          "Size": "0x40000000"
+        }
+      ],
+      "MemoryParams": {
+        "Frequency": "1600",
+        "HBM_DENSITY_PER_CHNL": "2G",
+        "HBM_NUM_CHNL": "16",
+        "HBM_START_CHNL": "0",
+        "HBM_START_PHYSICAL_CHNL": "-1",
+        "ChannelNumber": "0",
+        "StackNumber": "1"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/MC_hbmc/inst/hbm_st1/I_hbm_chnl1",
+      "DesignName": "/axi_noc_0/HBM9",
+      "IsMaster": false,
+      "CompType": "HBMMC",
+      "Protocol": "AXI_MM",
+      "Ports": [
+        "PORT0",
+        "PORT1",
+        "PORT2",
+        "PORT3"
+      ],
+      "SysAddresses": [
+        {
+          "Base": "0x480000000",
+          "Size": "0x40000000"
+        },
+        {
+          "Base": "0x4C0000000",
+          "Size": "0x40000000"
+        }
+      ],
+      "MemoryParams": {
+        "Frequency": "1600",
+        "HBM_DENSITY_PER_CHNL": "2G",
+        "HBM_NUM_CHNL": "16",
+        "HBM_START_CHNL": "0",
+        "HBM_START_PHYSICAL_CHNL": "-1",
+        "ChannelNumber": "1",
+        "StackNumber": "1"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/MC_hbmc/inst/hbm_st1/I_hbm_chnl2",
+      "DesignName": "/axi_noc_0/HBM10",
+      "IsMaster": false,
+      "CompType": "HBMMC",
+      "Protocol": "AXI_MM",
+      "Ports": [
+        "PORT0",
+        "PORT1",
+        "PORT2",
+        "PORT3"
+      ],
+      "SysAddresses": [
+        {
+          "Base": "0x500000000",
+          "Size": "0x40000000"
+        },
+        {
+          "Base": "0x540000000",
+          "Size": "0x40000000"
+        }
+      ],
+      "MemoryParams": {
+        "Frequency": "1600",
+        "HBM_DENSITY_PER_CHNL": "2G",
+        "HBM_NUM_CHNL": "16",
+        "HBM_START_CHNL": "0",
+        "HBM_START_PHYSICAL_CHNL": "-1",
+        "ChannelNumber": "2",
+        "StackNumber": "1"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/MC_hbmc/inst/hbm_st1/I_hbm_chnl3",
+      "DesignName": "/axi_noc_0/HBM11",
+      "IsMaster": false,
+      "CompType": "HBMMC",
+      "Protocol": "AXI_MM",
+      "Ports": [
+        "PORT0",
+        "PORT1",
+        "PORT2",
+        "PORT3"
+      ],
+      "SysAddresses": [
+        {
+          "Base": "0x580000000",
+          "Size": "0x40000000"
+        },
+        {
+          "Base": "0x5C0000000",
+          "Size": "0x40000000"
+        }
+      ],
+      "MemoryParams": {
+        "Frequency": "1600",
+        "HBM_DENSITY_PER_CHNL": "2G",
+        "HBM_NUM_CHNL": "16",
+        "HBM_START_CHNL": "0",
+        "HBM_START_PHYSICAL_CHNL": "-1",
+        "ChannelNumber": "3",
+        "StackNumber": "1"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/MC_hbmc/inst/hbm_st1/I_hbm_chnl4",
+      "DesignName": "/axi_noc_0/HBM12",
+      "IsMaster": false,
+      "CompType": "HBMMC",
+      "Protocol": "AXI_MM",
+      "Ports": [
+        "PORT0",
+        "PORT1",
+        "PORT2",
+        "PORT3"
+      ],
+      "SysAddresses": [
+        {
+          "Base": "0x600000000",
+          "Size": "0x40000000"
+        },
+        {
+          "Base": "0x640000000",
+          "Size": "0x40000000"
+        }
+      ],
+      "MemoryParams": {
+        "Frequency": "1600",
+        "HBM_DENSITY_PER_CHNL": "2G",
+        "HBM_NUM_CHNL": "16",
+        "HBM_START_CHNL": "0",
+        "HBM_START_PHYSICAL_CHNL": "-1",
+        "ChannelNumber": "4",
+        "StackNumber": "1"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/MC_hbmc/inst/hbm_st1/I_hbm_chnl5",
+      "DesignName": "/axi_noc_0/HBM13",
+      "IsMaster": false,
+      "CompType": "HBMMC",
+      "Protocol": "AXI_MM",
+      "Ports": [
+        "PORT0",
+        "PORT1",
+        "PORT2",
+        "PORT3"
+      ],
+      "SysAddresses": [
+        {
+          "Base": "0x680000000",
+          "Size": "0x40000000"
+        },
+        {
+          "Base": "0x6C0000000",
+          "Size": "0x40000000"
+        }
+      ],
+      "MemoryParams": {
+        "Frequency": "1600",
+        "HBM_DENSITY_PER_CHNL": "2G",
+        "HBM_NUM_CHNL": "16",
+        "HBM_START_CHNL": "0",
+        "HBM_START_PHYSICAL_CHNL": "-1",
+        "ChannelNumber": "5",
+        "StackNumber": "1"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/MC_hbmc/inst/hbm_st1/I_hbm_chnl6",
+      "DesignName": "/axi_noc_0/HBM14",
+      "IsMaster": false,
+      "CompType": "HBMMC",
+      "Protocol": "AXI_MM",
+      "Ports": [
+        "PORT0",
+        "PORT1",
+        "PORT2",
+        "PORT3"
+      ],
+      "SysAddresses": [
+        {
+          "Base": "0x700000000",
+          "Size": "0x40000000"
+        },
+        {
+          "Base": "0x740000000",
+          "Size": "0x40000000"
+        }
+      ],
+      "MemoryParams": {
+        "Frequency": "1600",
+        "HBM_DENSITY_PER_CHNL": "2G",
+        "HBM_NUM_CHNL": "16",
+        "HBM_START_CHNL": "0",
+        "HBM_START_PHYSICAL_CHNL": "-1",
+        "ChannelNumber": "6",
+        "StackNumber": "1"
+      }
+    },
+    {
+      "Name": "axi_noc_0/inst/MC_hbmc/inst/hbm_st1/I_hbm_chnl7",
+      "DesignName": "/axi_noc_0/HBM15",
+      "IsMaster": false,
+      "CompType": "HBMMC",
+      "Protocol": "AXI_MM",
+      "Ports": [
+        "PORT0",
+        "PORT1",
+        "PORT2",
+        "PORT3"
+      ],
+      "SysAddresses": [
+        {
+          "Base": "0x780000000",
+          "Size": "0x40000000"
+        },
+        {
+          "Base": "0x7C0000000",
+          "Size": "0x40000000"
+        }
+      ],
+      "MemoryParams": {
+        "Frequency": "1600",
+        "HBM_DENSITY_PER_CHNL": "2G",
+        "HBM_NUM_CHNL": "16",
+        "HBM_START_CHNL": "0",
+        "HBM_START_PHYSICAL_CHNL": "-1",
+        "ChannelNumber": "7",
+        "StackNumber": "1"
+      }
+    }
+  ],
+  "Paths": [
+    {
+      "Phase": 0,
+      "From": "axi_noc_0/inst/S00_AXI_nmu",
+      "To": "axi_noc_0/inst/MC_hbmc/inst/hbm_st0/I_hbm_chnl0",
+      "Port": "PORT0",
+      "CommType": "MM_ReadWrite",
+      "ReadBW": 500,
+      "ReadLatency": 300,
+      "ReadAvgBurst": 4,
+      "WriteBW": 500,
+      "WriteLatency": 300,
+      "WriteAvgBurst": 4,
+      "WriteOrder": "strict"
+    },
+    {
+      "Phase": 0,
+      "From": "axi_noc_0/inst/S01_AXI_nmu",
+      "To": "axi_noc_0/inst/MC_hbmc/inst/hbm_st0/I_hbm_chnl0",
+      "Port": "PORT2",
+      "CommType": "MM_ReadWrite",
+      "ReadBW": 500,
+      "ReadLatency": 300,
+      "ReadAvgBurst": 4,
+      "WriteBW": 500,
+      "WriteLatency": 300,
+      "WriteAvgBurst": 4,
+      "WriteOrder": "strict"
+    },
+    {
+      "Phase": 0,
+      "From": "axi_noc_0/inst/S02_AXI_nmu",
+      "To": "axi_noc_0/inst/MC_hbmc/inst/hbm_st0/I_hbm_chnl1",
+      "Port": "PORT0",
+      "CommType": "MM_ReadWrite",
+      "ReadBW": 500,
+      "ReadLatency": 300,
+      "ReadAvgBurst": 4,
+      "WriteBW": 500,
+      "WriteLatency": 300,
+      "WriteAvgBurst": 4,
+      "WriteOrder": "strict"
+    },
+    {
+      "Phase": 0,
+      "From": "axi_noc_0/inst/S03_AXI_nmu",
+      "To": "axi_noc_0/inst/MC_hbmc/inst/hbm_st0/I_hbm_chnl1",
+      "Port": "PORT2",
+      "CommType": "MM_ReadWrite",
+      "ReadBW": 500,
+      "ReadLatency": 300,
+      "ReadAvgBurst": 4,
+      "WriteBW": 500,
+      "WriteLatency": 300,
+      "WriteAvgBurst": 4,
+      "WriteOrder": "strict"
+    },
+    {
+      "Phase": 0,
+      "From": "axi_noc_0/inst/S04_AXI_nmu",
+      "To": "axi_noc_0/inst/MC_hbmc/inst/hbm_st0/I_hbm_chnl2",
+      "Port": "PORT0",
+      "CommType": "MM_ReadWrite",
+      "ReadBW": 500,
+      "ReadLatency": 300,
+      "ReadAvgBurst": 4,
+      "WriteBW": 500,
+      "WriteLatency": 300,
+      "WriteAvgBurst": 4,
+      "WriteOrder": "strict"
+    },
+    {
+      "Phase": 0,
+      "From": "axi_noc_0/inst/S05_AXI_nmu",
+      "To": "axi_noc_0/inst/MC_hbmc/inst/hbm_st0/I_hbm_chnl2",
+      "Port": "PORT2",
+      "CommType": "MM_ReadWrite",
+      "ReadBW": 500,
+      "ReadLatency": 300,
+      "ReadAvgBurst": 4,
+      "WriteBW": 500,
+      "WriteLatency": 300,
+      "WriteAvgBurst": 4,
+      "WriteOrder": "strict"
+    },
+    {
+      "Phase": 0,
+      "From": "axi_noc_0/inst/S06_AXI_nmu",
+      "To": "axi_noc_0/inst/MC_hbmc/inst/hbm_st0/I_hbm_chnl3",
+      "Port": "PORT0",
+      "CommType": "MM_ReadWrite",
+      "ReadBW": 500,
+      "ReadLatency": 300,
+      "ReadAvgBurst": 4,
+      "WriteBW": 500,
+      "WriteLatency": 300,
+      "WriteAvgBurst": 4,
+      "WriteOrder": "strict"
+    },
+    {
+      "Phase": 0,
+      "From": "axi_noc_0/inst/S07_AXI_nmu",
+      "To": "axi_noc_0/inst/MC_hbmc/inst/hbm_st0/I_hbm_chnl3",
+      "Port": "PORT2",
+      "CommType": "MM_ReadWrite",
+      "ReadBW": 500,
+      "ReadLatency": 300,
+      "ReadAvgBurst": 4,
+      "WriteBW": 500,
+      "WriteLatency": 300,
+      "WriteAvgBurst": 4,
+      "WriteOrder": "strict"
+    },
+    {
+      "Phase": 0,
+      "From": "axi_noc_0/inst/S08_AXI_nmu",
+      "To": "axi_noc_0/inst/MC_hbmc/inst/hbm_st0/I_hbm_chnl4",
+      "Port": "PORT0",
+      "CommType": "MM_ReadWrite",
+      "ReadBW": 500,
+      "ReadLatency": 300,
+      "ReadAvgBurst": 4,
+      "WriteBW": 500,
+      "WriteLatency": 300,
+      "WriteAvgBurst": 4,
+      "WriteOrder": "strict"
+    },
+    {
+      "Phase": 0,
+      "From": "axi_noc_0/inst/S09_AXI_nmu",
+      "To": "axi_noc_0/inst/MC_hbmc/inst/hbm_st0/I_hbm_chnl4",
+      "Port": "PORT2",
+      "CommType": "MM_ReadWrite",
+      "ReadBW": 500,
+      "ReadLatency": 300,
+      "ReadAvgBurst": 4,
+      "WriteBW": 500,
+      "WriteLatency": 300,
+      "WriteAvgBurst": 4,
+      "WriteOrder": "strict"
+    },
+    {
+      "Phase": 0,
+      "From": "axi_noc_0/inst/S10_AXI_nmu",
+      "To": "axi_noc_0/inst/MC_hbmc/inst/hbm_st0/I_hbm_chnl5",
+      "Port": "PORT0",
+      "CommType": "MM_ReadWrite",
+      "ReadBW": 500,
+      "ReadLatency": 300,
+      "ReadAvgBurst": 4,
+      "WriteBW": 500,
+      "WriteLatency": 300,
+      "WriteAvgBurst": 4,
+      "WriteOrder": "strict"
+    },
+    {
+      "Phase": 0,
+      "From": "axi_noc_0/inst/S11_AXI_nmu",
+      "To": "axi_noc_0/inst/MC_hbmc/inst/hbm_st0/I_hbm_chnl5",
+      "Port": "PORT2",
+      "CommType": "MM_ReadWrite",
+      "ReadBW": 500,
+      "ReadLatency": 300,
+      "ReadAvgBurst": 4,
+      "WriteBW": 500,
+      "WriteLatency": 300,
+      "WriteAvgBurst": 4,
+      "WriteOrder": "strict"
+    },
+    {
+      "Phase": 0,
+      "From": "axi_noc_0/inst/S12_AXI_nmu",
+      "To": "axi_noc_0/inst/MC_hbmc/inst/hbm_st0/I_hbm_chnl6",
+      "Port": "PORT0",
+      "CommType": "MM_ReadWrite",
+      "ReadBW": 500,
+      "ReadLatency": 300,
+      "ReadAvgBurst": 4,
+      "WriteBW": 500,
+      "WriteLatency": 300,
+      "WriteAvgBurst": 4,
+      "WriteOrder": "strict"
+    },
+    {
+      "Phase": 0,
+      "From": "axi_noc_0/inst/S13_AXI_nmu",
+      "To": "axi_noc_0/inst/MC_hbmc/inst/hbm_st0/I_hbm_chnl6",
+      "Port": "PORT2",
+      "CommType": "MM_ReadWrite",
+      "ReadBW": 500,
+      "ReadLatency": 300,
+      "ReadAvgBurst": 4,
+      "WriteBW": 500,
+      "WriteLatency": 300,
+      "WriteAvgBurst": 4,
+      "WriteOrder": "strict"
+    },
+    {
+      "Phase": 0,
+      "From": "axi_noc_0/inst/S14_AXI_nmu",
+      "To": "axi_noc_0/inst/MC_hbmc/inst/hbm_st0/I_hbm_chnl7",
+      "Port": "PORT0",
+      "CommType": "MM_ReadWrite",
+      "ReadBW": 500,
+      "ReadLatency": 300,
+      "ReadAvgBurst": 4,
+      "WriteBW": 500,
+      "WriteLatency": 300,
+      "WriteAvgBurst": 4,
+      "WriteOrder": "strict"
+    },
+    {
+      "Phase": 0,
+      "From": "axi_noc_0/inst/S15_AXI_nmu",
+      "To": "axi_noc_0/inst/MC_hbmc/inst/hbm_st0/I_hbm_chnl7",
+      "Port": "PORT2",
+      "CommType": "MM_ReadWrite",
+      "ReadBW": 500,
+      "ReadLatency": 300,
+      "ReadAvgBurst": 4,
+      "WriteBW": 500,
+      "WriteLatency": 300,
+      "WriteAvgBurst": 4,
+      "WriteOrder": "strict"
+    },
+    {
+      "Phase": 0,
+      "From": "axi_noc_0/inst/S16_AXI_nmu",
+      "To": "axi_noc_0/inst/MC_hbmc/inst/hbm_st1/I_hbm_chnl0",
+      "Port": "PORT0",
+      "CommType": "MM_ReadWrite",
+      "ReadBW": 500,
+      "ReadLatency": 300,
+      "ReadAvgBurst": 4,
+      "WriteBW": 500,
+      "WriteLatency": 300,
+      "WriteAvgBurst": 4,
+      "WriteOrder": "strict"
+    },
+    {
+      "Phase": 0,
+      "From": "axi_noc_0/inst/S17_AXI_nmu",
+      "To": "axi_noc_0/inst/MC_hbmc/inst/hbm_st1/I_hbm_chnl0",
+      "Port": "PORT2",
+      "CommType": "MM_ReadWrite",
+      "ReadBW": 500,
+      "ReadLatency": 300,
+      "ReadAvgBurst": 4,
+      "WriteBW": 500,
+      "WriteLatency": 300,
+      "WriteAvgBurst": 4,
+      "WriteOrder": "strict"
+    },
+    {
+      "Phase": 0,
+      "From": "axi_noc_0/inst/S18_AXI_nmu",
+      "To": "axi_noc_0/inst/MC_hbmc/inst/hbm_st1/I_hbm_chnl1",
+      "Port": "PORT0",
+      "CommType": "MM_ReadWrite",
+      "ReadBW": 500,
+      "ReadLatency": 300,
+      "ReadAvgBurst": 4,
+      "WriteBW": 500,
+      "WriteLatency": 300,
+      "WriteAvgBurst": 4,
+      "WriteOrder": "strict"
+    },
+    {
+      "Phase": 0,
+      "From": "axi_noc_0/inst/S19_AXI_nmu",
+      "To": "axi_noc_0/inst/MC_hbmc/inst/hbm_st1/I_hbm_chnl1",
+      "Port": "PORT2",
+      "CommType": "MM_ReadWrite",
+      "ReadBW": 500,
+      "ReadLatency": 300,
+      "ReadAvgBurst": 4,
+      "WriteBW": 500,
+      "WriteLatency": 300,
+      "WriteAvgBurst": 4,
+      "WriteOrder": "strict"
+    },
+    {
+      "Phase": 0,
+      "From": "axi_noc_0/inst/S20_AXI_nmu",
+      "To": "axi_noc_0/inst/MC_hbmc/inst/hbm_st1/I_hbm_chnl2",
+      "Port": "PORT0",
+      "CommType": "MM_ReadWrite",
+      "ReadBW": 500,
+      "ReadLatency": 300,
+      "ReadAvgBurst": 4,
+      "WriteBW": 500,
+      "WriteLatency": 300,
+      "WriteAvgBurst": 4,
+      "WriteOrder": "strict"
+    },
+    {
+      "Phase": 0,
+      "From": "axi_noc_0/inst/S21_AXI_nmu",
+      "To": "axi_noc_0/inst/MC_hbmc/inst/hbm_st1/I_hbm_chnl2",
+      "Port": "PORT2",
+      "CommType": "MM_ReadWrite",
+      "ReadBW": 500,
+      "ReadLatency": 300,
+      "ReadAvgBurst": 4,
+      "WriteBW": 500,
+      "WriteLatency": 300,
+      "WriteAvgBurst": 4,
+      "WriteOrder": "strict"
+    },
+    {
+      "Phase": 0,
+      "From": "axi_noc_0/inst/S22_AXI_nmu",
+      "To": "axi_noc_0/inst/MC_hbmc/inst/hbm_st1/I_hbm_chnl3",
+      "Port": "PORT0",
+      "CommType": "MM_ReadWrite",
+      "ReadBW": 500,
+      "ReadLatency": 300,
+      "ReadAvgBurst": 4,
+      "WriteBW": 500,
+      "WriteLatency": 300,
+      "WriteAvgBurst": 4,
+      "WriteOrder": "strict"
+    },
+    {
+      "Phase": 0,
+      "From": "axi_noc_0/inst/S23_AXI_nmu",
+      "To": "axi_noc_0/inst/MC_hbmc/inst/hbm_st1/I_hbm_chnl3",
+      "Port": "PORT2",
+      "CommType": "MM_ReadWrite",
+      "ReadBW": 500,
+      "ReadLatency": 300,
+      "ReadAvgBurst": 4,
+      "WriteBW": 500,
+      "WriteLatency": 300,
+      "WriteAvgBurst": 4,
+      "WriteOrder": "strict"
+    },
+    {
+      "Phase": 0,
+      "From": "axi_noc_0/inst/S24_AXI_nmu",
+      "To": "axi_noc_0/inst/MC_hbmc/inst/hbm_st1/I_hbm_chnl4",
+      "Port": "PORT0",
+      "CommType": "MM_ReadWrite",
+      "ReadBW": 500,
+      "ReadLatency": 300,
+      "ReadAvgBurst": 4,
+      "WriteBW": 500,
+      "WriteLatency": 300,
+      "WriteAvgBurst": 4,
+      "WriteOrder": "strict"
+    },
+    {
+      "Phase": 0,
+      "From": "axi_noc_0/inst/S25_AXI_nmu",
+      "To": "axi_noc_0/inst/MC_hbmc/inst/hbm_st1/I_hbm_chnl4",
+      "Port": "PORT2",
+      "CommType": "MM_ReadWrite",
+      "ReadBW": 500,
+      "ReadLatency": 300,
+      "ReadAvgBurst": 4,
+      "WriteBW": 500,
+      "WriteLatency": 300,
+      "WriteAvgBurst": 4,
+      "WriteOrder": "strict"
+    },
+    {
+      "Phase": 0,
+      "From": "axi_noc_0/inst/S26_AXI_nmu",
+      "To": "axi_noc_0/inst/MC_hbmc/inst/hbm_st1/I_hbm_chnl5",
+      "Port": "PORT0",
+      "CommType": "MM_ReadWrite",
+      "ReadBW": 500,
+      "ReadLatency": 300,
+      "ReadAvgBurst": 4,
+      "WriteBW": 500,
+      "WriteLatency": 300,
+      "WriteAvgBurst": 4,
+      "WriteOrder": "strict"
+    },
+    {
+      "Phase": 0,
+      "From": "axi_noc_0/inst/S27_AXI_nmu",
+      "To": "axi_noc_0/inst/MC_hbmc/inst/hbm_st1/I_hbm_chnl5",
+      "Port": "PORT2",
+      "CommType": "MM_ReadWrite",
+      "ReadBW": 500,
+      "ReadLatency": 300,
+      "ReadAvgBurst": 4,
+      "WriteBW": 500,
+      "WriteLatency": 300,
+      "WriteAvgBurst": 4,
+      "WriteOrder": "strict"
+    },
+    {
+      "Phase": 0,
+      "From": "axi_noc_0/inst/S28_AXI_nmu",
+      "To": "axi_noc_0/inst/MC_hbmc/inst/hbm_st1/I_hbm_chnl6",
+      "Port": "PORT0",
+      "CommType": "MM_ReadWrite",
+      "ReadBW": 500,
+      "ReadLatency": 300,
+      "ReadAvgBurst": 4,
+      "WriteBW": 500,
+      "WriteLatency": 300,
+      "WriteAvgBurst": 4,
+      "WriteOrder": "strict"
+    },
+    {
+      "Phase": 0,
+      "From": "axi_noc_0/inst/S29_AXI_nmu",
+      "To": "axi_noc_0/inst/MC_hbmc/inst/hbm_st1/I_hbm_chnl6",
+      "Port": "PORT2",
+      "CommType": "MM_ReadWrite",
+      "ReadBW": 500,
+      "ReadLatency": 300,
+      "ReadAvgBurst": 4,
+      "WriteBW": 500,
+      "WriteLatency": 300,
+      "WriteAvgBurst": 4,
+      "WriteOrder": "strict"
+    },
+    {
+      "Phase": 0,
+      "From": "axi_noc_0/inst/S30_AXI_nmu",
+      "To": "axi_noc_0/inst/MC_hbmc/inst/hbm_st1/I_hbm_chnl7",
+      "Port": "PORT0",
+      "CommType": "MM_ReadWrite",
+      "ReadBW": 500,
+      "ReadLatency": 300,
+      "ReadAvgBurst": 4,
+      "WriteBW": 500,
+      "WriteLatency": 300,
+      "WriteAvgBurst": 4,
+      "WriteOrder": "strict"
+    },
+    {
+      "Phase": 0,
+      "From": "axi_noc_0/inst/S31_AXI_nmu",
+      "To": "axi_noc_0/inst/MC_hbmc/inst/hbm_st1/I_hbm_chnl7",
+      "Port": "PORT2",
+      "CommType": "MM_ReadWrite",
+      "ReadBW": 500,
+      "ReadLatency": 300,
+      "ReadAvgBurst": 4,
+      "WriteBW": 500,
+      "WriteLatency": 300,
+      "WriteAvgBurst": 4,
+      "WriteOrder": "strict"
+    }
+  ]
+}

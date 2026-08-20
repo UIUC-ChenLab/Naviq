@@ -1,0 +1,8 @@
+# Public NoC experiment and visualization dependencies.
+#
+# Keep this file limited to maintained NoC workflows.  gem5's optional utility
+# services have their own dependencies and are not required to build, test, or
+# reproduce the supported NoC campaigns.
+networkx==3.6.1
+numpy==2.3.2
+matplotlib==3.10.5

@@ -1,0 +1,65 @@
+{
+    "connections": {
+        "tg_0": [
+            {
+                "to": "bram_0",
+                "RequiredBW": 1500,
+                "RequiredLatency": 150,
+                "AvgBurst": 4,
+                "WriteOrder": "strict"
+            },
+            {
+                "to": "ddrmc_0",
+                "RequiredBW": 5000,
+                "RequiredLatency": 400,
+                "AvgBurst": 8,
+                "WriteOrder": "strict"
+            }
+        ],
+        "tg_1": [
+            {
+                "to": "bram_1",
+                "RequiredBW": 1500,
+                "RequiredLatency": 150,
+                "AvgBurst": 4,
+                "WriteOrder": "strict"
+            },
+            {
+                "to": "ddrmc_0",
+                "RequiredBW": 2500,
+                "RequiredLatency": 400,
+                "AvgBurst": 8,
+                "WriteOrder": "strict"
+            }
+        ]
+    },
+    "endpoints": {
+        "tg_0": {
+            "type": "NMU512",
+            "ReadTC": "BE",
+            "WriteTC": "BE"
+        },
+        "tg_1": {
+            "type": "NMU512",
+            "ReadTC": "BE",
+            "WriteTC": "BE"
+        },
+        "bram_0": {
+            "type": "NSU512",
+            "base_address": "0x20100000000",
+            "size": "0x10000"
+        },
+        "bram_1": {
+            "type": "NSU512",
+            "base_address": "0x20200000000",
+            "size": "0x10000"
+        },
+        "ddrmc_0": {
+            "type": "DDRMC",
+            "base_address": "0x00000000",
+            "size": "0x100000000",
+            "memory_type": "DDR4",
+            "memory_density": "8GB"
+        }
+    }
+}

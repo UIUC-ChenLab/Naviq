@@ -1,0 +1,76 @@
+{
+  "kind": "naviq.connections",
+  "version": 1,
+  "name": "ddr_dma_axis",
+  "ddr_settings": {
+    "num_mc": 1,
+    "num_ports_per_mc": 1,
+    "controller_type": "DDR4_SDRAM",
+    "speed_grade": "DDR4-3200AC(24-24-24)",
+    "data_width": 64,
+    "memory_density": "8GB",
+    "component_width": "x8",
+    "rank": "1",
+    "slot": "Single",
+    "stackheight": "1"
+  },
+  "components": {
+    "ddr0_port0": {
+      "node_type": "DdrMemoryController",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm",
+          "type": "ddr",
+          "base_address": "0x0",
+          "size": "0x100000000"
+        }
+      },
+      "params": {}
+    },
+    "checker": {
+      "node_type": "AxisPacketCheckerSink",
+      "ports": {
+        "s_axis": {
+          "role": "slave",
+          "protocol": "axis"
+        }
+      },
+      "params": {}
+    },
+    "dma_aximm": {
+      "node_type": "DdrPacketDmaNode",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      },
+      "params": {}
+    },
+    "dma_axis": {
+      "node_type": "DdrPacketDmaNode",
+      "ports": {
+        "m_axis": {
+          "role": "master",
+          "protocol": "axis"
+        }
+      },
+      "params": {}
+    }
+  },
+  "connections": [
+    {
+      "from": "dma_aximm.m_axi",
+      "to": "ddr0_port0.s_axi",
+      "RequiredBW": 500,
+      "RequiredLatency": 300
+    },
+    {
+      "from": "dma_axis.m_axis",
+      "to": "checker.s_axis",
+      "RequiredBW": 500,
+      "RequiredLatency": 300
+    }
+  ]
+}

@@ -1,0 +1,3 @@
+#!/bin/sh
+echo "Continuing Linux boot process to reach login prompt..."
+exit 0

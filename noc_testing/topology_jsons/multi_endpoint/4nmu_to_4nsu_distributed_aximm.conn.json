@@ -1,0 +1,105 @@
+{
+  "kind": "naviq.connections",
+  "version": 1,
+  "name": "4nmu_to_4nsu_distributed_aximm",
+  "components": {
+    "tg_0": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "tg_1": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "tg_2": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "tg_3": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "bram_0": {
+      "node_type": "BramEndpoint",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm",
+          "base_address": "0x00000000",
+          "size": "0x10000"
+        }
+      }
+    },
+    "bram_1": {
+      "node_type": "BramEndpoint",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm",
+          "base_address": "0x00010000",
+          "size": "0x10000"
+        }
+      }
+    },
+    "bram_2": {
+      "node_type": "BramEndpoint",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm",
+          "base_address": "0x00020000",
+          "size": "0x10000"
+        }
+      }
+    },
+    "bram_3": {
+      "node_type": "BramEndpoint",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm",
+          "base_address": "0x00030000",
+          "size": "0x10000"
+        }
+      }
+    }
+  },
+  "connections": [
+    {
+      "from": "tg_0.m_axi",
+      "to": "bram_0.s_axi"
+    },
+    {
+      "from": "tg_1.m_axi",
+      "to": "bram_1.s_axi"
+    },
+    {
+      "from": "tg_2.m_axi",
+      "to": "bram_2.s_axi"
+    },
+    {
+      "from": "tg_3.m_axi",
+      "to": "bram_3.s_axi"
+    }
+  ]
+}

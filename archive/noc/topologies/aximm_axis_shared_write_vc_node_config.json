@@ -1,0 +1,110 @@
+{
+  "description": "Node configuration for axi_axis_shared_write_vc topology",
+  "record_mode_interfaces": 2,
+  "record_nps": 1,
+  "record_nps_gap_cycles": 50,
+  "nodes": [
+    {
+      "node_type": "AxisRandomTrafficGenerator",
+      "connections": [
+        {
+          "connectTo": "NMU",
+          "clock_domain": 100,
+          "connectLoc": "NOC_NMU512_X0Y2",
+          "protocol": "AXIS"
+        }
+      ],
+      "parameters": {
+        "max_gap_cycles": 0,
+        "data_width": 512,
+        "max_tid": 0,
+        "max_tdest": 0,
+        "max_packets": 1000
+      }
+    },
+    {
+      "node_type": "AxiRandomTrafficGenerator",
+      "connections": [
+        {
+          "connectTo": "NMU",
+          "clock_domain": 500,
+          "connectLoc": "NOC_NMU512_X0Y1",
+          "protocol": "AXIMM"
+        }
+      ],
+      "parameters": {
+        "address_distribution": "INCREMENT",
+        "align_addresses": false,
+        "nsu_min_addrs": [1],
+        "nsu_address_spaces": [65536],
+        "min_transaction_size_bytes": 64,
+        "max_transaction_size_bytes": 64,
+        "max_write_commands": 1000
+      }
+    },
+    {
+      "node_type": "SynchronizerNode",
+      "connections": [
+        {
+          "connectTo": "NSU",
+          "clock_domain": 500,
+          "connectLoc": "NOC_NSU512_X0Y1",
+          "protocol": "AXIS"
+        },
+        {
+          "connectTo": "NSU",
+          "clock_domain": 500,
+          "connectLoc": "NOC_NSU512_X0Y2",
+          "protocol": "AXIMM"
+        }
+      ],
+      "parameters": {
+        "sim_cycles": 10000000,
+        "base_addr": 0,
+        "memory_size": 65536,
+        "read_latency": 1,
+        "write_latency": 1,
+        "awready_percentage": 100,
+        "wready_percentage": 100,
+        "arready_percentage": 100,
+
+        "ready_percent": 0,
+        "ready_percent_start_fraction": 0,
+        "expected_packets": 999,
+        "print_data": false,
+        "data_width": 512,
+        "id_width": 16,
+        "dest_width": 12
+      }
+    }
+  ],
+
+  "noc_probes": [
+    {
+      "enabled": 0,
+      "probe_id": "1",
+      "probe_mode": "snooper",
+      "hook_point_0": {
+        "connectLoc": "nocinterface1",
+        "hook_id": "noc_if.state.node_side",
+        "fields": ["aximm.w.valid", "aximm.w.ready", "aximm.aw.valid", "aximm.aw.ready"],
+        "print_cycles": 1
+      }
+    },
+    {
+      "enabled": 0,
+      "path_match_trace": 1,
+      "probe_id": "1",
+      "probe_mode": "comparator",
+      "comparator_op": "path_match",
+      "hook_point_0": {
+        "connectLoc": "nocinterface0",
+        "hook_id": "noc_if.state.to_cdc"
+      },
+      "hook_point_1": {
+        "connectLoc": "nocinterface1",
+        "hook_id": "noc_if.cdc.to_node"
+      }
+    }
+  ]
+}

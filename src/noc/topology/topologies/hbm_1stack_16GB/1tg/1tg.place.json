@@ -1,0 +1,8 @@
+{
+  "kind": "naviq.placement",
+  "version": 1,
+  "placements": {
+    "hbm_sat_tg_00.m_axi": "NOC_NMU_HBM2E_X4Y0",
+    "hbm0_port0.s_axi": "HBM_MC_X0Y0"
+  }
+}

@@ -1,0 +1,22 @@
+name,tg_mode,topology_json,axi_write_len_beats,axi_write_size_bytes,axi_write_bandwidth_cfg_MBps,num_write_transactions_cfg,tg_axi_data_width_bits,bram_data_width,noc_axi_clk_mhz,qos_read_bw_MBps,qos_write_bw_MBps,qos_avg_burst
+# === AXI-MM Tests ===
+# Note: Max transaction size is 2048 bytes (RROB limit). For 64-byte beats, max len=31 (32 beats × 64B = 2048B)
+aximm_1to1_small,rw_interleaved,topology_jsons/basic/1to1_aximm.conn.json,8,16,500,50,512,512,1000
+aximm_1to1_medium,rw_interleaved,topology_jsons/basic/1to1_aximm.conn.json,16,32,800,100,512,512,1000
+aximm_1to1_large,rw_interleaved,topology_jsons/basic/1to1_aximm.conn.json,31,64,1000,200,512,512,1000
+aximm_2to2_small,rw_interleaved,topology_jsons/multi_endpoint/2to2_aximm.conn.json,8,16,500,50,512,512,1000
+# aximm_2to2_large,rw_interleaved,topology_jsons/multi_endpoint/2to2_aximm.conn.json,31,64,1000,200,512,512,1000
+# === AXI-S Tests ===
+axis_1to1_small,rw_interleaved,topology_jsons/basic/1to1_axis.conn.json,8,16,500,50,512,512,1000
+axis_1to1_large,rw_interleaved,topology_jsons/basic/1to1_axis.conn.json,31,64,1000,200,512,512,1000
+axis_2to2,rw_interleaved,topology_jsons/multi_endpoint/2to2_axis.conn.json,16,32,800,100,512,512,1000
+# === HBM Tests ===
+hbm_1nmu_to_1port,rw_interleaved,topology_jsons/hbm/1nmu_to_1hbm.conn.json,16,32,800,100,512,512,1000
+hbm_1hbm_to_1hbm,rw_interleaved,topology_jsons/hbm/1hbm_to_1hbm.conn.json,16,32,800,100,512,512,1000
+hbm_2hbm_to_2hbm,rw_interleaved,topology_jsons/hbm/2hbm_to_2hbm.conn.json,16,32,1000,150,512,512,1000
+# === DDR Tests ===
+ddr_1nmu_to_1ddr,rw_interleaved,topology_jsons/ddr/1nmu_to_1ddr.conn.json,16,32,800,100,512,512,1000
+ddr_1nmu_to_1ddr_high_bw,rw_interleaved,topology_jsons/ddr/1nmu_to_1ddr.conn.json,31,64,2000,200,512,512,1000
+# === Mixed Tests ===
+mixed_aximm_and_axis,rw_interleaved,topology_jsons/basic/aximm&axis_basic.conn.json,16,32,800,100,512,512,1000
+mixed_bram_and_hbm,rw_interleaved,topology_jsons/hbm/mixed_nmu_to_bram_hbm.conn.json,16,32,1000,150,512,512,1000

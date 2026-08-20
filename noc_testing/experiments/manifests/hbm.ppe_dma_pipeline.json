@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "id": "hbm.ppe_dma_pipeline",
+  "title": "HBM DMA-to-PPE pipeline baseline",
+  "status": "manual",
+  "runner": "src/noc/testing/experiments/hbm/ppe_dma_pipeline/run_compare.py",
+  "default_args": [],
+  "requires": ["gem5-x86", "external-rtl"],
+  "inputs": ["src/noc/testing/experiments/hbm/ppe_dma_pipeline/manifest.json"],
+  "reference_paths": [],
+  "validation": "Both direct and PPE cases must pass the driver's packet, byte-count, and AXIS-window checks."
+}

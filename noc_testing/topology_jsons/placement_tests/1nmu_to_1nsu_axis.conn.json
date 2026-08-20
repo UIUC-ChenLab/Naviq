@@ -1,0 +1,31 @@
+{
+  "kind": "naviq.connections",
+  "version": 1,
+  "name": "1nmu_to_1nsu_axis",
+  "components": {
+    "tg_0": {
+      "node_type": "AxisRandomTrafficGenerator",
+      "ports": {
+        "m_axis": {
+          "role": "master",
+          "protocol": "axis"
+        }
+      }
+    },
+    "bram_0": {
+      "node_type": "AxisSinkNode",
+      "ports": {
+        "s_axis": {
+          "role": "slave",
+          "protocol": "axis"
+        }
+      }
+    }
+  },
+  "connections": [
+    {
+      "from": "tg_0.m_axis",
+      "to": "bram_0.s_axis"
+    }
+  ]
+}

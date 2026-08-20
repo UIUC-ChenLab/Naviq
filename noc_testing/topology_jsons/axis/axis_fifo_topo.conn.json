@@ -1,0 +1,48 @@
+{
+  "kind": "naviq.connections",
+  "version": 1,
+  "name": "axis_fifo_topo",
+  "components": {
+    "axis_tg_0": {
+      "node_type": "AxisRandomTrafficGenerator",
+      "ports": {
+        "m_axis": {
+          "role": "master",
+          "protocol": "axis"
+        }
+      }
+    },
+    "axis_fifo": {
+      "node_type": "AxisFifoNode",
+      "ports": {
+        "s_axis": {
+          "role": "slave",
+          "protocol": "axis"
+        },
+        "m_axis": {
+          "role": "master",
+          "protocol": "axis"
+        }
+      }
+    },
+    "axis_end_0": {
+      "node_type": "AxisSinkNode",
+      "ports": {
+        "s_axis": {
+          "role": "slave",
+          "protocol": "axis"
+        }
+      }
+    }
+  },
+  "connections": [
+    {
+      "from": "axis_tg_0.m_axis",
+      "to": "axis_fifo.s_axis"
+    },
+    {
+      "from": "axis_fifo.m_axis",
+      "to": "axis_end_0.s_axis"
+    }
+  ]
+}

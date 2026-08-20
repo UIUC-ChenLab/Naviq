@@ -1,0 +1,106 @@
+@startuml rtl_flow
+left to right direction
+skinparam componentStyle rectangle
+' skinparam linetype ortho
+skinparam shadowing true
+skinparam arrowThickness 5
+skinparam DefaultFontSize 32
+
+
+' title Verilator Flow for NoC Integration
+
+' Define colors
+skinparam package {
+    BackgroundColor #E8F4F8
+    BorderColor #4A90A4
+}
+
+skinparam component {
+    BackgroundColor #FFF4E6
+    BorderColor #D4A574
+}
+
+skinparam file {
+    BackgroundColor #F0F0F0
+    BorderColor #808080
+}
+
+package "Step 1: SystemVerilog Modules" as SystemVerilogModules #E8F4F8 {
+    file "    RTL\nSources" as RTLSources
+    ' note top of RTLSources
+    '     • Contains all the SystemVerilog modules
+    '     • Instantiates AXI4 NMUs and NSUs
+    ' end note
+
+    file "AXI4 NoC Modules" as AXI4NMUsNSUs
+
+    ' note top of AXI4NMUsNSUs
+    ' • Compatible with Verilator and Vivado
+    ' • Verilator pragmas enable signal access
+    ' end note
+}
+
+
+' Step 2: Verilator processing
+rectangle "Step 2: Verilator Compilation" #FFF4E6 {
+    component "Verilator\nCompiler" as Verilator
+    file "AST" as AST
+    file "Verilated\n  Model" as VerilatedFiles
+    
+    Verilator --> AST
+    Verilator --> VerilatedFiles
+}
+
+' Step 3: Python analysis
+rectangle "Step 3: Hierarchy Analysis" #FFF4E6 {
+    component "AST Parser" as PythonScript
+    file "  Hierarchy\nInformation" as Hierarchy
+    
+    note top of PythonScript
+        Finds NMUs/NSUs 
+        in the hierarchy
+    endnote
+    
+    PythonScript --> Hierarchy
+}
+
+' Step 4: C++ wrapper generation
+rectangle "Step 4: C++ Shim Struct Generation" #FFF4E6 {
+    component "C++ Shim Generator" as PythonGenerator
+    file "C++ Shim Structs" as CppShimStructs
+    
+    ' note top of CppShimStructs
+    '     • C++ shim structs for each AXI4 module
+    ' end note
+    PythonGenerator -right-> CppShimStructs
+}
+
+package "Step 5: Compile Gem5" #E8F4F8 {
+    file "C++ to RTL Bridge" as TemplatedCppRtlBridge
+    file "C++ Node Wrapper" as CppNodeWrapper
+    note bottom of TemplatedCppRtlBridge
+        • Highly Templated C++ Design
+        • Compiler-time polymorphism
+    end note
+    component "Gem5 Build Flow" as Gem5Compiler
+    TemplatedCppRtlBridge --> Gem5Compiler
+    CppNodeWrapper --> Gem5Compiler
+
+    note right of CppNodeWrapper
+        • Connects to Naviq NoC Endpoints
+        • Wraps around the generated C++
+    end note
+}
+
+AXI4NMUsNSUs --> Verilator
+RTLSources --> Verilator
+
+
+AST --> PythonScript 
+
+Hierarchy -up-> PythonGenerator 
+
+VerilatedFiles -up-> Gem5Compiler
+
+CppShimStructs -up-> Gem5Compiler
+@enduml

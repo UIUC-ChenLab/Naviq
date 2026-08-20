@@ -1,0 +1,90 @@
+{
+  "kind": "naviq.connections",
+  "version": 1,
+  "name": "hbm_full_1_stack_16GB",
+  "components": {
+    "hbm_sat_tg_00": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      },
+      "params": {
+        "data_width": 512,
+        "beat_size_bytes": 64,
+        "min_transaction_size_bytes": 256,
+        "max_transaction_size_bytes": 256,
+        "transaction_size_distribution": "FIXED",
+        "read_write_mode": "WRITE_ONLY",
+        "min_gap_cycles": 0,
+        "max_gap_cycles": 0,
+        "max_outstanding_writes": 32,
+        "address_distribution": "INCREMENT",
+        "address_increment": 256,
+        "align_addresses": true
+      }
+    },
+    "hbm0_port0": {
+      "node_type": "tileNSU_HBM",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm",
+          "type": "hbm",
+          "base_address": "0x00000000",
+          "size": "0x40000000"
+        }
+      }
+    },
+    "hbm_sat_tg_01": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      },
+      "params": {
+        "data_width": 512,
+        "beat_size_bytes": 64,
+        "min_transaction_size_bytes": 256,
+        "max_transaction_size_bytes": 256,
+        "transaction_size_distribution": "FIXED",
+        "read_write_mode": "WRITE_ONLY",
+        "min_gap_cycles": 0,
+        "max_gap_cycles": 0,
+        "max_outstanding_writes": 32,
+        "address_distribution": "INCREMENT",
+        "address_increment": 256,
+        "align_addresses": true
+      }
+    },
+    "hbm0_port1": {
+      "node_type": "tileNSU_HBM",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm",
+          "type": "hbm",
+          "base_address": "0x00000000",
+          "size": "0x40000000"
+        }
+      }
+    }
+  },
+  "connections": [
+    {
+      "from": "hbm_sat_tg_00.m_axi",
+      "to": "hbm0_port0.s_axi"
+    },
+    {
+      "from": "hbm_sat_tg_01.m_axi",
+      "to": "hbm0_port1.s_axi"
+    }
+  ],
+  "hbm_settings": {
+    "num_pc": 32
+  }
+}

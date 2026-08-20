@@ -1,0 +1,12 @@
+{
+  "kind": "naviq.placement",
+  "version": 1,
+  "name": "1to4_axis",
+  "placements": {
+    "tg_0.m_axis": "NOC_NMU512_X0Y0",
+    "tg_1.m_axis": "NOC_NMU512_X1Y0",
+    "tg_2.m_axis": "NOC_NMU512_X2Y0",
+    "tg_3.m_axis": "NOC_NMU512_X3Y0",
+    "bram_0.s_axis": "NOC_NSU512_X0Y18"
+  }
+}

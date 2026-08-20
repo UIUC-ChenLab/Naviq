@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "id": "validation.vivado_reference",
+  "title": "Pinned Vivado-data input acceptance",
+  "status": "maintained",
+  "runner": "noc_testing/experiments/validation/validate_latency_inputs.py",
+  "default_args": ["noc_testing/sweep_plans/validation/4to1_512_same_base_fixed_inputs_smoke.csv"],
+  "requires": [],
+  "inputs": ["noc_testing/sweep_plans/validation/4to1_512_same_base_fixed_inputs_smoke.csv"],
+  "reference_paths": ["tests/gem5/noc/trusted_results"],
+  "validation": "The retained Vivado input plan must satisfy final latency-input invariants. Full Vivado reproduction is an explicit licensed-environment gate."
+}

@@ -1,0 +1,343 @@
+# -*- mode:python -*-
+#
+# Copyright (c) 2018-2020 ARM Limited
+# All rights reserved
+#
+# The license below extends only to copyright in the software and shall
+# not be construed as granting a license to any other intellectual
+# property including but not limited to intellectual property relating
+# to a hardware implementation of the functionality of the software
+# licensed hereunder.  You may use the software subject to the license
+# terms below provided that you ensure that this notice is replicated
+# unmodified and in its entirety in all distributions of the software,
+# modified or unmodified, in source code or in binary form.
+#
+# Copyright (c) 2006 The Regents of The University of Michigan
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are
+# met: redistributions of source code must retain the above copyright
+# notice, this list of conditions and the following disclaimer;
+# redistributions in binary form must reproduce the above copyright
+# notice, this list of conditions and the following disclaimer in the
+# documentation and/or other materials provided with the distribution;
+# neither the name of the copyright holders nor the names of its
+# contributors may be used to endorse or promote products derived from
+# this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+Import('*')
+Import('env')
+
+import os
+
+# ── External RTL toggle ──────────────────────────────────────────────
+# Set to True to compile smartNIC RTL wrappers and FIFO RTL nodes.
+# Can also be set from the command line:  scons BUILD_EXTERNAL_RTL=1 ...
+BUILD_EXTERNAL_RTL = ARGUMENTS.get('BUILD_EXTERNAL_RTL', '0') == '1'
+# ─────────────────────────────────────────────────────────────────────
+
+env.AppendUnique(LIBS=['pcap'])
+
+cpp_paths = [
+    '#src/noc/lib/axi',
+    '#src/noc/lib/interface',
+    '#src/noc/lib/network',
+    '#src/noc/lib/debug',
+    '#src/noc/core/interface',
+    '#src/noc/core/network',
+    '#src/noc/core/control',
+    '#src/noc/endpoints',
+    '#src/noc/monitors',
+    '#src/noc/ddr',
+    '#src/noc/hbm',
+    '#src/noc/topology',
+    '#src/noc/debug',
+    '#src/noc/lib/external/SystemVerilogAXI/axi_traffic/include',
+    '#src/noc/lib/external/SystemVerilogAXI/axi_traffic/AxisTrafficGenerator',
+    '#src/noc/lib/external/SystemVerilogAXI/axi_traffic/AxisTrafficGenerator/strategies',
+    '#src/noc/lib/external/SystemVerilogAXI/axi_traffic/AxiTrafficGenerator',
+    '#src/noc/lib/external/SystemVerilogAXI/axi_traffic/AxiTrafficGenerator/strategies',
+    '#src/noc/endpoints/rtl/include',
+]
+
+if BUILD_EXTERNAL_RTL:
+    cpp_paths += [
+        '#src/noc/endpoints/rtl',
+        '#src/rtl_simulation/build/axis_fifo_wrapper',
+        '#src/rtl_simulation/build/packet_rate_limiter_wrapper',
+        '#src/rtl_simulation/build/telemetry_wrapper',
+        '#src/rtl_simulation/build/checksum_wrapper',
+        '#src/rtl_simulation/build/segmentation_offload_wrapper',
+        '#src/rtl_simulation/build/overloaded_nat_wrapper',
+        '#src/rtl_simulation/build/ppe_base_none_wrapper',
+        '#src/rtl_simulation/build/ppe_base_telemetry_wrapper',
+        '#src/rtl_simulation/build/ppe_base_segmentation_wrapper',
+        '#src/rtl_simulation/build/ppe_base_checksum_wrapper',
+        '#src/rtl_simulation/build/ppe_base_nat_wrapper',
+        '#src/rtl_simulation/build/ppe_base_flow_prefix_wrapper',
+        '#src/rtl_simulation/build/ppe_base_five_tuple_hash_wrapper',
+        '#src/rtl_simulation/build/ppe_2x_none_wrapper',
+        '#src/rtl_simulation/build/ppe_2x_telemetry_wrapper',
+        '#src/rtl_simulation/build/ppe_2x_segmentation_wrapper',
+        '#src/rtl_simulation/build/ppe_2x_checksum_wrapper',
+        '#src/rtl_simulation/build/ppe_2x_nat_wrapper',
+        '#src/rtl_simulation/build/ppe_2x_flow_prefix_wrapper',
+        '#src/rtl_simulation/build/ppe_2x_five_tuple_hash_wrapper',
+    ]
+    rtl_build_root = Dir('#src/rtl_simulation/build').abspath
+    # The legacy hand-written nodes rely on independently generated Verilator
+    # models.  A manifest-only build must not try to compile their headers
+    # when those unrelated models have not been generated.  Generated nodes
+    # below are discovered independently and remain available in that case.
+    static_axis_fifo_model = os.path.isfile(
+        os.path.join(rtl_build_root, 'axis_fifo_wrapper', 'axis_fifo_wrapper.h')
+    )
+    smartnic_model_headers = [
+        'packet_rate_limiter_wrapper', 'telemetry_wrapper', 'checksum_wrapper',
+        'segmentation_offload_wrapper', 'overloaded_nat_wrapper',
+        'ppe_base_none_wrapper', 'ppe_base_telemetry_wrapper',
+        'ppe_base_segmentation_wrapper', 'ppe_base_checksum_wrapper',
+        'ppe_base_nat_wrapper', 'ppe_base_flow_prefix_wrapper',
+        'ppe_base_five_tuple_hash_wrapper', 'ppe_2x_none_wrapper',
+        'ppe_2x_telemetry_wrapper', 'ppe_2x_segmentation_wrapper',
+        'ppe_2x_checksum_wrapper', 'ppe_2x_nat_wrapper',
+        'ppe_2x_flow_prefix_wrapper', 'ppe_2x_five_tuple_hash_wrapper',
+    ]
+    static_smartnic_models = all(
+        os.path.isfile(os.path.join(rtl_build_root, model, model + '.h'))
+        for model in smartnic_model_headers
+    )
+    if not static_axis_fifo_model:
+        print('RTL Simulation: legacy AxisFifoRtlNode model not built; skipping it')
+    if not static_smartnic_models:
+        print('RTL Simulation: legacy SmartNIC RTL models not all built; skipping them')
+    if os.path.isdir(rtl_build_root):
+        for generated_model in sorted(os.listdir(rtl_build_root)):
+            generated_path = os.path.join(rtl_build_root, generated_model)
+            if os.path.isdir(generated_path):
+                cpp_paths.append(generated_path)
+
+env.Append(CPPPATH=cpp_paths)
+
+DebugFlag('NocTiming', 'Debug prints for NoC component timing and event scheduling')
+DebugFlag('NocPacketFlow', 'Debug prints for NoC component general packet flow and processing')
+DebugFlag('NocControl', 'Debug prints for Control loop and Tile/TileNSU tick updates')
+DebugFlag('NocCDC', 'Debug prints for per-NI CDC queue enqueue/dequeue and latency')
+DebugFlag('NocMemory', 'Debug prints for HBM/DDR memory controller interactions')
+DebugFlag('NocHBM', 'Detailed HBM bringup traces (tile NSU arb/B channel, TG AXI handshake)')
+DebugFlag('NocDebugVerbose', 'Verbose NoC debug (NI inNode, NSU outNode, NSU-NI stall, NMU outNode / niOutVc)')
+DebugFlag('NocNI', 'Network interface detailed trace (assembler lock, credits, protocol)')
+
+SimObject('endpoints/NocNode.py', sim_objects=['NocNode'])
+
+SimObject('core/interface/NocInterface.py', sim_objects=['NocInterface'])
+
+SimObject('core/network/NocBasicLink.py', sim_objects=['NocBasicLink', 'NocBasicExtLink', 'NocBasicIntLink'])
+SimObject('core/network/NocGarnetLink.py', sim_objects=['NocGarnetExtLink', 'NocGarnetIntLink'])
+SimObject('core/network/NocGarnetNetwork.py', sim_objects=['NocGarnetNetwork'])
+SimObject('core/network/NocMasterUnit.py', sim_objects=['NocMasterUnit'])
+SimObject('core/network/nmu_types/mmNocMasterUnit.py', sim_objects=['mmNocMasterUnit'])
+SimObject('core/network/nmu_types/sNocMasterUnit.py', sim_objects=['sNocMasterUnit'])
+SimObject('core/network/NocMessageBuffer.py', sim_objects=['NocMessageBuffer']) # , enums=['NocMessageRandomization']
+SimObject('core/network/NocNetwork.py', sim_objects=['NocNetwork', 'NocGarnetNetworkInterface'])
+SimObject('core/network/NocSlaveUnit.py', sim_objects=['NocSlaveUnit'])
+SimObject('core/network/nsu_types/mmNocSlaveUnit.py', sim_objects=['mmNocSlaveUnit'])
+SimObject('core/network/nsu_types/sNocSlaveUnit.py', sim_objects=['sNocSlaveUnit'])
+SimObject('core/network/NocSystem.py', sim_objects=['NocSystem'])
+SimObject('core/network/rrob.py', sim_objects=['rrob'])
+
+SimObject('core/control/Control.py', sim_objects=['Control'])
+
+SimObject('endpoints/memory/bram/BramEndpoint.py', sim_objects=['BramEndpoint'])
+SimObject('endpoints/memory/hbm/tileNSU_HBM.py', sim_objects=['tileNSU_HBM'])
+SimObject('endpoints/cpu/CpuNocBridge.py', sim_objects=['CpuNocBridge'])
+SimObject('debug/NocProbe.py', sim_objects=['NocProbe'])
+SimObject('endpoints/generator/AxisBuggyNode.py', sim_objects=['AxisBuggyGenerator'])
+SimObject('endpoints/memory/bram/BramBuggyNode.py', sim_objects=['BramBuggyNode'])
+SimObject('endpoints/misc/SynchronizerNode.py', sim_objects=['SynchronizerNode'])
+
+# HBM controller / DRAM interface
+# Source('../mem/hbm_ctrl.cc')
+# Source('../mem/dram_interface.cc')
+# Source('mem/hbm/HBMInterface.cc')
+# Source('mem/dram/DRAMCtrl.cc')          # if not already included
+# Source('mem/dram/DRAMInterface.cc')     # ditto
+# Source('mem/dram/DDR3.cc')              # if you use DDR fallback
+SimObject('endpoints/sink/AxisSinkNode.py', sim_objects=['AxisSinkNode'])
+SimObject('endpoints/fifo/AxisFifoNode.py', sim_objects=['AxisFifoNode'])
+SimObject('endpoints/sink/AxisBackpressureShimNode.py', sim_objects=['AxisBackpressureShimNode'])
+
+if BUILD_EXTERNAL_RTL:
+    if static_axis_fifo_model:
+        SimObject('endpoints/rtl/AxisFifoRtlNode.py', sim_objects=['AxisFifoRtlNode'])
+    if static_smartnic_models:
+        SimObject('endpoints/rtl/SmartNicRtlNodes.py', sim_objects=[
+            'PacketRateLimiterRtlNode',
+            'PacketRateLimiterThrottleRtlNode',
+            'TelemetryRtlNode',
+            'ChecksumRtlNode',
+            'SegmentationOffloadRtlNode',
+            'OverloadedNatRtlNode',
+            'PacketProcessingEngineBaseNoneRtlNode',
+            'PacketProcessingEngineBaseTelemetryRtlNode',
+            'PacketProcessingEngineBaseSegmentationRtlNode',
+            'PacketProcessingEngineBaseChecksumRtlNode',
+            'PacketProcessingEngineBaseNatRtlNode',
+            'PacketProcessingEngineBaseFlowPrefixRtlNode',
+            'PacketProcessingEngineBaseFiveTupleHashRtlNode',
+            'PacketProcessingEngine2xNoneRtlNode',
+            'PacketProcessingEngine2xTelemetryRtlNode',
+            'PacketProcessingEngine2xSegmentationRtlNode',
+            'PacketProcessingEngine2xChecksumRtlNode',
+            'PacketProcessingEngine2xNatRtlNode',
+            'PacketProcessingEngine2xFlowPrefixRtlNode',
+            'PacketProcessingEngine2xFiveTupleHashRtlNode'
+        ])
+    # Generated manifest-backed RTL nodes are opt-in: their generator writes
+    # Python SimObject declarations here before SCons starts.
+    generated_rtl_dir = Dir('endpoints/rtl/generated').srcnode().abspath
+    if os.path.isdir(generated_rtl_dir):
+        for generated_py in sorted(os.listdir(generated_rtl_dir)):
+            if generated_py.endswith('.py'):
+                SimObject(
+                    'endpoints/rtl/generated/' + generated_py,
+                    sim_objects=[os.path.splitext(generated_py)[0]],
+                )
+SimObject('endpoints/generator/TrafficGenerator.py', sim_objects=['TrafficGenerator'])
+SimObject('endpoints/generator/AXISTrafficGenerator.py', sim_objects=[
+    'AXISTrafficGenerator',
+    'AxisRandomTrafficGenerator',
+    'AxisPcapTrafficGenerator',
+    'AxisPacketTrafficGenerator'
+])
+SimObject('endpoints/sink/AxisPacketCheckerSink.py', sim_objects=['AxisPacketCheckerSink'])
+SimObject('endpoints/memory/ddr/DdrPacketDmaNode.py', sim_objects=['DdrPacketDmaNode'])
+SimObject('endpoints/generator/AXIMMTrafficGenerator.py', sim_objects=[
+    'AXIMMTrafficGenerator',
+    'AxiRandomTrafficGenerator'
+])
+SimObject('endpoints/generator/AxiHandshakeStressGenerator.py', sim_objects=[
+    'AxiHandshakeStressGenerator'
+])
+
+
+Source('lib/axi/AXITypes.cc')
+Source('lib/axi/WriteStructs.cc')
+GTest('noc_write_structs.test',
+      'lib/axi/WriteStructs.test.cc',
+      'lib/axi/WriteStructs.cc',
+      'lib/axi/AXITypes.cc',
+      with_tag('gem5 serialize'))
+
+Source('core/network/nsu_types/MmWriteDataDepacketizer.cc')
+GTest('noc_mm_write_depacketizer.test',
+      'core/network/nsu_types/MmWriteDataDepacketizer.test.cc',
+      'core/network/nsu_types/MmWriteDataDepacketizer.cc')
+Source('core/network/nsu_types/AxisDepacketizer.cc')
+GTest('noc_axis_depacketizer.test',
+      'core/network/nsu_types/AxisDepacketizer.test.cc',
+      'core/network/nsu_types/AxisDepacketizer.cc')
+
+Source('core/interface/NocInterface.cc')
+Source('core/interface/CDCQueue.cc')
+Source('core/interface/ProtocolHandler.cc')
+Source('core/interface/protocols/AXIMMHandler.cc')
+Source('core/interface/protocols/AXISHandler.cc')
+
+Source('core/network/NocBasicLink.cc')
+Source('core/network/NocGarnetLink.cc')
+Source('core/network/NocGarnetNetwork.cc')
+Source('core/network/NocMasterUnit.cc')
+Source('core/network/nmu_types/mmNocMasterUnit.cc')
+Source('core/network/nmu_types/sNocMasterUnit.cc')
+Source('core/network/NocMemoryMsg.cc')
+Source('core/network/NocMessageBuffer.cc')
+Source('core/network/NocNetDest.cc')
+Source('core/network/NocNetwork.cc')
+Source('core/network/NocNetworkInterface.cc')
+Source('core/network/NocStreamMsg.cc')
+Source('core/network/NocSlaveUnit.cc')
+Source('core/network/nsu_types/mmNocSlaveUnit.cc')
+Source('core/network/nsu_types/sNocSlaveUnit.cc')
+Source('core/network/NocSystem.cc')
+Source('core/network/rrob.cc')
+GTest('noc_rrob.test',
+      'core/network/rrob.test.cc',
+      with_tag('gem5 serialize'))
+
+Source('core/control/Control.cc')
+
+# Source('core/network/switch/NocOutputUnit.cc')
+Source('core/network/switch/NocOutVcState.cc')
+Source('core/network/switch/NocRouter.cc')
+Source('core/network/switch/NocSwitchAllocator.cc')
+
+Source('monitors/NocTrafficMonitor.cc')
+Source('debug/NocProbe.cc')
+Source('endpoints/NocNode.cc')
+Source('endpoints/memory/bram/BramEndpoint.cc')
+Source('hbm/HBMArbiter.cc')
+Source('endpoints/memory/hbm/tileNSU_HBM.cc')
+Source('endpoints/sink/AxisSinkNode.cc')
+Source('endpoints/cpu/CpuNocBridge.cc')
+# Source('../cpu/probes/pc_count_tracker_manager.cc')
+# Source('../cpu/probes/pc_count_tracker_manager.cc')
+Source('endpoints/fifo/AxisFifoNode.cc')
+Source('endpoints/sink/AxisBackpressureShimNode.cc')
+
+if BUILD_EXTERNAL_RTL:
+    if static_axis_fifo_model:
+        Source('endpoints/rtl/AxisFifoRtlNode.cc')
+    if static_smartnic_models:
+        Source('endpoints/rtl/SmartNicRtlNodes.cc')
+    generated_rtl_dir = Dir('endpoints/rtl/generated').srcnode().abspath
+    if os.path.isdir(generated_rtl_dir):
+        for generated_hh in sorted(os.listdir(generated_rtl_dir)):
+            if generated_hh.endswith('.cc'):
+                Source('endpoints/rtl/generated/' + generated_hh)
+Source('endpoints/generator/AxisBuggyNode.cc')
+
+Source('topology/NocTopology.cc')
+
+# External AXIS traffic generator sources
+Source('endpoints/generator/TrafficGenerator.cc')
+Source('endpoints/generator/AXISTrafficGenerator.cc')
+Source('endpoints/generator/AxisRandomTrafficGenerator.cc')
+Source('endpoints/generator/AxisPcapTrafficGenerator.cc')
+Source('lib/AxisPacketUtils.cc')
+Source('endpoints/generator/AxisPacketTrafficGenerator.cc')
+Source('endpoints/sink/AxisPacketCheckerSink.cc')
+Source('endpoints/memory/ddr/DdrPacketDmaNode.cc')
+Source('endpoints/memory/bram/BramBuggyNode.cc')
+Source('endpoints/misc/SynchronizerNode.cc')
+Source('endpoints/generator/AXIMMTrafficGenerator.cc')
+Source('endpoints/generator/AxiRandomTrafficGenerator.cc')
+Source('endpoints/generator/AxiHandshakeStressGenerator.cc')
+Source('lib/external/SystemVerilogAXI/axi_traffic/include/DataView.cpp')
+Source('lib/external/SystemVerilogAXI/axi_traffic/include/AxisInterface.cpp')
+Source('lib/external/SystemVerilogAXI/axi_traffic/include/AxiInterface.cpp')
+Source('lib/external/SystemVerilogAXI/axi_traffic/AxisTrafficGenerator/AxisTrafficGenerator.cpp')
+Source('lib/external/SystemVerilogAXI/axi_traffic/AxiTrafficGenerator/AxiTrafficGenerator.cpp')
+Source('lib/external/SystemVerilogAXI/axi_traffic/AxiTrafficGenerator/AxiCommand.cpp')
+Source('lib/external/SystemVerilogAXI/axi_traffic/AxiTrafficGenerator/AxiResponse.cpp')
+Source('lib/external/SystemVerilogAXI/axi_traffic/AxiTrafficGenerator/strategies/AxiRandomStrategy.cpp')
+Source('lib/external/SystemVerilogAXI/axi_traffic/AxiTrafficGenerator/strategies/AxiFileStrategy.cpp')
+Source('lib/external/SystemVerilogAXI/axi_traffic/AxiTrafficGenerator/strategies/AxiTrafficStrategy.cpp')
+Source('lib/external/SystemVerilogAXI/axi_traffic/AxisTrafficGenerator/strategies/AxisRandomStrategy.cpp')
+Source('lib/external/SystemVerilogAXI/axi_traffic/AxisTrafficGenerator/strategies/AxisPcapStrategy.cpp')
+Source('lib/external/SystemVerilogAXI/axi_traffic/AxisTrafficGenerator/strategies/AxisPacketStrategy.cpp')
+Source('lib/external/SystemVerilogAXI/axi_traffic/AxisTrafficGenerator/strategies/AxisPacketUtils.cpp')
+Source('lib/external/SystemVerilogAXI/axi_traffic/AxisTrafficGenerator/strategies/AxisTrafficStrategy.cpp')

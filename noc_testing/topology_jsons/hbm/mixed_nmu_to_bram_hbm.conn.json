@@ -1,0 +1,79 @@
+{
+  "kind": "naviq.connections",
+  "version": 1,
+  "name": "mixed_nmu_to_bram_hbm",
+  "components": {
+    "tg_0": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "hbm_tg_0": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "bram_0": {
+      "node_type": "BramEndpoint",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "hbm0_port0": {
+      "node_type": "tileNSU_HBM",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm",
+          "type": "hbm",
+          "base_address": "0x00000000",
+          "size": "0x10000"
+        }
+      }
+    },
+    "hbm0_port1": {
+      "node_type": "tileNSU_HBM",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm",
+          "type": "hbm",
+          "base_address": "0x00000000",
+          "size": "0x10000"
+        }
+      }
+    }
+  },
+  "connections": [
+    {
+      "from": "tg_0.m_axi",
+      "to": "bram_0.s_axi"
+    },
+    {
+      "from": "tg_0.m_axi",
+      "to": "hbm0_port0.s_axi"
+    },
+    {
+      "from": "hbm_tg_0.m_axi",
+      "to": "bram_0.s_axi"
+    },
+    {
+      "from": "hbm_tg_0.m_axi",
+      "to": "hbm0_port1.s_axi"
+    }
+  ],
+  "hbm_settings": {
+    "num_pc": 2
+  }
+}

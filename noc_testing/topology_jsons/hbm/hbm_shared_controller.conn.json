@@ -1,0 +1,53 @@
+{
+  "kind": "naviq.connections",
+  "version": 1,
+  "name": "hbm_shared_controller",
+  "components": {
+    "hbm_tg_0": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "hbm0_port0": {
+      "node_type": "tileNSU_HBM",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm",
+          "type": "hbm",
+          "base_address": "0x4000000000",
+          "size": "0x40000000"
+        }
+      }
+    },
+    "hbm0_port2": {
+      "node_type": "tileNSU_HBM",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm",
+          "type": "hbm",
+          "base_address": "0x4040000000",
+          "size": "0x40000000"
+        }
+      }
+    }
+  },
+  "connections": [
+    {
+      "from": "hbm_tg_0.m_axi",
+      "to": "hbm0_port0.s_axi"
+    },
+    {
+      "from": "hbm_tg_0.m_axi",
+      "to": "hbm0_port2.s_axi"
+    }
+  ],
+  "hbm_settings": {
+    "num_pc": 2
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "kind": "naviq.placement",
+  "version": 1,
+  "name": "axis_packet_loopback",
+  "placements": {
+    "packet_sink.s_axis": "NOC_NSU512_X0Y0",
+    "packet_src.m_axis": "NOC_NMU512_X0Y0"
+  }
+}

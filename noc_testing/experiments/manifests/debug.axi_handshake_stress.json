@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "id": "debug.axi_handshake_stress",
+  "title": "Deterministic AXI-MM handshake-stress experiment",
+  "status": "manual",
+  "runner": "src/noc/testing/experiments/debug/axi_handshake_stress/run.py",
+  "output_argument": "--output",
+  "requires": ["gem5-null"],
+  "inputs": [
+    "src/noc/testing/experiments/debug/axi_handshake_stress/README.md",
+    "src/noc/testing/generic/aximm_handshake_stress_smoke.py",
+    "noc_testing/topology_jsons/experiments/axi_handshake_stress_2to2.conn.json",
+    "noc_testing/topology_jsons/multi_endpoint/2to2_aximm.place.json",
+    "src/noc/testing/fixtures/topologies/2to2_aximm/2to2_aximm.ncr",
+    "src/noc/testing/fixtures/topologies/2to2_aximm/2to2_aximm.nts"
+  ],
+  "reference_paths": [],
+  "validation": "The fixed-seed scenario must complete eight AXI-MM writes without a NoC completion error."
+}

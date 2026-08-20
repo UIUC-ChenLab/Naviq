@@ -1,0 +1,13 @@
+{
+  "kind": "naviq.placement",
+  "version": 1,
+  "name": "cpu_ddr_dma_axis",
+  "placements": {
+    "ddr0_port0.s_axi": "DDRMC_X2Y0",
+    "dma_ctrl.s_axi": "NOC_NSU512_X0Y0",
+    "checker.s_axis": "NOC_NSU512_X0Y0",
+    "cpu_aximm.m_axi": "NOC_NMU512_X0Y0",
+    "dma_aximm.m_axi": "NOC_NMU512_X1Y0",
+    "dma_axis.m_axis": "NOC_NMU512_X0Y0"
+  }
+}

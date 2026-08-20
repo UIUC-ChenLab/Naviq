@@ -1,0 +1,4 @@
+name,tg_mode,topology_json,axi_write_len_beats,axi_write_size_bytes,axi_write_bandwidth_cfg_MBps,num_write_transactions_cfg,tg_axi_data_width_bits,bram_data_width,noc_axi_clk_mhz,qos_read_bw_MBps,qos_write_bw_MBps,qos_avg_burst
+hbm_1nmu_test,rw_interleaved,topology_jsons/hbm/1nmu_to_1hbm.conn.json,16,16,800,50,512,512,1000
+# hbm_1hbm_test,rw_interleaved,topology_jsons/hbm/1hbm_to_1hbm.conn.json,16,16,800,50,512,512,1000
+# hbm_2hbm_test,rw_interleaved,topology_jsons/hbm/2hbm_to_2hbm.conn.json,16,16,800,50,512,512,1000

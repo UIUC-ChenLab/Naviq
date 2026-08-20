@@ -1,0 +1,1321 @@
+{
+  "kind": "naviq.connections",
+  "version": 1,
+  "name": "16to16_aximm",
+  "components": {
+    "tg_0": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "tg_1": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "tg_2": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "tg_3": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "tg_4": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "tg_5": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "tg_6": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "tg_7": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "tg_8": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "tg_9": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "tg_10": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "tg_11": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "tg_12": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "tg_13": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "tg_14": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "tg_15": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "bram_0": {
+      "node_type": "BramEndpoint",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "bram_1": {
+      "node_type": "BramEndpoint",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "bram_2": {
+      "node_type": "BramEndpoint",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "bram_3": {
+      "node_type": "BramEndpoint",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "bram_4": {
+      "node_type": "BramEndpoint",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "bram_5": {
+      "node_type": "BramEndpoint",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "bram_6": {
+      "node_type": "BramEndpoint",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "bram_7": {
+      "node_type": "BramEndpoint",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "bram_8": {
+      "node_type": "BramEndpoint",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "bram_9": {
+      "node_type": "BramEndpoint",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "bram_10": {
+      "node_type": "BramEndpoint",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "bram_11": {
+      "node_type": "BramEndpoint",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "bram_12": {
+      "node_type": "BramEndpoint",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "bram_13": {
+      "node_type": "BramEndpoint",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "bram_14": {
+      "node_type": "BramEndpoint",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "bram_15": {
+      "node_type": "BramEndpoint",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm"
+        }
+      }
+    }
+  },
+  "connections": [
+    {
+      "from": "tg_0.m_axi",
+      "to": "bram_0.s_axi"
+    },
+    {
+      "from": "tg_0.m_axi",
+      "to": "bram_1.s_axi"
+    },
+    {
+      "from": "tg_0.m_axi",
+      "to": "bram_2.s_axi"
+    },
+    {
+      "from": "tg_0.m_axi",
+      "to": "bram_3.s_axi"
+    },
+    {
+      "from": "tg_0.m_axi",
+      "to": "bram_4.s_axi"
+    },
+    {
+      "from": "tg_0.m_axi",
+      "to": "bram_5.s_axi"
+    },
+    {
+      "from": "tg_0.m_axi",
+      "to": "bram_6.s_axi"
+    },
+    {
+      "from": "tg_0.m_axi",
+      "to": "bram_7.s_axi"
+    },
+    {
+      "from": "tg_0.m_axi",
+      "to": "bram_8.s_axi"
+    },
+    {
+      "from": "tg_0.m_axi",
+      "to": "bram_9.s_axi"
+    },
+    {
+      "from": "tg_0.m_axi",
+      "to": "bram_10.s_axi"
+    },
+    {
+      "from": "tg_0.m_axi",
+      "to": "bram_11.s_axi"
+    },
+    {
+      "from": "tg_0.m_axi",
+      "to": "bram_12.s_axi"
+    },
+    {
+      "from": "tg_0.m_axi",
+      "to": "bram_13.s_axi"
+    },
+    {
+      "from": "tg_0.m_axi",
+      "to": "bram_14.s_axi"
+    },
+    {
+      "from": "tg_0.m_axi",
+      "to": "bram_15.s_axi"
+    },
+    {
+      "from": "tg_1.m_axi",
+      "to": "bram_0.s_axi"
+    },
+    {
+      "from": "tg_1.m_axi",
+      "to": "bram_1.s_axi"
+    },
+    {
+      "from": "tg_1.m_axi",
+      "to": "bram_2.s_axi"
+    },
+    {
+      "from": "tg_1.m_axi",
+      "to": "bram_3.s_axi"
+    },
+    {
+      "from": "tg_1.m_axi",
+      "to": "bram_4.s_axi"
+    },
+    {
+      "from": "tg_1.m_axi",
+      "to": "bram_5.s_axi"
+    },
+    {
+      "from": "tg_1.m_axi",
+      "to": "bram_6.s_axi"
+    },
+    {
+      "from": "tg_1.m_axi",
+      "to": "bram_7.s_axi"
+    },
+    {
+      "from": "tg_1.m_axi",
+      "to": "bram_8.s_axi"
+    },
+    {
+      "from": "tg_1.m_axi",
+      "to": "bram_9.s_axi"
+    },
+    {
+      "from": "tg_1.m_axi",
+      "to": "bram_10.s_axi"
+    },
+    {
+      "from": "tg_1.m_axi",
+      "to": "bram_11.s_axi"
+    },
+    {
+      "from": "tg_1.m_axi",
+      "to": "bram_12.s_axi"
+    },
+    {
+      "from": "tg_1.m_axi",
+      "to": "bram_13.s_axi"
+    },
+    {
+      "from": "tg_1.m_axi",
+      "to": "bram_14.s_axi"
+    },
+    {
+      "from": "tg_1.m_axi",
+      "to": "bram_15.s_axi"
+    },
+    {
+      "from": "tg_2.m_axi",
+      "to": "bram_0.s_axi"
+    },
+    {
+      "from": "tg_2.m_axi",
+      "to": "bram_1.s_axi"
+    },
+    {
+      "from": "tg_2.m_axi",
+      "to": "bram_2.s_axi"
+    },
+    {
+      "from": "tg_2.m_axi",
+      "to": "bram_3.s_axi"
+    },
+    {
+      "from": "tg_2.m_axi",
+      "to": "bram_4.s_axi"
+    },
+    {
+      "from": "tg_2.m_axi",
+      "to": "bram_5.s_axi"
+    },
+    {
+      "from": "tg_2.m_axi",
+      "to": "bram_6.s_axi"
+    },
+    {
+      "from": "tg_2.m_axi",
+      "to": "bram_7.s_axi"
+    },
+    {
+      "from": "tg_2.m_axi",
+      "to": "bram_8.s_axi"
+    },
+    {
+      "from": "tg_2.m_axi",
+      "to": "bram_9.s_axi"
+    },
+    {
+      "from": "tg_2.m_axi",
+      "to": "bram_10.s_axi"
+    },
+    {
+      "from": "tg_2.m_axi",
+      "to": "bram_11.s_axi"
+    },
+    {
+      "from": "tg_2.m_axi",
+      "to": "bram_12.s_axi"
+    },
+    {
+      "from": "tg_2.m_axi",
+      "to": "bram_13.s_axi"
+    },
+    {
+      "from": "tg_2.m_axi",
+      "to": "bram_14.s_axi"
+    },
+    {
+      "from": "tg_2.m_axi",
+      "to": "bram_15.s_axi"
+    },
+    {
+      "from": "tg_3.m_axi",
+      "to": "bram_0.s_axi"
+    },
+    {
+      "from": "tg_3.m_axi",
+      "to": "bram_1.s_axi"
+    },
+    {
+      "from": "tg_3.m_axi",
+      "to": "bram_2.s_axi"
+    },
+    {
+      "from": "tg_3.m_axi",
+      "to": "bram_3.s_axi"
+    },
+    {
+      "from": "tg_3.m_axi",
+      "to": "bram_4.s_axi"
+    },
+    {
+      "from": "tg_3.m_axi",
+      "to": "bram_5.s_axi"
+    },
+    {
+      "from": "tg_3.m_axi",
+      "to": "bram_6.s_axi"
+    },
+    {
+      "from": "tg_3.m_axi",
+      "to": "bram_7.s_axi"
+    },
+    {
+      "from": "tg_3.m_axi",
+      "to": "bram_8.s_axi"
+    },
+    {
+      "from": "tg_3.m_axi",
+      "to": "bram_9.s_axi"
+    },
+    {
+      "from": "tg_3.m_axi",
+      "to": "bram_10.s_axi"
+    },
+    {
+      "from": "tg_3.m_axi",
+      "to": "bram_11.s_axi"
+    },
+    {
+      "from": "tg_3.m_axi",
+      "to": "bram_12.s_axi"
+    },
+    {
+      "from": "tg_3.m_axi",
+      "to": "bram_13.s_axi"
+    },
+    {
+      "from": "tg_3.m_axi",
+      "to": "bram_14.s_axi"
+    },
+    {
+      "from": "tg_3.m_axi",
+      "to": "bram_15.s_axi"
+    },
+    {
+      "from": "tg_4.m_axi",
+      "to": "bram_0.s_axi"
+    },
+    {
+      "from": "tg_4.m_axi",
+      "to": "bram_1.s_axi"
+    },
+    {
+      "from": "tg_4.m_axi",
+      "to": "bram_2.s_axi"
+    },
+    {
+      "from": "tg_4.m_axi",
+      "to": "bram_3.s_axi"
+    },
+    {
+      "from": "tg_4.m_axi",
+      "to": "bram_4.s_axi"
+    },
+    {
+      "from": "tg_4.m_axi",
+      "to": "bram_5.s_axi"
+    },
+    {
+      "from": "tg_4.m_axi",
+      "to": "bram_6.s_axi"
+    },
+    {
+      "from": "tg_4.m_axi",
+      "to": "bram_7.s_axi"
+    },
+    {
+      "from": "tg_4.m_axi",
+      "to": "bram_8.s_axi"
+    },
+    {
+      "from": "tg_4.m_axi",
+      "to": "bram_9.s_axi"
+    },
+    {
+      "from": "tg_4.m_axi",
+      "to": "bram_10.s_axi"
+    },
+    {
+      "from": "tg_4.m_axi",
+      "to": "bram_11.s_axi"
+    },
+    {
+      "from": "tg_4.m_axi",
+      "to": "bram_12.s_axi"
+    },
+    {
+      "from": "tg_4.m_axi",
+      "to": "bram_13.s_axi"
+    },
+    {
+      "from": "tg_4.m_axi",
+      "to": "bram_14.s_axi"
+    },
+    {
+      "from": "tg_4.m_axi",
+      "to": "bram_15.s_axi"
+    },
+    {
+      "from": "tg_5.m_axi",
+      "to": "bram_0.s_axi"
+    },
+    {
+      "from": "tg_5.m_axi",
+      "to": "bram_1.s_axi"
+    },
+    {
+      "from": "tg_5.m_axi",
+      "to": "bram_2.s_axi"
+    },
+    {
+      "from": "tg_5.m_axi",
+      "to": "bram_3.s_axi"
+    },
+    {
+      "from": "tg_5.m_axi",
+      "to": "bram_4.s_axi"
+    },
+    {
+      "from": "tg_5.m_axi",
+      "to": "bram_5.s_axi"
+    },
+    {
+      "from": "tg_5.m_axi",
+      "to": "bram_6.s_axi"
+    },
+    {
+      "from": "tg_5.m_axi",
+      "to": "bram_7.s_axi"
+    },
+    {
+      "from": "tg_5.m_axi",
+      "to": "bram_8.s_axi"
+    },
+    {
+      "from": "tg_5.m_axi",
+      "to": "bram_9.s_axi"
+    },
+    {
+      "from": "tg_5.m_axi",
+      "to": "bram_10.s_axi"
+    },
+    {
+      "from": "tg_5.m_axi",
+      "to": "bram_11.s_axi"
+    },
+    {
+      "from": "tg_5.m_axi",
+      "to": "bram_12.s_axi"
+    },
+    {
+      "from": "tg_5.m_axi",
+      "to": "bram_13.s_axi"
+    },
+    {
+      "from": "tg_5.m_axi",
+      "to": "bram_14.s_axi"
+    },
+    {
+      "from": "tg_5.m_axi",
+      "to": "bram_15.s_axi"
+    },
+    {
+      "from": "tg_6.m_axi",
+      "to": "bram_0.s_axi"
+    },
+    {
+      "from": "tg_6.m_axi",
+      "to": "bram_1.s_axi"
+    },
+    {
+      "from": "tg_6.m_axi",
+      "to": "bram_2.s_axi"
+    },
+    {
+      "from": "tg_6.m_axi",
+      "to": "bram_3.s_axi"
+    },
+    {
+      "from": "tg_6.m_axi",
+      "to": "bram_4.s_axi"
+    },
+    {
+      "from": "tg_6.m_axi",
+      "to": "bram_5.s_axi"
+    },
+    {
+      "from": "tg_6.m_axi",
+      "to": "bram_6.s_axi"
+    },
+    {
+      "from": "tg_6.m_axi",
+      "to": "bram_7.s_axi"
+    },
+    {
+      "from": "tg_6.m_axi",
+      "to": "bram_8.s_axi"
+    },
+    {
+      "from": "tg_6.m_axi",
+      "to": "bram_9.s_axi"
+    },
+    {
+      "from": "tg_6.m_axi",
+      "to": "bram_10.s_axi"
+    },
+    {
+      "from": "tg_6.m_axi",
+      "to": "bram_11.s_axi"
+    },
+    {
+      "from": "tg_6.m_axi",
+      "to": "bram_12.s_axi"
+    },
+    {
+      "from": "tg_6.m_axi",
+      "to": "bram_13.s_axi"
+    },
+    {
+      "from": "tg_6.m_axi",
+      "to": "bram_14.s_axi"
+    },
+    {
+      "from": "tg_6.m_axi",
+      "to": "bram_15.s_axi"
+    },
+    {
+      "from": "tg_7.m_axi",
+      "to": "bram_0.s_axi"
+    },
+    {
+      "from": "tg_7.m_axi",
+      "to": "bram_1.s_axi"
+    },
+    {
+      "from": "tg_7.m_axi",
+      "to": "bram_2.s_axi"
+    },
+    {
+      "from": "tg_7.m_axi",
+      "to": "bram_3.s_axi"
+    },
+    {
+      "from": "tg_7.m_axi",
+      "to": "bram_4.s_axi"
+    },
+    {
+      "from": "tg_7.m_axi",
+      "to": "bram_5.s_axi"
+    },
+    {
+      "from": "tg_7.m_axi",
+      "to": "bram_6.s_axi"
+    },
+    {
+      "from": "tg_7.m_axi",
+      "to": "bram_7.s_axi"
+    },
+    {
+      "from": "tg_7.m_axi",
+      "to": "bram_8.s_axi"
+    },
+    {
+      "from": "tg_7.m_axi",
+      "to": "bram_9.s_axi"
+    },
+    {
+      "from": "tg_7.m_axi",
+      "to": "bram_10.s_axi"
+    },
+    {
+      "from": "tg_7.m_axi",
+      "to": "bram_11.s_axi"
+    },
+    {
+      "from": "tg_7.m_axi",
+      "to": "bram_12.s_axi"
+    },
+    {
+      "from": "tg_7.m_axi",
+      "to": "bram_13.s_axi"
+    },
+    {
+      "from": "tg_7.m_axi",
+      "to": "bram_14.s_axi"
+    },
+    {
+      "from": "tg_7.m_axi",
+      "to": "bram_15.s_axi"
+    },
+    {
+      "from": "tg_8.m_axi",
+      "to": "bram_0.s_axi"
+    },
+    {
+      "from": "tg_8.m_axi",
+      "to": "bram_1.s_axi"
+    },
+    {
+      "from": "tg_8.m_axi",
+      "to": "bram_2.s_axi"
+    },
+    {
+      "from": "tg_8.m_axi",
+      "to": "bram_3.s_axi"
+    },
+    {
+      "from": "tg_8.m_axi",
+      "to": "bram_4.s_axi"
+    },
+    {
+      "from": "tg_8.m_axi",
+      "to": "bram_5.s_axi"
+    },
+    {
+      "from": "tg_8.m_axi",
+      "to": "bram_6.s_axi"
+    },
+    {
+      "from": "tg_8.m_axi",
+      "to": "bram_7.s_axi"
+    },
+    {
+      "from": "tg_8.m_axi",
+      "to": "bram_8.s_axi"
+    },
+    {
+      "from": "tg_8.m_axi",
+      "to": "bram_9.s_axi"
+    },
+    {
+      "from": "tg_8.m_axi",
+      "to": "bram_10.s_axi"
+    },
+    {
+      "from": "tg_8.m_axi",
+      "to": "bram_11.s_axi"
+    },
+    {
+      "from": "tg_8.m_axi",
+      "to": "bram_12.s_axi"
+    },
+    {
+      "from": "tg_8.m_axi",
+      "to": "bram_13.s_axi"
+    },
+    {
+      "from": "tg_8.m_axi",
+      "to": "bram_14.s_axi"
+    },
+    {
+      "from": "tg_8.m_axi",
+      "to": "bram_15.s_axi"
+    },
+    {
+      "from": "tg_9.m_axi",
+      "to": "bram_0.s_axi"
+    },
+    {
+      "from": "tg_9.m_axi",
+      "to": "bram_1.s_axi"
+    },
+    {
+      "from": "tg_9.m_axi",
+      "to": "bram_2.s_axi"
+    },
+    {
+      "from": "tg_9.m_axi",
+      "to": "bram_3.s_axi"
+    },
+    {
+      "from": "tg_9.m_axi",
+      "to": "bram_4.s_axi"
+    },
+    {
+      "from": "tg_9.m_axi",
+      "to": "bram_5.s_axi"
+    },
+    {
+      "from": "tg_9.m_axi",
+      "to": "bram_6.s_axi"
+    },
+    {
+      "from": "tg_9.m_axi",
+      "to": "bram_7.s_axi"
+    },
+    {
+      "from": "tg_9.m_axi",
+      "to": "bram_8.s_axi"
+    },
+    {
+      "from": "tg_9.m_axi",
+      "to": "bram_9.s_axi"
+    },
+    {
+      "from": "tg_9.m_axi",
+      "to": "bram_10.s_axi"
+    },
+    {
+      "from": "tg_9.m_axi",
+      "to": "bram_11.s_axi"
+    },
+    {
+      "from": "tg_9.m_axi",
+      "to": "bram_12.s_axi"
+    },
+    {
+      "from": "tg_9.m_axi",
+      "to": "bram_13.s_axi"
+    },
+    {
+      "from": "tg_9.m_axi",
+      "to": "bram_14.s_axi"
+    },
+    {
+      "from": "tg_9.m_axi",
+      "to": "bram_15.s_axi"
+    },
+    {
+      "from": "tg_10.m_axi",
+      "to": "bram_0.s_axi"
+    },
+    {
+      "from": "tg_10.m_axi",
+      "to": "bram_1.s_axi"
+    },
+    {
+      "from": "tg_10.m_axi",
+      "to": "bram_2.s_axi"
+    },
+    {
+      "from": "tg_10.m_axi",
+      "to": "bram_3.s_axi"
+    },
+    {
+      "from": "tg_10.m_axi",
+      "to": "bram_4.s_axi"
+    },
+    {
+      "from": "tg_10.m_axi",
+      "to": "bram_5.s_axi"
+    },
+    {
+      "from": "tg_10.m_axi",
+      "to": "bram_6.s_axi"
+    },
+    {
+      "from": "tg_10.m_axi",
+      "to": "bram_7.s_axi"
+    },
+    {
+      "from": "tg_10.m_axi",
+      "to": "bram_8.s_axi"
+    },
+    {
+      "from": "tg_10.m_axi",
+      "to": "bram_9.s_axi"
+    },
+    {
+      "from": "tg_10.m_axi",
+      "to": "bram_10.s_axi"
+    },
+    {
+      "from": "tg_10.m_axi",
+      "to": "bram_11.s_axi"
+    },
+    {
+      "from": "tg_10.m_axi",
+      "to": "bram_12.s_axi"
+    },
+    {
+      "from": "tg_10.m_axi",
+      "to": "bram_13.s_axi"
+    },
+    {
+      "from": "tg_10.m_axi",
+      "to": "bram_14.s_axi"
+    },
+    {
+      "from": "tg_10.m_axi",
+      "to": "bram_15.s_axi"
+    },
+    {
+      "from": "tg_11.m_axi",
+      "to": "bram_0.s_axi"
+    },
+    {
+      "from": "tg_11.m_axi",
+      "to": "bram_1.s_axi"
+    },
+    {
+      "from": "tg_11.m_axi",
+      "to": "bram_2.s_axi"
+    },
+    {
+      "from": "tg_11.m_axi",
+      "to": "bram_3.s_axi"
+    },
+    {
+      "from": "tg_11.m_axi",
+      "to": "bram_4.s_axi"
+    },
+    {
+      "from": "tg_11.m_axi",
+      "to": "bram_5.s_axi"
+    },
+    {
+      "from": "tg_11.m_axi",
+      "to": "bram_6.s_axi"
+    },
+    {
+      "from": "tg_11.m_axi",
+      "to": "bram_7.s_axi"
+    },
+    {
+      "from": "tg_11.m_axi",
+      "to": "bram_8.s_axi"
+    },
+    {
+      "from": "tg_11.m_axi",
+      "to": "bram_9.s_axi"
+    },
+    {
+      "from": "tg_11.m_axi",
+      "to": "bram_10.s_axi"
+    },
+    {
+      "from": "tg_11.m_axi",
+      "to": "bram_11.s_axi"
+    },
+    {
+      "from": "tg_11.m_axi",
+      "to": "bram_12.s_axi"
+    },
+    {
+      "from": "tg_11.m_axi",
+      "to": "bram_13.s_axi"
+    },
+    {
+      "from": "tg_11.m_axi",
+      "to": "bram_14.s_axi"
+    },
+    {
+      "from": "tg_11.m_axi",
+      "to": "bram_15.s_axi"
+    },
+    {
+      "from": "tg_12.m_axi",
+      "to": "bram_0.s_axi"
+    },
+    {
+      "from": "tg_12.m_axi",
+      "to": "bram_1.s_axi"
+    },
+    {
+      "from": "tg_12.m_axi",
+      "to": "bram_2.s_axi"
+    },
+    {
+      "from": "tg_12.m_axi",
+      "to": "bram_3.s_axi"
+    },
+    {
+      "from": "tg_12.m_axi",
+      "to": "bram_4.s_axi"
+    },
+    {
+      "from": "tg_12.m_axi",
+      "to": "bram_5.s_axi"
+    },
+    {
+      "from": "tg_12.m_axi",
+      "to": "bram_6.s_axi"
+    },
+    {
+      "from": "tg_12.m_axi",
+      "to": "bram_7.s_axi"
+    },
+    {
+      "from": "tg_12.m_axi",
+      "to": "bram_8.s_axi"
+    },
+    {
+      "from": "tg_12.m_axi",
+      "to": "bram_9.s_axi"
+    },
+    {
+      "from": "tg_12.m_axi",
+      "to": "bram_10.s_axi"
+    },
+    {
+      "from": "tg_12.m_axi",
+      "to": "bram_11.s_axi"
+    },
+    {
+      "from": "tg_12.m_axi",
+      "to": "bram_12.s_axi"
+    },
+    {
+      "from": "tg_12.m_axi",
+      "to": "bram_13.s_axi"
+    },
+    {
+      "from": "tg_12.m_axi",
+      "to": "bram_14.s_axi"
+    },
+    {
+      "from": "tg_12.m_axi",
+      "to": "bram_15.s_axi"
+    },
+    {
+      "from": "tg_13.m_axi",
+      "to": "bram_0.s_axi"
+    },
+    {
+      "from": "tg_13.m_axi",
+      "to": "bram_1.s_axi"
+    },
+    {
+      "from": "tg_13.m_axi",
+      "to": "bram_2.s_axi"
+    },
+    {
+      "from": "tg_13.m_axi",
+      "to": "bram_3.s_axi"
+    },
+    {
+      "from": "tg_13.m_axi",
+      "to": "bram_4.s_axi"
+    },
+    {
+      "from": "tg_13.m_axi",
+      "to": "bram_5.s_axi"
+    },
+    {
+      "from": "tg_13.m_axi",
+      "to": "bram_6.s_axi"
+    },
+    {
+      "from": "tg_13.m_axi",
+      "to": "bram_7.s_axi"
+    },
+    {
+      "from": "tg_13.m_axi",
+      "to": "bram_8.s_axi"
+    },
+    {
+      "from": "tg_13.m_axi",
+      "to": "bram_9.s_axi"
+    },
+    {
+      "from": "tg_13.m_axi",
+      "to": "bram_10.s_axi"
+    },
+    {
+      "from": "tg_13.m_axi",
+      "to": "bram_11.s_axi"
+    },
+    {
+      "from": "tg_13.m_axi",
+      "to": "bram_12.s_axi"
+    },
+    {
+      "from": "tg_13.m_axi",
+      "to": "bram_13.s_axi"
+    },
+    {
+      "from": "tg_13.m_axi",
+      "to": "bram_14.s_axi"
+    },
+    {
+      "from": "tg_13.m_axi",
+      "to": "bram_15.s_axi"
+    },
+    {
+      "from": "tg_14.m_axi",
+      "to": "bram_0.s_axi"
+    },
+    {
+      "from": "tg_14.m_axi",
+      "to": "bram_1.s_axi"
+    },
+    {
+      "from": "tg_14.m_axi",
+      "to": "bram_2.s_axi"
+    },
+    {
+      "from": "tg_14.m_axi",
+      "to": "bram_3.s_axi"
+    },
+    {
+      "from": "tg_14.m_axi",
+      "to": "bram_4.s_axi"
+    },
+    {
+      "from": "tg_14.m_axi",
+      "to": "bram_5.s_axi"
+    },
+    {
+      "from": "tg_14.m_axi",
+      "to": "bram_6.s_axi"
+    },
+    {
+      "from": "tg_14.m_axi",
+      "to": "bram_7.s_axi"
+    },
+    {
+      "from": "tg_14.m_axi",
+      "to": "bram_8.s_axi"
+    },
+    {
+      "from": "tg_14.m_axi",
+      "to": "bram_9.s_axi"
+    },
+    {
+      "from": "tg_14.m_axi",
+      "to": "bram_10.s_axi"
+    },
+    {
+      "from": "tg_14.m_axi",
+      "to": "bram_11.s_axi"
+    },
+    {
+      "from": "tg_14.m_axi",
+      "to": "bram_12.s_axi"
+    },
+    {
+      "from": "tg_14.m_axi",
+      "to": "bram_13.s_axi"
+    },
+    {
+      "from": "tg_14.m_axi",
+      "to": "bram_14.s_axi"
+    },
+    {
+      "from": "tg_14.m_axi",
+      "to": "bram_15.s_axi"
+    },
+    {
+      "from": "tg_15.m_axi",
+      "to": "bram_0.s_axi"
+    },
+    {
+      "from": "tg_15.m_axi",
+      "to": "bram_1.s_axi"
+    },
+    {
+      "from": "tg_15.m_axi",
+      "to": "bram_2.s_axi"
+    },
+    {
+      "from": "tg_15.m_axi",
+      "to": "bram_3.s_axi"
+    },
+    {
+      "from": "tg_15.m_axi",
+      "to": "bram_4.s_axi"
+    },
+    {
+      "from": "tg_15.m_axi",
+      "to": "bram_5.s_axi"
+    },
+    {
+      "from": "tg_15.m_axi",
+      "to": "bram_6.s_axi"
+    },
+    {
+      "from": "tg_15.m_axi",
+      "to": "bram_7.s_axi"
+    },
+    {
+      "from": "tg_15.m_axi",
+      "to": "bram_8.s_axi"
+    },
+    {
+      "from": "tg_15.m_axi",
+      "to": "bram_9.s_axi"
+    },
+    {
+      "from": "tg_15.m_axi",
+      "to": "bram_10.s_axi"
+    },
+    {
+      "from": "tg_15.m_axi",
+      "to": "bram_11.s_axi"
+    },
+    {
+      "from": "tg_15.m_axi",
+      "to": "bram_12.s_axi"
+    },
+    {
+      "from": "tg_15.m_axi",
+      "to": "bram_13.s_axi"
+    },
+    {
+      "from": "tg_15.m_axi",
+      "to": "bram_14.s_axi"
+    },
+    {
+      "from": "tg_15.m_axi",
+      "to": "bram_15.s_axi"
+    }
+  ]
+}

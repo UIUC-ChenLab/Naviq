@@ -1,0 +1,11 @@
+{
+  "kind": "naviq.placement",
+  "version": 1,
+  "name": "1to1_ladder_16hop_pos",
+  "placements": {
+    "tg_0.m_axi": "NOC_NMU512_X0Y0",
+    "bram_0.s_axi": "NOC_NSU512_X0Y10",
+    "tg_0.m_axis": "NOC_NMU512_X0Y0",
+    "bram_0.s_axis": "NOC_NSU512_X0Y10"
+  }
+}

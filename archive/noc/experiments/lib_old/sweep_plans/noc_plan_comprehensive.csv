@@ -1,0 +1,4 @@
+name,tg_mode,num_axi_tg,num_axi_bram,noc_axi_clk_mhz,bram_data_width,qos_read_bw_MBps,qos_write_bw_MBps,qos_avg_burst,USER_C_AXI_WRITE_LEN,USER_C_AXI_WRITE_SIZE,USER_C_AXI_WRITE_BANDWIDTH,USER_C_AXI_NO_OF_WR_TRANS,USER_C_AXI_NO_OF_RD_TRANS,USER_C_AXI_READ_LEN,USER_C_AXI_READ_SIZE,USER_C_AXI_READ_BANDWIDTH,axi_write_len_beats,axi_write_size_bytes,axi_write_bandwidth_cfg_MBps,num_write_transactions_cfg,num_read_transactions_cfg,tg_axi_data_width_bits
+rw_default_uses_baseline,rw_interleaved,1,1,300,512,500,500,4,,,,,,,,,16,16,800,50,,
+direct_user_fields_demo,rw_interleaved,1,1,300,512,500,500,4,16,4,800,100,100,16,4,800,,, , , ,
+read_heavy_interleaved,interleaved,2,1,400,0,500,500,4,,,,,,, , , , , ,200,,

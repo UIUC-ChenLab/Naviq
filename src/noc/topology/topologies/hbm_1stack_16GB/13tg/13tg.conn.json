@@ -1,0 +1,821 @@
+{
+  "kind": "naviq.connections",
+  "version": 1,
+  "name": "hbm_full_1_stack_16GB_13tg",
+  "components": {
+    "hbm_sat_tg_00": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      },
+      "params": {
+        "data_width": 512,
+        "beat_size_bytes": 32,
+        "min_transaction_size_bytes": 512,
+        "max_transaction_size_bytes": 512,
+        "transaction_size_distribution": "FIXED",
+        "read_write_mode": "WRITE_ONLY",
+        "min_gap_cycles": 0,
+        "max_gap_cycles": 0,
+        "max_outstanding_writes": 32,
+        "address_distribution": "INCREMENT",
+        "address_increment": 256,
+        "align_addresses": false,
+        "base_addr": 274877906944,
+        "max_addr": 274877923327,
+        "nsu_min_addrs": [
+          274877906944
+        ],
+        "nsu_address_spaces": [
+          268435456
+        ],
+        "nsu_selection": "INTERLEAVE",
+        "max_write_commands": 1000,
+        "max_write_bandwidth_mbps": 0,
+        "max_read_bandwidth_mbps": 0,
+        "awid_distribution": "INCREMENT",
+        "min_awid": 0,
+        "max_awid": 3,
+        "clock_domain_mhz": 500
+      }
+    },
+    "hbm0_port0": {
+      "node_type": "tileNSU_HBM",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm",
+          "type": "hbm",
+          "base_address": "0x00000000",
+          "size": "0x40000000"
+        }
+      },
+      "params": {
+        "clock_domain_mhz": 1600,
+        "row_miss_latency_cycles": 15,
+        "read_latency_cycles": 25,
+        "write_latency_cycles": 15,
+        "resp_latency_cycles": 4
+      }
+    },
+    "hbm_sat_tg_01": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      },
+      "params": {
+        "data_width": 512,
+        "beat_size_bytes": 32,
+        "min_transaction_size_bytes": 512,
+        "max_transaction_size_bytes": 512,
+        "transaction_size_distribution": "FIXED",
+        "read_write_mode": "WRITE_ONLY",
+        "min_gap_cycles": 0,
+        "max_gap_cycles": 0,
+        "max_outstanding_writes": 32,
+        "address_distribution": "INCREMENT",
+        "address_increment": 256,
+        "align_addresses": false,
+        "base_addr": 274877906944,
+        "max_addr": 274877923327,
+        "nsu_min_addrs": [
+          274877906944
+        ],
+        "nsu_address_spaces": [
+          268435456
+        ],
+        "nsu_selection": "INTERLEAVE",
+        "max_write_commands": 1000,
+        "max_write_bandwidth_mbps": 0,
+        "max_read_bandwidth_mbps": 0,
+        "awid_distribution": "INCREMENT",
+        "min_awid": 0,
+        "max_awid": 3,
+        "clock_domain_mhz": 500
+      }
+    },
+    "hbm0_port1": {
+      "node_type": "tileNSU_HBM",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm",
+          "type": "hbm",
+          "base_address": "0x00000000",
+          "size": "0x40000000"
+        }
+      },
+      "params": {
+        "clock_domain_mhz": 1600,
+        "row_miss_latency_cycles": 15,
+        "read_latency_cycles": 25,
+        "write_latency_cycles": 15,
+        "resp_latency_cycles": 4
+      }
+    },
+    "hbm_sat_tg_02": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      },
+      "params": {
+        "data_width": 512,
+        "beat_size_bytes": 32,
+        "min_transaction_size_bytes": 512,
+        "max_transaction_size_bytes": 512,
+        "transaction_size_distribution": "FIXED",
+        "read_write_mode": "WRITE_ONLY",
+        "min_gap_cycles": 0,
+        "max_gap_cycles": 0,
+        "max_outstanding_writes": 32,
+        "address_distribution": "INCREMENT",
+        "address_increment": 256,
+        "align_addresses": false,
+        "base_addr": 275951648768,
+        "max_addr": 275951665151,
+        "nsu_min_addrs": [
+          275951648768
+        ],
+        "nsu_address_spaces": [
+          268435456
+        ],
+        "nsu_selection": "INTERLEAVE",
+        "max_write_commands": 1000,
+        "max_write_bandwidth_mbps": 0,
+        "max_read_bandwidth_mbps": 0,
+        "awid_distribution": "INCREMENT",
+        "min_awid": 0,
+        "max_awid": 3,
+        "clock_domain_mhz": 500
+      }
+    },
+    "hbm0_port2": {
+      "node_type": "tileNSU_HBM",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm",
+          "type": "hbm",
+          "base_address": "0x00000000",
+          "size": "0x40000000"
+        }
+      },
+      "params": {
+        "clock_domain_mhz": 1600,
+        "row_miss_latency_cycles": 15,
+        "read_latency_cycles": 25,
+        "write_latency_cycles": 15,
+        "resp_latency_cycles": 4
+      }
+    },
+    "hbm_sat_tg_03": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      },
+      "params": {
+        "data_width": 512,
+        "beat_size_bytes": 32,
+        "min_transaction_size_bytes": 512,
+        "max_transaction_size_bytes": 512,
+        "transaction_size_distribution": "FIXED",
+        "read_write_mode": "WRITE_ONLY",
+        "min_gap_cycles": 0,
+        "max_gap_cycles": 0,
+        "max_outstanding_writes": 32,
+        "address_distribution": "INCREMENT",
+        "address_increment": 256,
+        "align_addresses": false,
+        "base_addr": 275951648768,
+        "max_addr": 275951665151,
+        "nsu_min_addrs": [
+          275951648768
+        ],
+        "nsu_address_spaces": [
+          268435456
+        ],
+        "nsu_selection": "INTERLEAVE",
+        "max_write_commands": 1000,
+        "max_write_bandwidth_mbps": 0,
+        "max_read_bandwidth_mbps": 0,
+        "awid_distribution": "INCREMENT",
+        "min_awid": 0,
+        "max_awid": 3,
+        "clock_domain_mhz": 500
+      }
+    },
+    "hbm0_port3": {
+      "node_type": "tileNSU_HBM",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm",
+          "type": "hbm",
+          "base_address": "0x00000000",
+          "size": "0x40000000"
+        }
+      },
+      "params": {
+        "clock_domain_mhz": 1600,
+        "row_miss_latency_cycles": 15,
+        "read_latency_cycles": 25,
+        "write_latency_cycles": 15,
+        "resp_latency_cycles": 4
+      }
+    },
+    "hbm_sat_tg_04": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      },
+      "params": {
+        "data_width": 512,
+        "beat_size_bytes": 32,
+        "min_transaction_size_bytes": 512,
+        "max_transaction_size_bytes": 512,
+        "transaction_size_distribution": "FIXED",
+        "read_write_mode": "WRITE_ONLY",
+        "min_gap_cycles": 0,
+        "max_gap_cycles": 0,
+        "max_outstanding_writes": 32,
+        "address_distribution": "INCREMENT",
+        "address_increment": 256,
+        "align_addresses": false,
+        "base_addr": 277025390592,
+        "max_addr": 277025406975,
+        "nsu_min_addrs": [
+          277025390592
+        ],
+        "nsu_address_spaces": [
+          268435456
+        ],
+        "nsu_selection": "INTERLEAVE",
+        "max_write_commands": 1000,
+        "max_write_bandwidth_mbps": 0,
+        "max_read_bandwidth_mbps": 0,
+        "awid_distribution": "INCREMENT",
+        "min_awid": 0,
+        "max_awid": 3,
+        "clock_domain_mhz": 500
+      }
+    },
+    "hbm1_port0": {
+      "node_type": "tileNSU_HBM",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm",
+          "type": "hbm",
+          "base_address": "0x00000000",
+          "size": "0x40000000"
+        }
+      },
+      "params": {
+        "clock_domain_mhz": 1600,
+        "row_miss_latency_cycles": 15,
+        "read_latency_cycles": 25,
+        "write_latency_cycles": 15,
+        "resp_latency_cycles": 4
+      }
+    },
+    "hbm_sat_tg_05": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      },
+      "params": {
+        "data_width": 512,
+        "beat_size_bytes": 32,
+        "min_transaction_size_bytes": 512,
+        "max_transaction_size_bytes": 512,
+        "transaction_size_distribution": "FIXED",
+        "read_write_mode": "WRITE_ONLY",
+        "min_gap_cycles": 0,
+        "max_gap_cycles": 0,
+        "max_outstanding_writes": 32,
+        "address_distribution": "INCREMENT",
+        "address_increment": 256,
+        "align_addresses": false,
+        "base_addr": 277025390592,
+        "max_addr": 277025406975,
+        "nsu_min_addrs": [
+          277025390592
+        ],
+        "nsu_address_spaces": [
+          268435456
+        ],
+        "nsu_selection": "INTERLEAVE",
+        "max_write_commands": 1000,
+        "max_write_bandwidth_mbps": 0,
+        "max_read_bandwidth_mbps": 0,
+        "awid_distribution": "INCREMENT",
+        "min_awid": 0,
+        "max_awid": 3,
+        "clock_domain_mhz": 500
+      }
+    },
+    "hbm1_port1": {
+      "node_type": "tileNSU_HBM",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm",
+          "type": "hbm",
+          "base_address": "0x00000000",
+          "size": "0x40000000"
+        }
+      },
+      "params": {
+        "clock_domain_mhz": 1600,
+        "row_miss_latency_cycles": 15,
+        "read_latency_cycles": 25,
+        "write_latency_cycles": 15,
+        "resp_latency_cycles": 4
+      }
+    },
+    "hbm_sat_tg_06": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      },
+      "params": {
+        "data_width": 512,
+        "beat_size_bytes": 32,
+        "min_transaction_size_bytes": 512,
+        "max_transaction_size_bytes": 512,
+        "transaction_size_distribution": "FIXED",
+        "read_write_mode": "WRITE_ONLY",
+        "min_gap_cycles": 0,
+        "max_gap_cycles": 0,
+        "max_outstanding_writes": 32,
+        "address_distribution": "INCREMENT",
+        "address_increment": 256,
+        "align_addresses": false,
+        "base_addr": 278099132416,
+        "max_addr": 278099148799,
+        "nsu_min_addrs": [
+          278099132416
+        ],
+        "nsu_address_spaces": [
+          268435456
+        ],
+        "nsu_selection": "INTERLEAVE",
+        "max_write_commands": 1000,
+        "max_write_bandwidth_mbps": 0,
+        "max_read_bandwidth_mbps": 0,
+        "awid_distribution": "INCREMENT",
+        "min_awid": 0,
+        "max_awid": 3,
+        "clock_domain_mhz": 500
+      }
+    },
+    "hbm1_port2": {
+      "node_type": "tileNSU_HBM",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm",
+          "type": "hbm",
+          "base_address": "0x00000000",
+          "size": "0x40000000"
+        }
+      },
+      "params": {
+        "clock_domain_mhz": 1600,
+        "row_miss_latency_cycles": 15,
+        "read_latency_cycles": 25,
+        "write_latency_cycles": 15,
+        "resp_latency_cycles": 4
+      }
+    },
+    "hbm_sat_tg_07": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      },
+      "params": {
+        "data_width": 512,
+        "beat_size_bytes": 32,
+        "min_transaction_size_bytes": 512,
+        "max_transaction_size_bytes": 512,
+        "transaction_size_distribution": "FIXED",
+        "read_write_mode": "WRITE_ONLY",
+        "min_gap_cycles": 0,
+        "max_gap_cycles": 0,
+        "max_outstanding_writes": 32,
+        "address_distribution": "INCREMENT",
+        "address_increment": 256,
+        "align_addresses": false,
+        "base_addr": 278099132416,
+        "max_addr": 278099148799,
+        "nsu_min_addrs": [
+          278099132416
+        ],
+        "nsu_address_spaces": [
+          268435456
+        ],
+        "nsu_selection": "INTERLEAVE",
+        "max_write_commands": 1000,
+        "max_write_bandwidth_mbps": 0,
+        "max_read_bandwidth_mbps": 0,
+        "awid_distribution": "INCREMENT",
+        "min_awid": 0,
+        "max_awid": 3,
+        "clock_domain_mhz": 500
+      }
+    },
+    "hbm1_port3": {
+      "node_type": "tileNSU_HBM",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm",
+          "type": "hbm",
+          "base_address": "0x00000000",
+          "size": "0x40000000"
+        }
+      },
+      "params": {
+        "clock_domain_mhz": 1600,
+        "row_miss_latency_cycles": 15,
+        "read_latency_cycles": 25,
+        "write_latency_cycles": 15,
+        "resp_latency_cycles": 4
+      }
+    },
+    "hbm_sat_tg_08": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      },
+      "params": {
+        "data_width": 512,
+        "beat_size_bytes": 32,
+        "min_transaction_size_bytes": 512,
+        "max_transaction_size_bytes": 512,
+        "transaction_size_distribution": "FIXED",
+        "read_write_mode": "WRITE_ONLY",
+        "min_gap_cycles": 0,
+        "max_gap_cycles": 0,
+        "max_outstanding_writes": 32,
+        "address_distribution": "INCREMENT",
+        "address_increment": 256,
+        "align_addresses": false,
+        "base_addr": 279172874240,
+        "max_addr": 279172890623,
+        "nsu_min_addrs": [
+          279172874240
+        ],
+        "nsu_address_spaces": [
+          268435456
+        ],
+        "nsu_selection": "INTERLEAVE",
+        "max_write_commands": 1000,
+        "max_write_bandwidth_mbps": 0,
+        "max_read_bandwidth_mbps": 0,
+        "awid_distribution": "INCREMENT",
+        "min_awid": 0,
+        "max_awid": 3,
+        "clock_domain_mhz": 500
+      }
+    },
+    "hbm2_port0": {
+      "node_type": "tileNSU_HBM",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm",
+          "type": "hbm",
+          "base_address": "0x00000000",
+          "size": "0x40000000"
+        }
+      },
+      "params": {
+        "clock_domain_mhz": 1600,
+        "row_miss_latency_cycles": 15,
+        "read_latency_cycles": 25,
+        "write_latency_cycles": 15,
+        "resp_latency_cycles": 4
+      }
+    },
+    "hbm_sat_tg_09": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      },
+      "params": {
+        "data_width": 512,
+        "beat_size_bytes": 32,
+        "min_transaction_size_bytes": 512,
+        "max_transaction_size_bytes": 512,
+        "transaction_size_distribution": "FIXED",
+        "read_write_mode": "WRITE_ONLY",
+        "min_gap_cycles": 0,
+        "max_gap_cycles": 0,
+        "max_outstanding_writes": 32,
+        "address_distribution": "INCREMENT",
+        "address_increment": 256,
+        "align_addresses": false,
+        "base_addr": 279172874240,
+        "max_addr": 279172890623,
+        "nsu_min_addrs": [
+          279172874240
+        ],
+        "nsu_address_spaces": [
+          268435456
+        ],
+        "nsu_selection": "INTERLEAVE",
+        "max_write_commands": 1000,
+        "max_write_bandwidth_mbps": 0,
+        "max_read_bandwidth_mbps": 0,
+        "awid_distribution": "INCREMENT",
+        "min_awid": 0,
+        "max_awid": 3,
+        "clock_domain_mhz": 500
+      }
+    },
+    "hbm2_port1": {
+      "node_type": "tileNSU_HBM",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm",
+          "type": "hbm",
+          "base_address": "0x00000000",
+          "size": "0x40000000"
+        }
+      },
+      "params": {
+        "clock_domain_mhz": 1600,
+        "row_miss_latency_cycles": 15,
+        "read_latency_cycles": 25,
+        "write_latency_cycles": 15,
+        "resp_latency_cycles": 4
+      }
+    },
+    "hbm_sat_tg_10": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      },
+      "params": {
+        "data_width": 512,
+        "beat_size_bytes": 32,
+        "min_transaction_size_bytes": 512,
+        "max_transaction_size_bytes": 512,
+        "transaction_size_distribution": "FIXED",
+        "read_write_mode": "WRITE_ONLY",
+        "min_gap_cycles": 0,
+        "max_gap_cycles": 0,
+        "max_outstanding_writes": 32,
+        "address_distribution": "INCREMENT",
+        "address_increment": 256,
+        "align_addresses": false,
+        "base_addr": 280246616064,
+        "max_addr": 280246632447,
+        "nsu_min_addrs": [
+          280246616064
+        ],
+        "nsu_address_spaces": [
+          268435456
+        ],
+        "nsu_selection": "INTERLEAVE",
+        "max_write_commands": 1000,
+        "max_write_bandwidth_mbps": 0,
+        "max_read_bandwidth_mbps": 0,
+        "awid_distribution": "INCREMENT",
+        "min_awid": 0,
+        "max_awid": 3,
+        "clock_domain_mhz": 500
+      }
+    },
+    "hbm2_port2": {
+      "node_type": "tileNSU_HBM",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm",
+          "type": "hbm",
+          "base_address": "0x00000000",
+          "size": "0x40000000"
+        }
+      },
+      "params": {
+        "clock_domain_mhz": 1600,
+        "row_miss_latency_cycles": 15,
+        "read_latency_cycles": 25,
+        "write_latency_cycles": 15,
+        "resp_latency_cycles": 4
+      }
+    },
+    "hbm_sat_tg_11": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      },
+      "params": {
+        "data_width": 512,
+        "beat_size_bytes": 32,
+        "min_transaction_size_bytes": 512,
+        "max_transaction_size_bytes": 512,
+        "transaction_size_distribution": "FIXED",
+        "read_write_mode": "WRITE_ONLY",
+        "min_gap_cycles": 0,
+        "max_gap_cycles": 0,
+        "max_outstanding_writes": 32,
+        "address_distribution": "INCREMENT",
+        "address_increment": 256,
+        "align_addresses": false,
+        "base_addr": 280246616064,
+        "max_addr": 280246632447,
+        "nsu_min_addrs": [
+          280246616064
+        ],
+        "nsu_address_spaces": [
+          268435456
+        ],
+        "nsu_selection": "INTERLEAVE",
+        "max_write_commands": 1000,
+        "max_write_bandwidth_mbps": 0,
+        "max_read_bandwidth_mbps": 0,
+        "awid_distribution": "INCREMENT",
+        "min_awid": 0,
+        "max_awid": 3,
+        "clock_domain_mhz": 500
+      }
+    },
+    "hbm2_port3": {
+      "node_type": "tileNSU_HBM",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm",
+          "type": "hbm",
+          "base_address": "0x00000000",
+          "size": "0x40000000"
+        }
+      },
+      "params": {
+        "clock_domain_mhz": 1600,
+        "row_miss_latency_cycles": 15,
+        "read_latency_cycles": 25,
+        "write_latency_cycles": 15,
+        "resp_latency_cycles": 4
+      }
+    },
+    "hbm_sat_tg_12": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      },
+      "params": {
+        "data_width": 512,
+        "beat_size_bytes": 32,
+        "min_transaction_size_bytes": 512,
+        "max_transaction_size_bytes": 512,
+        "transaction_size_distribution": "FIXED",
+        "read_write_mode": "WRITE_ONLY",
+        "min_gap_cycles": 0,
+        "max_gap_cycles": 0,
+        "max_outstanding_writes": 32,
+        "address_distribution": "INCREMENT",
+        "address_increment": 256,
+        "align_addresses": false,
+        "base_addr": 281320357888,
+        "max_addr": 281320374271,
+        "nsu_min_addrs": [
+          281320357888
+        ],
+        "nsu_address_spaces": [
+          268435456
+        ],
+        "nsu_selection": "INTERLEAVE",
+        "max_write_commands": 1000,
+        "max_write_bandwidth_mbps": 0,
+        "max_read_bandwidth_mbps": 0,
+        "awid_distribution": "INCREMENT",
+        "min_awid": 0,
+        "max_awid": 3,
+        "clock_domain_mhz": 500
+      }
+    },
+    "hbm3_port0": {
+      "node_type": "tileNSU_HBM",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm",
+          "type": "hbm",
+          "base_address": "0x00000000",
+          "size": "0x40000000"
+        }
+      },
+      "params": {
+        "clock_domain_mhz": 1600,
+        "row_miss_latency_cycles": 15,
+        "read_latency_cycles": 25,
+        "write_latency_cycles": 15,
+        "resp_latency_cycles": 4
+      }
+    }
+  },
+  "connections": [
+    {
+      "from": "hbm_sat_tg_00.m_axi",
+      "to": "hbm0_port0.s_axi"
+    },
+    {
+      "from": "hbm_sat_tg_01.m_axi",
+      "to": "hbm0_port1.s_axi"
+    },
+    {
+      "from": "hbm_sat_tg_02.m_axi",
+      "to": "hbm0_port2.s_axi"
+    },
+    {
+      "from": "hbm_sat_tg_03.m_axi",
+      "to": "hbm0_port3.s_axi"
+    },
+    {
+      "from": "hbm_sat_tg_04.m_axi",
+      "to": "hbm1_port0.s_axi"
+    },
+    {
+      "from": "hbm_sat_tg_05.m_axi",
+      "to": "hbm1_port1.s_axi"
+    },
+    {
+      "from": "hbm_sat_tg_06.m_axi",
+      "to": "hbm1_port2.s_axi"
+    },
+    {
+      "from": "hbm_sat_tg_07.m_axi",
+      "to": "hbm1_port3.s_axi"
+    },
+    {
+      "from": "hbm_sat_tg_08.m_axi",
+      "to": "hbm2_port0.s_axi"
+    },
+    {
+      "from": "hbm_sat_tg_09.m_axi",
+      "to": "hbm2_port1.s_axi"
+    },
+    {
+      "from": "hbm_sat_tg_10.m_axi",
+      "to": "hbm2_port2.s_axi"
+    },
+    {
+      "from": "hbm_sat_tg_11.m_axi",
+      "to": "hbm2_port3.s_axi"
+    },
+    {
+      "from": "hbm_sat_tg_12.m_axi",
+      "to": "hbm3_port0.s_axi"
+    }
+  ],
+  "hbm_settings": {
+    "num_pc": 16,
+    "shared_bw_MBps": 25600,
+    "nmu_bw_MBps": 12800,
+    "page_policy": "open_page"
+  }
+}

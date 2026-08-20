@@ -1,0 +1,49 @@
+CompileFlags:
+  Add:
+    # C++ standard
+    - -std=c++17
+    
+    # Preprocessor defines (common ones - users can adjust based on build variant)
+    - -DTRACING_ON=1
+    
+    # Main include paths (from root)
+    - -I/mnt/dev/noc/include
+    - -I/mnt/dev/noc/src
+    - -I/mnt/dev/noc/ext
+    
+    # NOC-specific source directories
+    - -I/mnt/dev/noc/src/noc/axi
+    - -I/mnt/dev/noc/src/noc/interface
+    - -I/mnt/dev/noc/src/noc/internals
+    - -I/mnt/dev/noc/src/noc/main
+    - -I/mnt/dev/noc/src/noc/test
+    - -I/mnt/dev/noc/src/noc/topology
+    - -I/mnt/dev/noc/src/noc/external
+    
+    # SystemVerilogAXI traffic library includes
+    - -I/mnt/dev/noc/src/noc/lib/external/SystemVerilogAXI/axi_traffic/include
+    - -I/mnt/dev/noc/src/noc/lib/external/SystemVerilogAXI/axi_traffic/AxisTrafficGenerator
+    - -I/mnt/dev/noc/src/noc/lib/external/SystemVerilogAXI/axi_traffic/AxisTrafficGenerator/strategies
+    - -I/mnt/dev/noc/src/noc/lib/external/SystemVerilogAXI/axi_traffic/AxiTrafficGenerator
+    - -I/mnt/dev/noc/src/noc/lib/external/SystemVerilogAXI/axi_traffic/AxiTrafficGenerator/strategies
+    
+    # Build directories for generated headers (adjust build variant as needed)
+    # Most common: build/NULL (adjust if using different variant like X86, ARM, etc.)
+    - -I/mnt/dev/noc/build/NULL
+    - -I/mnt/dev/noc/build/NULL/debug
+    - -I/mnt/dev/noc/build/NULL/params
+    
+    # Verilator includes (if needed)
+    - -I/usr/local/share/verilator/include
+    
+  Remove:
+    # Remove any potentially conflicting flags if needed
+    # Add specific flags here if you encounter issues
+
+Diagnostics:
+  UnusedIncludes: Relaxed
+  MissingIncludes: Relaxed
+
+Index:
+  Background: Build
+

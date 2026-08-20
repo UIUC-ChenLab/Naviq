@@ -1,0 +1,9 @@
+{
+  "kind": "naviq.placement",
+  "version": 1,
+  "name": "aximm_rtl_memory_smoke",
+  "placements": {
+    "tg_0.m_axi": "NOC_NMU512_X0Y0",
+    "rtl_memory.s_axi": "NOC_NSU512_X0Y0"
+  }
+}

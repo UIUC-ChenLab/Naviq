@@ -1,0 +1,68 @@
+{
+  "description": "1hbm_to_1hbm: AXIMM NMU traffic generator targeting HBM controller port 0 through tileNSU_HBM.",
+  "record_mode_interfaces": 0,
+  "record_nps": 0,
+  "record_nps_gap_cycles": 50,
+  "nodes": [
+    {
+      "node_type": "AxiRandomTrafficGenerator",
+      "connections": [
+        {
+          "connectTo": "NMU",
+          "clock_domain": 500,
+          "connectLoc": "NOC_NMU512_X0Y18",
+          "protocol": "AXIMM"
+        }
+      ],
+      "parameters": {
+        "seed": 2,
+        "address_distribution": "INCREMENT",
+        "align_addresses": true,
+        "nsu_min_addrs": [64],
+        "nsu_address_spaces": [65472],
+        "min_transaction_size_bytes": 512,
+        "max_transaction_size_bytes": 512,
+        "max_write_commands": 1000
+      }
+    },
+    {
+      "node_type": "tileNSU_HBM",
+      "connections": [
+        {
+          "connectTo": "NSU",
+          "clock_domain": 500,
+          "connectLoc": "HBM_MC_X0Y0",
+          "protocol": "AXIMM"
+        }
+      ],
+      "parameters": {
+        "sim_cycles": 10000000,
+        "base_addr": 0,
+        "memory_size": 65536,
+        "read_latency": 1,
+        "write_latency": 1,
+        "requestorId": 0,
+        "hbm_controller_id": 0,
+        "hbm_port_id": 0,
+        "hbm_pseudo_channel_id": 0,
+        "hbm_pseudo_channel_base_addr": 0,
+        "hbm_pseudo_channel_size": 65536,
+        "read_latency_cycles": 30,
+        "write_latency_cycles": 20,
+        "resp_latency_cycles": 8,
+        "port_queue_depth": 16,
+        "max_outstanding_reads": 16,
+        "max_outstanding_writes": 16,
+        "issue_interval_cycles": 0,
+        "shared_bw_MBps": 51200,
+        "banks_per_pseudo_channel": 16,
+        "row_hit_latency_cycles": 4,
+        "row_miss_latency_cycles": 18,
+        "bank_busy_cycles": 12,
+        "cmd_bus_cycles": 2,
+        "page_policy": "open_page"
+      }
+    }
+  ],
+  "noc_probes": []
+}

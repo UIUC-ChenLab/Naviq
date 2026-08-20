@@ -1,0 +1,107 @@
+{
+  "kind": "naviq.connections",
+  "version": 1,
+  "name": "nat_chain",
+  "components": {
+    "nat0": {
+      "node_type": "OverloadedNatRtlNode",
+      "ports": {
+        "s_axis": {
+          "role": "slave",
+          "protocol": "axis"
+        },
+        "m_axis": {
+          "role": "master",
+          "protocol": "axis"
+        }
+      },
+      "params": {
+        "expected_packets": 2,
+        "reset_cycles": 2500
+      }
+    },
+    "packet_src": {
+      "node_type": "AxisPacketTrafficGenerator",
+      "ports": {
+        "m_axis": {
+          "role": "master",
+          "protocol": "axis"
+        }
+      },
+      "params": {
+        "profile": "ipv4_tcp",
+        "max_packets": 2,
+        "initial_gap_cycles": 2600,
+        "min_gap_cycles": 4096,
+        "max_gap_cycles": 4096
+      }
+    },
+    "packet_sink": {
+      "node_type": "AxisPacketCheckerSink",
+      "ports": {
+        "s_axis": {
+          "role": "slave",
+          "protocol": "axis"
+        }
+      },
+      "params": {
+        "check_mode": "nat_outbound",
+        "expected_packets": 2,
+        "validate_ipv4_checksum": false,
+        "validate_l4_checksum": false
+      }
+    }
+  },
+  "connections": [
+    {
+      "from": "packet_src.m_axis",
+      "to": "nat0.s_axis"
+    },
+    {
+      "from": "nat0.m_axis",
+      "to": "packet_sink.s_axis"
+    }
+  ],
+  "smartnic_sim": {
+    "modules": {
+      "nat0": {
+        "kind": "nat",
+        "params": {
+          "expected_packets": 2,
+          "reset_cycles": 2500
+        }
+      }
+    },
+    "endpoints": {
+      "packet_src": {
+        "kind": "axis_packet_source",
+        "params": {
+          "profile": "ipv4_tcp",
+          "max_packets": 2,
+          "initial_gap_cycles": 2600,
+          "min_gap_cycles": 4096,
+          "max_gap_cycles": 4096
+        }
+      },
+      "packet_sink": {
+        "kind": "axis_packet_checker",
+        "params": {
+          "check_mode": "nat_outbound",
+          "expected_packets": 2,
+          "validate_ipv4_checksum": false,
+          "validate_l4_checksum": false
+        }
+      },
+      "nat_in": {
+        "kind": "rtl_module_port",
+        "module": "nat0",
+        "port": "slave"
+      },
+      "nat_out": {
+        "kind": "rtl_module_port",
+        "module": "nat0",
+        "port": "master"
+      }
+    }
+  }
+}

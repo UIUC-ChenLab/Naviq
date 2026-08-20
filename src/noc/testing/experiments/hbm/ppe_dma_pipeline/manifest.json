@@ -1,0 +1,28 @@
+{
+  "id": "hbm.ppe_dma_pipeline",
+  "title": "HBM DMA to PPE datapath baseline",
+  "canonical_driver": "src/noc/testing/experiments/hbm/ppe_dma_pipeline/run_compare.py",
+  "memory_endpoint_type": "hbm",
+  "cases": [
+    {
+      "name": "direct",
+      "run_label": "smartnic_hbm_direct_dma_pkt500_hbmclk1600_buf128_mo32_rrob128_funcpreload",
+      "with_ppe": false,
+      "packets": 500
+    },
+    {
+      "name": "ppe",
+      "run_label": "smartnic_hbm_ppe_dma_pkt500_hbmclk1600_buf128_mo32_rrob128_funcpreload",
+      "with_ppe": true,
+      "packets": 500
+    }
+  ],
+  "result_criteria": [
+    "measurement_valid is true",
+    "memory_endpoint_type == hbm",
+    "packets_received == packets_expected == 500",
+    "checker_bytes_received == axis_bytes_emitted",
+    "dma_bytes_read > 0",
+    "operation and AXIS stream windows are present"
+  ]
+}

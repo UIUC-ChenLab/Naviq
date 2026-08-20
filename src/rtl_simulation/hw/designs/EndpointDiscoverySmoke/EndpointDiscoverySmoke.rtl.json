@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "design": "EndpointDiscoverySmoke",
+  "top_module": "EndpointDiscoverySmoke",
+  "sources": [
+    "EndpointDiscoverySmoke.sv",
+    "../../include/xpm_nmu_mm.sv",
+    "../../include/xpm_nsu_mm.sv",
+    "../../include/xpm_nmu_strm.sv",
+    "../../include/xpm_nsu_strm.sv"
+  ],
+  "include_dirs": ["../../include"],
+  "endpoints": [
+    {
+      "name": "smoke_nmu_mm",
+      "instance_path": "u_nmu_mm",
+      "protocol": "aximm",
+      "role": "nmu",
+      "connections": [{"connect_to": "NSU", "connect_loc": "SMOKE_NSU_MM", "clock_domain": "rtl"}]
+    },
+    {
+      "name": "smoke_nsu_mm",
+      "instance_path": "u_nsu_mm",
+      "protocol": "aximm",
+      "role": "nsu",
+      "connections": [{"connect_to": "NMU", "connect_loc": "SMOKE_NMU_MM", "clock_domain": "rtl"}]
+    },
+    {
+      "name": "smoke_nmu_axis",
+      "instance_path": "u_nmu_axis",
+      "protocol": "axis",
+      "role": "nmu",
+      "connections": [{"connect_to": "NSU", "connect_loc": "SMOKE_NSU_AXIS", "clock_domain": "rtl"}]
+    },
+    {
+      "name": "smoke_nsu_axis",
+      "instance_path": "u_nsu_axis",
+      "protocol": "axis",
+      "role": "nsu",
+      "connections": [{"connect_to": "NMU", "connect_loc": "SMOKE_NMU_AXIS", "clock_domain": "rtl"}]
+    }
+  ]
+}

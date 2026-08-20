@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "id": "evaluation.uncapped_sensitivity",
+  "title": "Uncapped offered-load sensitivity",
+  "status": "maintained",
+  "runner": "noc_testing/experiments/evaluation/run_uncapped_sensitivity.py",
+  "default_args": [],
+  "output_argument": "--artifact-root",
+  "requires": ["gem5-null"],
+  "inputs": ["noc_testing/experiments/evaluation/run_uncapped_sensitivity.py"],
+  "reference_paths": ["tests/gem5/noc/trusted_results"],
+  "validation": "Run after the Experiment 1 and 4 baselines are reproduced; inspect the generated summary CSV."
+}

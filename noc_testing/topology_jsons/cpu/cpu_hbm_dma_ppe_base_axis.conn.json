@@ -1,0 +1,145 @@
+{
+  "kind": "naviq.connections",
+  "version": 1,
+  "name": "cpu_hbm_dma_ppe_base_axis",
+  "hbm_settings": {
+    "num_pc": 1
+  },
+  "components": {
+    "hbm0_port0": {
+      "node_type": "tileNSU_HBM",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm",
+          "type": "hbm",
+          "base_address": "0x4000000000",
+          "size": "0x40000000"
+        }
+      },
+      "params": {}
+    },
+    "cpu_mem": {
+      "node_type": "BramEndpoint",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm",
+          "base_address": "0x0",
+          "size": "0x1000000"
+        }
+      },
+      "params": {}
+    },
+    "dma_ctrl": {
+      "node_type": "DdrPacketDmaControl",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm",
+          "base_address": "0x40000000",
+          "size": "0x1000"
+        }
+      },
+      "params": {}
+    },
+    "checker": {
+      "node_type": "AxisPacketCheckerSink",
+      "ports": {
+        "s_axis": {
+          "role": "slave",
+          "protocol": "axis"
+        }
+      },
+      "params": {}
+    },
+    "ppe_in": {
+      "node_type": "PacketProcessingEngineBaseRtlIngress",
+      "ports": {
+        "s_axis": {
+          "role": "slave",
+          "protocol": "axis"
+        }
+      },
+      "params": {}
+    },
+    "cpu_aximm": {
+      "node_type": "CpuNocBridge",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      },
+      "params": {}
+    },
+    "dma_aximm": {
+      "node_type": "DdrPacketDmaNode",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      },
+      "params": {}
+    },
+    "dma_axis": {
+      "node_type": "DdrPacketDmaNode",
+      "ports": {
+        "m_axis": {
+          "role": "master",
+          "protocol": "axis"
+        }
+      },
+      "params": {}
+    },
+    "ppe_out": {
+      "node_type": "PacketProcessingEngineBaseRtlEgress",
+      "ports": {
+        "m_axis": {
+          "role": "master",
+          "protocol": "axis"
+        }
+      },
+      "params": {}
+    }
+  },
+  "connections": [
+    {
+      "from": "cpu_aximm.m_axi",
+      "to": "cpu_mem.s_axi",
+      "RequiredBW": 500,
+      "RequiredLatency": 300
+    },
+    {
+      "from": "cpu_aximm.m_axi",
+      "to": "hbm0_port0.s_axi",
+      "RequiredBW": 500,
+      "RequiredLatency": 300
+    },
+    {
+      "from": "dma_aximm.m_axi",
+      "to": "hbm0_port0.s_axi",
+      "RequiredBW": 500,
+      "RequiredLatency": 300
+    },
+    {
+      "from": "cpu_aximm.m_axi",
+      "to": "dma_ctrl.s_axi",
+      "RequiredBW": 500,
+      "RequiredLatency": 300
+    },
+    {
+      "from": "dma_axis.m_axis",
+      "to": "ppe_in.s_axis",
+      "RequiredBW": 500,
+      "RequiredLatency": 300
+    },
+    {
+      "from": "ppe_out.m_axis",
+      "to": "checker.s_axis",
+      "RequiredBW": 500,
+      "RequiredLatency": 300
+    }
+  ]
+}

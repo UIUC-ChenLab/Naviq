@@ -1,0 +1,6 @@
+name,topology_json,placement_json,num_write_transactions_cfg,tg_axi_data_width_bits,bram_data_width,noc_axi_clk_mhz,qos_read_bw_MBps,qos_write_bw_MBps,qos_avg_burst
+axis_fifo_test,topology_jsons/axis/axis_fifo_topo.conn.json,topology_jsons/axis/axis_fifo_placement.place.json,160,512,512,1000
+name,topology_json,placement_json,num_write_transactions_cfg,tg_axi_data_width_bits,bram_data_width,noc_axi_clk_mhz,qos_read_bw_MBps,qos_write_bw_MBps,qos_avg_burst
+# axis_fifo_test,topology_jsons/axis/axis_fifo_topo.conn.json,topology_jsons/axis/axis_fifo_placement.place.json,160,512,512,1000
+axis_fifo_test,topology_jsons/axis/axis_fifo_topo.conn.json,topology_jsons/axis/axis_fifo_placement.place.json,1600,512,512,1000
+axis_fifo_test,topology_jsons/axis/axis_fifo_topo.conn.json,topology_jsons/axis/axis_fifo_placement.place.json,16384,512,512,1000

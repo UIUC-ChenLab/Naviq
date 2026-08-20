@@ -1,0 +1,2 @@
+name,tg_mode,topology_json,axi_write_len_beats,axi_write_size_bytes,axi_write_bandwidth_cfg_MBps,num_write_transactions_cfg,tg_axi_data_width_bits,bram_data_width,noc_axi_clk_mhz,qos_read_bw_MBps,qos_write_bw_MBps,qos_avg_burst
+ddr_1nmu_1mc_test,rw_interleaved,topology_jsons/ddr/1nmu_to_1ddr.conn.json,16,16,800,50,512,512,1000

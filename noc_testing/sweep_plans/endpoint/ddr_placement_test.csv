@@ -1,0 +1,35 @@
+name,tg_mode,num_write_transactions_cfg,axi_write_len_beats,axi_write_size_bytes,topology_json,placement_json,sim_mode
+# DDR topology - RTL mode
+ddr_2hop_64pkt_rtl,rw_interleaved,64,16,32,topology_jsons/placement_tests/1nmu_to_1ddr.conn.json,topology_jsons/placement_tests/1to1_2hop_ddr.place.json,rtl
+ddr_2hop_256pkt_rtl,rw_interleaved,256,16,32,topology_jsons/placement_tests/1nmu_to_1ddr.conn.json,topology_jsons/placement_tests/1to1_2hop_ddr.place.json,rtl
+ddr_2hop_1024pkt_rtl,rw_interleaved,1024,16,32,topology_jsons/placement_tests/1nmu_to_1ddr.conn.json,topology_jsons/placement_tests/1to1_2hop_ddr.place.json,rtl
+ddr_2hop_2048pkt_rtl,rw_interleaved,2048,16,32,topology_jsons/placement_tests/1nmu_to_1ddr.conn.json,topology_jsons/placement_tests/1to1_2hop_ddr.place.json,rtl
+ddr_8hop_64pkt_rtl,rw_interleaved,64,16,32,topology_jsons/placement_tests/1nmu_to_1ddr.conn.json,topology_jsons/placement_tests/1to1_8hop_ddr.place.json,rtl
+ddr_8hop_256pkt_rtl,rw_interleaved,256,16,32,topology_jsons/placement_tests/1nmu_to_1ddr.conn.json,topology_jsons/placement_tests/1to1_8hop_ddr.place.json,rtl
+ddr_8hop_1024pkt_rtl,rw_interleaved,1024,16,32,topology_jsons/placement_tests/1nmu_to_1ddr.conn.json,topology_jsons/placement_tests/1to1_8hop_ddr.place.json,rtl
+ddr_8hop_2048pkt_rtl,rw_interleaved,2048,16,32,topology_jsons/placement_tests/1nmu_to_1ddr.conn.json,topology_jsons/placement_tests/1to1_8hop_ddr.place.json,rtl
+ddr_16hop_64pkt_rtl,rw_interleaved,64,16,32,topology_jsons/placement_tests/1nmu_to_1ddr.conn.json,topology_jsons/placement_tests/1to1_16hop_ddr.place.json,rtl
+ddr_16hop_256pkt_rtl,rw_interleaved,256,16,32,topology_jsons/placement_tests/1nmu_to_1ddr.conn.json,topology_jsons/placement_tests/1to1_16hop_ddr.place.json,rtl
+ddr_16hop_1024pkt_rtl,rw_interleaved,1024,16,32,topology_jsons/placement_tests/1nmu_to_1ddr.conn.json,topology_jsons/placement_tests/1to1_16hop_ddr.place.json,rtl
+ddr_16hop_2048pkt_rtl,rw_interleaved,2048,16,32,topology_jsons/placement_tests/1nmu_to_1ddr.conn.json,topology_jsons/placement_tests/1to1_16hop_ddr.place.json,rtl
+ddr_32hop_64pkt_rtl,rw_interleaved,64,16,32,topology_jsons/placement_tests/1nmu_to_1ddr.conn.json,topology_jsons/placement_tests/1to1_32hop_ddr.place.json,rtl
+ddr_32hop_256pkt_rtl,rw_interleaved,256,16,32,topology_jsons/placement_tests/1nmu_to_1ddr.conn.json,topology_jsons/placement_tests/1to1_32hop_ddr.place.json,rtl
+ddr_32hop_1024pkt_rtl,rw_interleaved,1024,16,32,topology_jsons/placement_tests/1nmu_to_1ddr.conn.json,topology_jsons/placement_tests/1to1_32hop_ddr.place.json,rtl
+ddr_32hop_2048pkt_rtl,rw_interleaved,2048,16,32,topology_jsons/placement_tests/1nmu_to_1ddr.conn.json,topology_jsons/placement_tests/1to1_32hop_ddr.place.json,rtl
+# DDR topology - TLM mode
+# ddr_2hop_64pkt_tlm,rw_interleaved,64,16,32,topology_jsons/placement_tests/1nmu_to_1ddr.conn.json,topology_jsons/placement_tests/1to1_2hop_ddr.place.json,tlm
+# ddr_2hop_256pkt_tlm,rw_interleaved,256,16,32,topology_jsons/placement_tests/1nmu_to_1ddr.conn.json,topology_jsons/placement_tests/1to1_2hop_ddr.place.json,tlm
+# ddr_2hop_1024pkt_tlm,rw_interleaved,1024,16,32,topology_jsons/placement_tests/1nmu_to_1ddr.conn.json,topology_jsons/placement_tests/1to1_2hop_ddr.place.json,tlm
+# ddr_2hop_2048pkt_tlm,rw_interleaved,2048,16,32,topology_jsons/placement_tests/1nmu_to_1ddr.conn.json,topology_jsons/placement_tests/1to1_2hop_ddr.place.json,tlm
+# ddr_8hop_64pkt_tlm,rw_interleaved,64,16,32,topology_jsons/placement_tests/1nmu_to_1ddr.conn.json,topology_jsons/placement_tests/1to1_8hop_ddr.place.json,tlm
+# ddr_8hop_256pkt_tlm,rw_interleaved,256,16,32,topology_jsons/placement_tests/1nmu_to_1ddr.conn.json,topology_jsons/placement_tests/1to1_8hop_ddr.place.json,tlm
+# ddr_8hop_1024pkt_tlm,rw_interleaved,1024,16,32,topology_jsons/placement_tests/1nmu_to_1ddr.conn.json,topology_jsons/placement_tests/1to1_8hop_ddr.place.json,tlm
+# ddr_8hop_2048pkt_tlm,rw_interleaved,2048,16,32,topology_jsons/placement_tests/1nmu_to_1ddr.conn.json,topology_jsons/placement_tests/1to1_8hop_ddr.place.json,tlm
+# ddr_16hop_64pkt_tlm,rw_interleaved,64,16,32,topology_jsons/placement_tests/1nmu_to_1ddr.conn.json,topology_jsons/placement_tests/1to1_16hop_ddr.place.json,tlm
+# ddr_16hop_256pkt_tlm,rw_interleaved,256,16,32,topology_jsons/placement_tests/1nmu_to_1ddr.conn.json,topology_jsons/placement_tests/1to1_16hop_ddr.place.json,tlm
+# ddr_16hop_1024pkt_tlm,rw_interleaved,1024,16,32,topology_jsons/placement_tests/1nmu_to_1ddr.conn.json,topology_jsons/placement_tests/1to1_16hop_ddr.place.json,tlm
+# ddr_16hop_2048pkt_tlm,rw_interleaved,2048,16,32,topology_jsons/placement_tests/1nmu_to_1ddr.conn.json,topology_jsons/placement_tests/1to1_16hop_ddr.place.json,tlm
+# ddr_32hop_64pkt_tlm,rw_interleaved,64,16,32,topology_jsons/placement_tests/1nmu_to_1ddr.conn.json,topology_jsons/placement_tests/1to1_32hop_ddr.place.json,tlm
+# ddr_32hop_256pkt_tlm,rw_interleaved,256,16,32,topology_jsons/placement_tests/1nmu_to_1ddr.conn.json,topology_jsons/placement_tests/1to1_32hop_ddr.place.json,tlm
+# ddr_32hop_1024pkt_tlm,rw_interleaved,1024,16,32,topology_jsons/placement_tests/1nmu_to_1ddr.conn.json,topology_jsons/placement_tests/1to1_32hop_ddr.place.json,tlm
+# ddr_32hop_2048pkt_tlm,rw_interleaved,2048,16,32,topology_jsons/placement_tests/1nmu_to_1ddr.conn.json,topology_jsons/placement_tests/1to1_32hop_ddr.place.json,tlm

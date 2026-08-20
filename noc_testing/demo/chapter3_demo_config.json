@@ -1,0 +1,90 @@
+{
+  "live_experiments": {
+    "enabled_by_default": false,
+    "artifact_root": "noc_testing/demo/artifacts_ch3/live_experiments",
+    "common_args": {
+      "repeats": 1,
+      "bandwidth_mbps": 800,
+      "num_transactions": 64,
+      "beat_bytes": 32,
+      "beat_count": 16,
+      "data_width_bits": 512,
+      "bram_data_width_bits": 512,
+      "noc_clk_mhz": 1000,
+      "abs_max_tick": 10000000000
+    },
+    "experiments": {
+      "experiment1": {
+        "enabled": true,
+        "label": "Experiment 1 motivation sweep",
+        "script": "noc_testing/experiments/evaluation/run_experiment1.py",
+        "run_tag": "chapter3_demo_exp1",
+        "existing_summary_csv": "noc_testing/experiments/evaluation/artifacts/exp1_evaluation_1/analysis/repeat_01.csv",
+        "args": {
+          "hotspot_profile": "recommended"
+        }
+      },
+      "experiment2": {
+        "enabled": true,
+        "label": "Experiment 2 route-overlap sweep",
+        "script": "noc_testing/experiments/evaluation/run_experiment2.py",
+        "run_tag": "chapter3_demo_exp2",
+        "existing_summary_csv": "noc_testing/experiments/evaluation/artifacts/exp2_evaluation/analysis/repeat_01_final.csv",
+        "args": {
+          "hotspot_profile": "all",
+          "allow_validation_failures": true
+        }
+      },
+      "experiment3": {
+        "enabled": true,
+        "label": "Experiment 3 routing-strategy validation",
+        "script": "noc_testing/experiments/evaluation/run_experiment3.py",
+        "run_tag": "chapter3_demo_exp3",
+        "existing_summary_csv": "noc_testing/experiments/evaluation/artifacts/exp3_tornado_uncapped_tx500/analysis/repeat_01_final.csv",
+        "args": {
+          "workload_case": "exp2_tornado",
+          "strategies": "exp3_shortest,exp3_bad_path,exp3_high_overlap,exp3_path_diverse",
+          "bandwidth_mbps": 0,
+          "num_transactions": 500,
+          "hotspot_profile": "all",
+          "allow_validation_failures": true
+        }
+      },
+      "experiment4": {
+        "enabled": false,
+        "label": "Optional Experiment 4 memory-target sweep",
+        "script": "noc_testing/experiments/evaluation/run_experiment4.py",
+        "run_tag": "chapter3_demo_exp4",
+        "existing_summary_csv": "noc_testing/experiments/evaluation/artifacts/exp4_main_1/analysis/repeat_01_final.csv",
+        "args": {
+          "hotspot_profile": "all"
+        }
+      }
+    }
+  },
+  "live_gem5_smoke": {
+    "enabled": false,
+    "run_tag": "chapter3_demo_smoke",
+    "mode": "gem5_only",
+    "topo_gen": "in_house",
+    "row_index": 1,
+    "hotspot_mode": "off",
+    "gem5_cmd": [
+      "build/NULL/gem5.opt",
+      "src/noc/setup/noc_config.py"
+    ],
+    "row": {
+      "name": "chapter3_smoke_1to1",
+      "tg_mode": "write_only",
+      "topology_json": "topology_jsons/basic/1to1_aximm.conn.json",
+      "axi_write_len_beats": 16,
+      "axi_write_size_bytes": 16,
+      "axi_write_bandwidth_cfg_MBps": 800,
+      "num_write_transactions_cfg": 8,
+      "tg_axi_data_width_bits": 512,
+      "bram_data_width": 512,
+      "noc_axi_clk_mhz": 1000,
+      "abs_max_tick": 100000000
+    }
+  }
+}

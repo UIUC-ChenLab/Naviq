@@ -1,0 +1,29 @@
+{
+  "workload_case": "exp1_4to1_far",
+  "shortest_metrics": {
+    "avg_hop": 32.25,
+    "max_hop": 36,
+    "max_flows": 4,
+    "avg_pair": 0.1469830353967608,
+    "score": 0.5879321415870432,
+    "shared_fraction": 0.26804123711340205
+  },
+  "bad_metrics": {
+    "avg_hop": 32.25,
+    "max_hop": 36,
+    "max_flows": 4,
+    "avg_pair": 0.22486190829405894,
+    "score": 0.8994476331762358,
+    "shared_fraction": 0.2
+  },
+  "path_diverse_metrics": {
+    "avg_hop": 32.25,
+    "max_hop": 36,
+    "max_flows": 4,
+    "avg_pair": 0.070421399133632,
+    "score": 0.281685596534528,
+    "shared_fraction": 0.06666666666666667
+  },
+  "selection_rule_id": "min_overlap_under_hop_cap_v1",
+  "k_shortest_paths_considered_per_direction": 4
+}

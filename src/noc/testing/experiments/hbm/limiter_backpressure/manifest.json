@@ -1,0 +1,39 @@
+{
+  "id": "hbm.limiter_backpressure",
+  "title": "HBM DMA real RTL limiter backpressure",
+  "canonical_driver": "src/noc/testing/experiments/hbm/limiter_backpressure/run_compare.py",
+  "memory_endpoint_type": "hbm",
+  "rtl_node": "PacketRateLimiterThrottleRtlNode",
+  "limiter_scope": "csr_programmed_plus_axis_backpressure_v1",
+  "cases": [
+    {
+      "name": "none",
+      "run_label": "smartnic_hbm_rtl_limiter_none_pkt100",
+      "period": 1,
+      "allow": 1,
+      "packets": 100
+    },
+    {
+      "name": "moderate",
+      "run_label": "smartnic_hbm_rtl_limiter_moderate_pkt100",
+      "period": 8,
+      "allow": 1,
+      "packets": 100
+    },
+    {
+      "name": "strong",
+      "run_label": "smartnic_hbm_rtl_limiter_strong_pkt100",
+      "period": 16,
+      "allow": 1,
+      "packets": 100
+    }
+  ],
+  "result_criteria": [
+    "packets_received == 100",
+    "limiter_input_packets == 100",
+    "limiter_output_packets == 100",
+    "input, output, DMA, and checker bytes match",
+    "moderate and strong show increasing limiter-to-checker valid-only cycles",
+    "strong shows at least 10 percent throughput drop or AXIS window increase versus none"
+  ]
+}

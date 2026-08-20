@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "design": "AximmMemorySmoke",
+  "top_module": "AximmMemorySmoke",
+  "sources": [
+    "AximmMemorySmoke.sv",
+    "../../include/xpm_nsu_mm.sv"
+  ],
+  "include_dirs": ["../../include"],
+  "gem5_wrapper": {
+    "clock_signal": "clk",
+    "reset_signal": "resetn",
+    "data_width": 512,
+    "id_width": 4,
+    "addr_width": 32
+  },
+  "endpoints": [
+    {
+      "name": "aximm_memory",
+      "instance_path": "u_nsu",
+      "protocol": "aximm",
+      "role": "nsu",
+      "connections": [
+        {
+          "connect_to": "NMU",
+          "connect_loc": "NOC_NSU512_X0Y0",
+          "clock_domain": "rtl"
+        }
+      ]
+    }
+  ]
+}

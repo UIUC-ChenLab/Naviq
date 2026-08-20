@@ -1,0 +1,201 @@
+{
+  "kind": "naviq.connections",
+  "version": 1,
+  "name": "detailed_mixed_clocked",
+  "ddr_settings": {
+    "num_mc": 1,
+    "num_ports_per_mc": 1,
+    "controller_type": "DDR4_SDRAM",
+    "speed_grade": "DDR4-3200AC(24-24-24)",
+    "data_width": 64,
+    "memory_density": "8GB",
+    "component_width": "x8",
+    "rank": "1",
+    "slot": "Single",
+    "stackheight": "1",
+    "interleave_size_bytes": 256
+  },
+  "hbm_settings": {
+    "num_pc": 2,
+    "page_policy": "open_page"
+  },
+  "components": {
+    "ddr_writer": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "params": {
+        "clock_domain_mhz": 300,
+        "data_width": 512,
+        "beat_size_bytes": 64,
+        "min_transaction_size_bytes": 256,
+        "max_transaction_size_bytes": 256,
+        "transaction_size_distribution": "FIXED",
+        "read_write_mode": "WRITE_ONLY",
+        "max_write_commands": 16,
+        "max_write_bandwidth_mbps": 1200,
+        "min_gap_cycles": 0,
+        "max_gap_cycles": 4,
+        "max_outstanding_writes": 8,
+        "address_distribution": "INCREMENT",
+        "address_increment": 256,
+        "align_addresses": true
+      },
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "hbm_reader_writer": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "params": {
+        "data_width": 512,
+        "beat_size_bytes": 64,
+        "min_transaction_size_bytes": 128,
+        "max_transaction_size_bytes": 512,
+        "transaction_size_distribution": "UNIFORM",
+        "read_write_mode": "INTERLEAVED",
+        "max_write_commands": 24,
+        "max_write_bandwidth_mbps": 900,
+        "max_read_bandwidth_mbps": 900,
+        "max_outstanding_writes": 4,
+        "nsu_selection": "RANDOM",
+        "address_distribution": "UNIFORM",
+        "align_addresses": true
+      },
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm",
+          "clock_domain_mhz": 250
+        }
+      }
+    },
+    "ddr0_port0": {
+      "node_type": "DdrMemoryController",
+      "params": {},
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm",
+          "type": "ddr",
+          "base_address": "0x00000000",
+          "size": "0x100000000",
+          "clock_domain_mhz": 300
+        }
+      }
+    },
+    "hbm0_port0": {
+      "node_type": "tileNSU_HBM",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm",
+          "type": "hbm",
+          "base_address": "0x100000000",
+          "size": "0x40000000",
+          "clock_domain_mhz": 450
+        }
+      }
+    },
+    "axis_source": {
+      "node_type": "AxisRandomTrafficGenerator",
+      "params": {
+        "clock_domain_mhz": 200,
+        "data_width": 512,
+        "tid_width": 16,
+        "tdest_width": 12,
+        "tuser_width": 16,
+        "packet_size_distribution": "FIXED",
+        "min_packet_size_bytes": 256,
+        "max_packet_size_bytes": 256,
+        "gap_distribution": "FIXED",
+        "min_gap_cycles": 2,
+        "max_gap_cycles": 2,
+        "tdest_distribution": "FIXED",
+        "min_tdest": 0,
+        "max_tdest": 0,
+        "max_packets": 16
+      },
+      "ports": {
+        "m_axis": {
+          "role": "master",
+          "protocol": "axis"
+        }
+      }
+    },
+    "axis_fifo": {
+      "node_type": "AxisFifoNode",
+      "params": {
+        "fifo_depth": 512,
+        "delay": 2,
+        "expected_packets": 16,
+        "ready_percent": 100,
+        "data_width": 512,
+        "id_width": 16,
+        "dest_width": 12
+      },
+      "ports": {
+        "s_axis": {
+          "role": "slave",
+          "protocol": "axis",
+          "clock_domain_mhz": 200
+        },
+        "m_axis": {
+          "role": "master",
+          "protocol": "axis",
+          "clock_domain_mhz": 250
+        }
+      }
+    },
+    "axis_checker": {
+      "node_type": "AxisPacketCheckerSink",
+      "params": {
+        "data_width": 512,
+        "tid_width": 16,
+        "tdest_width": 12,
+        "tuser_width": 16,
+        "check_mode": "exact",
+        "expected_packets": 16,
+        "ready_percent": 100,
+        "print_summary": true
+      },
+      "ports": {
+        "s_axis": {
+          "role": "slave",
+          "protocol": "axis",
+          "clock_domain_mhz": 250
+        }
+      }
+    }
+  },
+  "connections": [
+    {
+      "from": "ddr_writer.m_axi",
+      "to": "ddr0_port0.s_axi",
+      "RequiredBW": 1200,
+      "RequiredLatency": 300
+    },
+    {
+      "from": "hbm_reader_writer.m_axi",
+      "to": "hbm0_port0.s_axi",
+      "qos": {
+        "read_bw": 900,
+        "write_bw": 900,
+        "latency": 240
+      }
+    },
+    {
+      "from": "axis_source.m_axis",
+      "to": "axis_fifo.s_axis",
+      "RequiredBW": 500,
+      "RequiredLatency": 160
+    },
+    {
+      "from": "axis_fifo.m_axis",
+      "to": "axis_checker.s_axis",
+      "RequiredBW": 500,
+      "RequiredLatency": 160
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "kind": "naviq.placement",
+  "version": 1,
+  "name": "axis_module_smoke",
+  "placements": {
+    "packet_sink.s_axis": "NOC_NSU512_X0Y0",
+    "packet_src.m_axis": "NOC_NMU512_X0Y0",
+    "module_in.s_axis": "NOC_NSU512_X1Y0",
+    "module_out.m_axis": "NOC_NMU512_X1Y0"
+  }
+}

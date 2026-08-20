@@ -1,0 +1,3 @@
+name,axi_write_len_beats,axi_write_size_bytes,axi_write_bandwidth_cfg_MBps,num_write_transactions_cfg
+short_8B,8,8,800,50
+burst16_16B,16,16,800,50

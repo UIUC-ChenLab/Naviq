@@ -1,0 +1,5 @@
+{
+  "NOC_NPS_VNOC_X3Y0": { "x": 420, "y": 310 },
+  "NOC_NPS_VNOC_X3Y1": { "x": 980, "y": 310 },
+  "_comment": "x,y are pixel coordinates in matplotlib data space (hover the floorplan and read x,y from the toolbar). Match keys to CSV 'nocname'."
+}

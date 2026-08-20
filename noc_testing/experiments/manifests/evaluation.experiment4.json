@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "id": "evaluation.experiment4",
+  "title": "Evaluation Experiment 4: offered-load scaling",
+  "status": "maintained",
+  "runner": "noc_testing/experiments/evaluation/run_experiment4.py",
+  "default_args": ["--mode", "plan-only"],
+  "output_argument": "--artifact-root",
+  "requires": ["gem5-null"],
+  "inputs": ["noc_testing/experiments/evaluation"],
+  "reference_paths": ["tests/gem5/noc/trusted_results"],
+  "validation": "Validate the generated case manifest and retained reference metrics."
+}

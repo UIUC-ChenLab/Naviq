@@ -1,0 +1,46 @@
+{
+  "id": "hbm.aes_ctr_pipeline",
+  "title": "HBM AES-CTR DMA pipeline",
+  "status": "planned",
+  "canonical_driver": null,
+  "memory_endpoint_type": "hbm",
+  "datapath": "HBM -> DMA -> AES-CTR -> DMA -> HBM",
+  "target_scale": {
+    "aes_engines": 32,
+    "nmus_per_engine": 2
+  },
+  "planned_cases": [
+    {
+      "name": "direct_dma_copy_baseline",
+      "description": "HBM DMA read/write path without AES"
+    },
+    {
+      "name": "aes_1_engine",
+      "description": "Single AES-CTR engine correctness and smoke performance"
+    },
+    {
+      "name": "aes_4_engine",
+      "description": "Small multi-engine scaling check"
+    },
+    {
+      "name": "aes_8_engine",
+      "description": "Intermediate scaling check"
+    },
+    {
+      "name": "aes_16_engine",
+      "description": "Large scaling check"
+    },
+    {
+      "name": "aes_32_engine",
+      "description": "Target full-scale HBM AES-CTR experiment"
+    }
+  ],
+  "result_criteria": [
+    "CPU programs AES key/vector state for every engine",
+    "AES output matches a software reference",
+    "all engines complete",
+    "HBM input/output byte counts match expected transfer size",
+    "direct DMA copy baseline is reported",
+    "32-engine result identifies the limiting resource"
+  ]
+}

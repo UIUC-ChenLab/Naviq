@@ -1,0 +1,101 @@
+{
+  "kind": "naviq.connections",
+  "version": 1,
+  "name": "checksum_chain",
+  "components": {
+    "checksum0": {
+      "node_type": "ChecksumRtlNode",
+      "ports": {
+        "s_axis": {
+          "role": "slave",
+          "protocol": "axis"
+        },
+        "m_axis": {
+          "role": "master",
+          "protocol": "axis"
+        }
+      },
+      "params": {
+        "expected_packets": 2,
+        "reset_cycles": 8
+      }
+    },
+    "packet_src": {
+      "node_type": "AxisPacketTrafficGenerator",
+      "ports": {
+        "m_axis": {
+          "role": "master",
+          "protocol": "axis"
+        }
+      },
+      "params": {
+        "profile": "mixed_tcp_udp",
+        "max_packets": 2,
+        "corrupt_ipv4_checksum": true,
+        "corrupt_l4_checksum": true
+      }
+    },
+    "packet_sink": {
+      "node_type": "AxisPacketCheckerSink",
+      "ports": {
+        "s_axis": {
+          "role": "slave",
+          "protocol": "axis"
+        }
+      },
+      "params": {
+        "check_mode": "ipv4",
+        "expected_packets": 2
+      }
+    }
+  },
+  "connections": [
+    {
+      "from": "packet_src.m_axis",
+      "to": "checksum0.s_axis"
+    },
+    {
+      "from": "checksum0.m_axis",
+      "to": "packet_sink.s_axis"
+    }
+  ],
+  "smartnic_sim": {
+    "modules": {
+      "checksum0": {
+        "kind": "checksum",
+        "params": {
+          "expected_packets": 2,
+          "reset_cycles": 8
+        }
+      }
+    },
+    "endpoints": {
+      "packet_src": {
+        "kind": "axis_packet_source",
+        "params": {
+          "profile": "mixed_tcp_udp",
+          "max_packets": 2,
+          "corrupt_ipv4_checksum": true,
+          "corrupt_l4_checksum": true
+        }
+      },
+      "packet_sink": {
+        "kind": "axis_packet_checker",
+        "params": {
+          "check_mode": "ipv4",
+          "expected_packets": 2
+        }
+      },
+      "checksum_in": {
+        "kind": "rtl_module_port",
+        "module": "checksum0",
+        "port": "slave"
+      },
+      "checksum_out": {
+        "kind": "rtl_module_port",
+        "module": "checksum0",
+        "port": "master"
+      }
+    }
+  }
+}

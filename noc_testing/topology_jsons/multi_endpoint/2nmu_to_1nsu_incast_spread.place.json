@@ -1,0 +1,10 @@
+{
+  "kind": "naviq.placement",
+  "version": 1,
+  "name": "2nmu_to_1nsu_incast_spread",
+  "placements": {
+    "tg_0.m_axi": "NOC_NMU512_X0Y18",
+    "tg_1.m_axi": "NOC_NMU512_X1Y18",
+    "bram_0.s_axi": "NOC_NSU512_X1Y0"
+  }
+}

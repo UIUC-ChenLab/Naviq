@@ -1,0 +1,114 @@
+/*
+ * Copyright (c) 2011 Advanced Micro Devices, Inc.
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met: redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer;
+ * redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution;
+ * neither the name of the copyright holders nor the names of its
+ * contributors may be used to endorse or promote products derived from
+ * this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+#ifndef __NOCBASICLINK_HH__
+#define __NOCBASICLINK_HH__
+
+#include <iostream>
+#include <string>
+#include <vector>
+
+#include "mem/ruby/network/BasicRouter.hh"
+//  #include "mem/ruby/slicc_interface/AbstractController.hh"
+#include "params/NocBasicExtLink.hh"
+#include "params/NocBasicIntLink.hh"
+#include "params/NocBasicLink.hh"
+#include "sim/serialize.hh"
+#include "sim/sim_object.hh"
+#include "noc/topology/NocTopology.hh"
+
+// namespace gem5{
+//  namespace ruby{
+//    class Topology;
+//  }
+// }
+namespace gem5
+{
+
+namespace noc
+{
+    class NocTopology;
+
+ class NocBasicLink : public SimObject
+ {
+   public:
+     PARAMS(NocBasicLink);
+     NocBasicLink(const Params &p);
+
+     void init();
+
+     void print(std::ostream& out) const;
+
+     void serialize(CheckpointOut &cp) const override;
+     void unserialize(CheckpointIn &cp) override;
+
+     int get_id() const { return m_id; }
+
+     Cycles m_latency;
+     int m_bandwidth_factor;
+     int m_weight;
+     int m_id;
+     std::vector<int> mVnets;
+ };
+
+ inline std::ostream&
+ operator<<(std::ostream& out, const NocBasicLink& obj)
+ {
+     obj.print(out);
+     out << std::flush;
+     return out;
+ }
+
+ class NocBasicExtLink : public NocBasicLink
+ {
+   public:
+     PARAMS(NocBasicExtLink);
+     NocBasicExtLink(const Params &p);
+
+     void serialize(CheckpointOut &cp) const override;
+     void unserialize(CheckpointIn &cp) override;
+
+     friend class NocTopology;
+ };
+
+ class NocBasicIntLink : public NocBasicLink
+ {
+   public:
+     PARAMS(NocBasicIntLink);
+     NocBasicIntLink(const Params &p);
+
+     void serialize(CheckpointOut &cp) const override;
+     void unserialize(CheckpointIn &cp) override;
+
+     friend class NocTopology;
+ };
+
+ } // namespace noc
+ } // namespace gem5
+
+ #endif //__MEM_RUBY_NETWORK_BASICLINK_HH__

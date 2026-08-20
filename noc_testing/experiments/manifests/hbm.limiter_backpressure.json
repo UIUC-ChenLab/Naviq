@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "id": "hbm.limiter_backpressure",
+  "title": "HBM RTL limiter-backpressure comparison",
+  "status": "manual",
+  "runner": "src/noc/testing/experiments/hbm/limiter_backpressure/run_compare.py",
+  "default_args": [],
+  "requires": ["gem5-x86", "external-rtl"],
+  "inputs": ["src/noc/testing/experiments/hbm/limiter_backpressure/manifest.json"],
+  "reference_paths": [],
+  "validation": "All rate cases must preserve packet and byte counts; stronger limiting must show the documented performance effect."
+}

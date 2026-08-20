@@ -1,0 +1,148 @@
+{
+    "description": "Node configuration for 2x1_to_1axis topology - AxisBuggyGenerators (2 NMUs; wraps AxisRandomStrategy) and two AxisSinkNodes (NSUs)",
+    "record_nps": 1,
+    "record_nps_gap_cycles": 50,
+    "nodes": [
+      {
+        "node_type": "AxisBuggyGenerator",
+        "connections": [
+          {
+            "connectTo": "NMU",
+            "clock_domain": 500,
+            "connectLoc": "NOC_NMU512_X3Y14",
+            "protocol": "AXIS"
+          },
+          {
+            "connectTo": "NMU",
+            "clock_domain": 500,
+            "connectLoc": "NOC_NMU512_X3Y13",
+            "protocol": "AXIS"
+          }
+        ],
+        "parameters": {
+          "seed": 2,
+          "max_gap_cycles": 0,
+          "data_width": 512,
+          "max_tid": 0,
+          "max_tdest": 0,
+          "max_packets": 1000,
+          "min_packet_size_bytes": 64,
+  
+          "tid_corrupt_enable": false,
+          "tid_corrupt_chance": 0.5,
+  
+          "stall_drop_tvalid_enable": false,
+          "stall_drop_tvalid_chance": 1.0,
+  
+          "stall_mutate_payload_enable": false,
+          "stall_mutate_payload_chance": 1.0,
+  
+          "stall_drop_tlast_enable": false,
+          "stall_drop_tlast_chance": 1.0,
+  
+          "valid_percent": 100,
+          "valid_percent_start_fraction": 1,
+  
+          "second_master_enable": true,
+          "second_seed": 2,
+          "second_max_gap_cycles": 0,
+          "second_data_width": 512,
+          "second_max_tid": 0,
+          "second_max_tdest": 0,
+          "second_max_packets": 1000,
+          "second_min_packet_size_bytes": 64
+        }
+      },
+      {
+        "node_type": "AxisSinkNode",
+        "connections": [
+          {
+            "connectTo": "NSU",
+            "clock_domain": 500,
+            "connectLoc": "NOC_NSU512_X3Y14",
+            "protocol": "AXIS"
+          }
+        ],
+        "parameters": {
+          "sim_cycles": 10000000000000000,
+          "ready_percent": 100,
+          "ready_percent_start_fraction": 0.5,
+          "expected_packets": 999,
+          "print_data": false,
+          "data_width": 512,
+          "id_width": 16,
+          "dest_width": 12
+        }
+      },
+      {
+        "node_type": "AxisSinkNode",
+        "connections": [
+          {
+            "connectTo": "NSU",
+            "clock_domain": 500,
+            "connectLoc": "NOC_NSU512_X3Y13",
+            "protocol": "AXIS"
+          }
+        ],
+        "parameters": {
+          "sim_cycles": 10000000000000000,
+          "ready_percent": 100,
+          "ready_percent_start_fraction": 0,
+          "expected_packets": 999,
+          "print_data": false,
+          "data_width": 512,
+          "id_width": 16,
+          "dest_width": 12
+        }
+      }
+    ],
+    "noc_probes": [
+      {
+        "enabled": 0,
+        "probe_id": "1",
+        "probe_mode": "snooper",
+        "hook_point_0":
+          {
+            "connectLoc": "nocinterface1",
+            "hook_id": "noc_if.state.node_side",
+            "fields": ["axis.tlast", "axis.tready"],
+            "print_cycles": 1
+          }
+      },
+      {
+        "enabled": 0,
+        "path_match_trace": 1,
+        "probe_id": "1",
+        "probe_mode": "comparator",
+        "comparator_op": "latency",
+        "hook_point_0":
+          {
+            "connectLoc": "nocinterface0",
+            "hook_id": "noc_if.state.to_cdc"
+          },
+          "hook_point_1":
+          {
+            "connectLoc": "intlink1",
+            "hook_id": "link.flit.enqueue"
+          }
+      },
+      {
+        "enabled": 0,
+        "path_match_trace": 1,
+        "probe_id": "1",
+        "probe_mode": "comparator",
+        "comparator_op": "path_match",
+        "hook_point_0":
+          {
+            "connectLoc": "nocinterface0",
+            "hook_id": "noc_if.state.to_cdc"
+          },
+          "hook_point_1":
+          {
+            "connectLoc": "nocinterface1",
+            "hook_id": "noc_if.cdc.to_node"
+          }
+      }
+    ]
+  }
+  

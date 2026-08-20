@@ -1,0 +1,2 @@
+name,tg_mode,num_axi_tg,num_axi_bram,axi_write_len_beats,axi_write_size_bytes,axi_write_bandwidth_cfg_MBps,num_write_transactions_cfg,tg_axi_data_width_bits,bram_data_width,noc_axi_clk_mhz
+rw_default_18,rw_interleaved,1,1,2,2,300,200,512,512,1000

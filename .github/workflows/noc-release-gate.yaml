@@ -1,0 +1,44 @@
+name: NoC Release Gate
+
+on:
+  pull_request:
+    paths:
+      - 'src/noc/**'
+      - 'tests/gem5/noc/**'
+      - 'noc_testing/**'
+      - 'docs/NOC_*.md'
+      - '.github/workflows/noc-release-gate.yaml'
+  workflow_dispatch:
+
+concurrency:
+  group: noc-release-${{ github.ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  portable-noc-gates:
+    runs-on: [self-hosted, linux, x64]
+    container: ghcr.io/gem5/ubuntu-24.04_all-dependencies:latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Build NULL gem5
+        run: scons --no-compress-debug build/NULL/gem5.opt -j $(nproc)
+
+      - name: Run quick NoC TestLib suite
+        working-directory: tests
+        run: ./main.py run --skip-build --length=quick --isa=NULL --variant=opt gem5/noc
+
+      - name: Run NoC C++ tests
+        run: src/noc/testing/run_noc_gtests.sh
+
+      - name: Check pinned Vivado-data acceptance
+        working-directory: tests
+        run: >-
+          ./main.py run --skip-build --exclude-tags '.*'
+          --include-tags noc-vivado --isa=NULL --variant=opt gem5/noc
+
+      - name: Dry-run all experiment manifests
+        run: python3 noc_testing/experiments/run_experiment.py --dry-run-all

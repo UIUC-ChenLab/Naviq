@@ -1,0 +1,113 @@
+{
+  "kind": "naviq.connections",
+  "version": 1,
+  "name": "mixed_aximm_axis",
+  "components": {
+    "tg_0": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "tg_1": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "bram_0": {
+      "node_type": "BramEndpoint",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "bram_1": {
+      "node_type": "BramEndpoint",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "tg_0_s": {
+      "node_type": "AxisRandomTrafficGenerator",
+      "ports": {
+        "m_axis": {
+          "role": "master",
+          "protocol": "axis"
+        }
+      }
+    },
+    "tg_1_s": {
+      "node_type": "AxisRandomTrafficGenerator",
+      "ports": {
+        "m_axis": {
+          "role": "master",
+          "protocol": "axis"
+        }
+      }
+    },
+    "axis_end_0": {
+      "node_type": "AxisSinkNode",
+      "ports": {
+        "s_axis": {
+          "role": "slave",
+          "protocol": "axis"
+        }
+      }
+    },
+    "axis_end_1": {
+      "node_type": "AxisSinkNode",
+      "ports": {
+        "s_axis": {
+          "role": "slave",
+          "protocol": "axis"
+        }
+      }
+    }
+  },
+  "connections": [
+    {
+      "from": "tg_0.m_axi",
+      "to": "bram_0.s_axi"
+    },
+    {
+      "from": "tg_0.m_axi",
+      "to": "bram_1.s_axi"
+    },
+    {
+      "from": "tg_1.m_axi",
+      "to": "bram_0.s_axi"
+    },
+    {
+      "from": "tg_1.m_axi",
+      "to": "bram_1.s_axi"
+    },
+    {
+      "from": "tg_0_s.m_axis",
+      "to": "axis_end_0.s_axis"
+    },
+    {
+      "from": "tg_0_s.m_axis",
+      "to": "axis_end_1.s_axis"
+    },
+    {
+      "from": "tg_1_s.m_axis",
+      "to": "axis_end_1.s_axis"
+    },
+    {
+      "from": "tg_1_s.m_axis",
+      "to": "axis_end_0.s_axis"
+    }
+  ]
+}

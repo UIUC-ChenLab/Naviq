@@ -1,0 +1,65 @@
+{
+  "kind": "naviq.connections",
+  "version": 1,
+  "name": "axis_1to1_close",
+  "components": {
+    "tg_0": {
+      "node_type": "AxisBuggyGenerator",
+      "params": {
+        "seed": 2,
+        "data_width": 512,
+        "tid_width": 16,
+        "tdest_width": 12,
+        "tuser_width": 0,
+        "max_gap_cycles": 0,
+        "max_tid": 0,
+        "max_tdest": 0,
+        "max_packets": 1000,
+        "min_packet_size_bytes": 64,
+        "tid_corrupt_enable": false,
+        "tid_corrupt_chance": 0.5,
+        "stall_drop_tvalid_enable": false,
+        "stall_drop_tvalid_chance": 1.0,
+        "stall_mutate_payload_enable": false,
+        "stall_mutate_payload_chance": 1.0,
+        "stall_drop_tlast_enable": false,
+        "stall_drop_tlast_chance": 1.0,
+        "valid_percent": 100,
+        "valid_percent_start_fraction": 1.0
+      },
+      "ports": {
+        "m_axis": {
+          "role": "master",
+          "protocol": "axis"
+        }
+      }
+    },
+    "sink_0": {
+      "node_type": "AxisSinkNode",
+      "params": {
+        "sim_cycles": 10000000000000000,
+        "data_width": 512,
+        "id_width": 16,
+        "dest_width": 12,
+        "ready_percent": 100,
+        "ready_percent_start_fraction": 0,
+        "expected_packets": 999,
+        "print_data": false
+      },
+      "ports": {
+        "s_axis": {
+          "role": "slave",
+          "protocol": "axis"
+        }
+      }
+    }
+  },
+  "connections": [
+    {
+      "from": "tg_0.m_axis",
+      "to": "sink_0.s_axis",
+      "RequiredBW": 500,
+      "RequiredLatency": 300
+    }
+  ]
+}

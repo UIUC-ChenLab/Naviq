@@ -1,0 +1,15 @@
+{
+  "kind": "naviq.placement",
+  "version": 1,
+  "name": "detailed_mixed_clocked",
+  "placements": {
+    "ddr_writer.m_axi": "NOC_NMU512_X0Y18",
+    "hbm_reader_writer.m_axi": "NOC_NMU512_X1Y18",
+    "ddr0_port0.s_axi": "DDRMC_X2Y0",
+    "hbm0_port0.s_axi": "HBM_MC_X0Y0",
+    "axis_source.m_axis": "NOC_NMU512_X0Y0",
+    "axis_fifo.s_axis": "NOC_NSU512_X1Y0",
+    "axis_fifo.m_axis": "NOC_NMU512_X1Y0",
+    "axis_checker.s_axis": "NOC_NSU512_X2Y0"
+  }
+}

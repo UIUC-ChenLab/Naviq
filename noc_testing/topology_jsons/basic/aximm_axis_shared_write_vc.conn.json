@@ -1,0 +1,53 @@
+{
+  "kind": "naviq.connections",
+  "version": 1,
+  "name": "aximm_axis_shared_write_vc",
+  "components": {
+    "aximm_tg_0": {
+      "node_type": "AxiRandomTrafficGenerator",
+      "ports": {
+        "m_axi": {
+          "role": "master",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "aximm_bram_0": {
+      "node_type": "BramEndpoint",
+      "ports": {
+        "s_axi": {
+          "role": "slave",
+          "protocol": "aximm"
+        }
+      }
+    },
+    "axis_tg_0": {
+      "node_type": "AxisRandomTrafficGenerator",
+      "ports": {
+        "m_axis": {
+          "role": "master",
+          "protocol": "axis"
+        }
+      }
+    },
+    "axis_sink_0": {
+      "node_type": "AxisSinkNode",
+      "ports": {
+        "s_axis": {
+          "role": "slave",
+          "protocol": "axis"
+        }
+      }
+    }
+  },
+  "connections": [
+    {
+      "from": "aximm_tg_0.m_axi",
+      "to": "aximm_bram_0.s_axi"
+    },
+    {
+      "from": "axis_tg_0.m_axis",
+      "to": "axis_sink_0.s_axis"
+    }
+  ]
+}
