@@ -1,9 +1,0 @@
-name: register_slice
-id: lib/other/register_slice
-rtl:
-  - rtl/register_slice.sv
-deps:
-  []
-tb:
-  tests:
-    - tb/register_slice

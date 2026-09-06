@@ -1,9 +1,0 @@
-name: axil_crossbar
-id: lib/axil/axil_crossbar
-rtl:
-  - rtl/axil_crossbar.sv
-deps:
-  - lib/other/axi
-tb:
-  tests:
-    - tb/axil_crossbar

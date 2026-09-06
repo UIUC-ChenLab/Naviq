@@ -66,3 +66,6 @@ docs/out/*
 m5out*
 fs_resources/*
 tmp_xsim_smoke/
+
+# Keep the local AdaptNIC13PE design snapshot out of version control.
+/src/rtl_simulation/hw/designs/AdaptNIC13PE/

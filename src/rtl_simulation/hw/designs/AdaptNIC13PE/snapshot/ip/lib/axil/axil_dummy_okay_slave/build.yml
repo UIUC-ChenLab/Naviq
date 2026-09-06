@@ -1,9 +1,0 @@
-name: axil_dummy_okay_slave
-id: lib/axil/axil_dummy_okay_slave
-rtl:
-  - rtl/axil_dummy_okay_slave.sv
-deps:
-  - lib/other/axi
-tb:
-  tests:
-    - tb/axil_dummy_okay_slave

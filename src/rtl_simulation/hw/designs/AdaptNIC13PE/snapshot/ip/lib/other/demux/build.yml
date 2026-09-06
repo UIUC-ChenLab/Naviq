@@ -1,9 +1,0 @@
-name: demux
-id: lib/other/demux
-rtl:
-  - rtl/demux.sv
-deps:
-  []
-tb:
-  tests:
-    []

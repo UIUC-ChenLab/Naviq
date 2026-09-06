@@ -1,9 +1,0 @@
-name: axis_count_beat_size
-id: lib/axis/axis_count_beat_size
-rtl:
-  - rtl/axis_count_beat_size.sv
-deps:
-  - lib/other/axi
-tb:
-  tests:
-    - tb/axis_count_beat_size

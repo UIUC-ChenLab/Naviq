@@ -1,9 +1,0 @@
-name: sync_bram_fifo
-id: lib/other/sync_bram_fifo
-rtl:
-  - rtl/sync_bram_fifo.sv
-deps:
-  []
-tb:
-  tests:
-    - tb/sync_bram_fifo

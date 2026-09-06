@@ -1,9 +1,0 @@
-name: axis_multicast
-id: lib/axis/axis_multicast
-rtl:
-  - rtl/axis_multicast.sv
-deps:
-  - lib/other/axi
-tb:
-  tests:
-    - tb/axis_multicast
