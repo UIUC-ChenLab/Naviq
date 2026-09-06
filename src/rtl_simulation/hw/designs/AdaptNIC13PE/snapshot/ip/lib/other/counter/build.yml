@@ -1,0 +1,9 @@
+name: counter
+id: lib/other/counter
+rtl:
+  - rtl/generic_counter.sv
+  - rtl/generic_prescaled_counter.sv
+deps: []
+tb:
+  tests:
+    - tb/counter

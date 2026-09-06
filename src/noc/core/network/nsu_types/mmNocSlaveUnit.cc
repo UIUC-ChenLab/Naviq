@@ -862,7 +862,8 @@ mmNocSlaveUnit::depacketizeWriteDataFlit(gem5::ruby::garnet::flit<NocMessage, No
     }
 
     uint64_t write_addr = 0;
-    if (S_DATA_WIDTH > 16) {
+    uint32_t transfer_bytes = 0;
+    {
         MsgPtr aw_req = writeTracker.read(axi_id);
         MessagePayload aw_p = aw_req->getPayload();
         aximmRWAddr* p = std::get_if<aximmRWAddr>(&aw_p);
@@ -870,11 +871,12 @@ mmNocSlaveUnit::depacketizeWriteDataFlit(gem5::ruby::garnet::flit<NocMessage, No
             "mmNocSlaveUnit::depacketizeWriteDataFlit expected tracked AW "
             "payload for AXI id %u", axi_id);
         write_addr = p->addr;
+        transfer_bytes = p->getTotalByteSize();
     }
 
     MmWriteDataDepacketizedFlit depacketized = depacketizeMmWriteDataFlit(
         S_DATA_WIDTH, axi_id, write_addr, stagedAssembly, flit_id,
-        msg->getNumFlits(), flit_data, flit_strobe);
+        msg->getNumFlits(), flit_data, flit_strobe, transfer_bytes);
     payloads = std::move(depacketized.payloads);
     for (const MmWriteDataDebugRange& range : depacketized.debugRanges) {
         dbg_ids.push_back(debugIdsForMmByteRange(

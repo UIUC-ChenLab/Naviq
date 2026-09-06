@@ -1,0 +1,9 @@
+name: sync_ff_fifo
+id: lib/other/sync_ff_fifo
+rtl:
+  - rtl/sync_ff_fifo.sv
+deps:
+  []
+tb:
+  tests:
+    - tb/sync_ff_fifo

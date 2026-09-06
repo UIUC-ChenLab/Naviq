@@ -47,7 +47,8 @@ MmWriteDataDepacketizedFlit depacketizeMmWriteDataFlit(
     uint8_t flitId,
     uint8_t numFlits,
     const std::array<uint8_t, 16>& flitData,
-    uint64_t flitStrobe);
+    uint64_t flitStrobe,
+    uint32_t transferBytes = 0);
 
 } // namespace garnet
 } // namespace noc

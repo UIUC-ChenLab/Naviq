@@ -54,7 +54,9 @@ makePayloadChunk(const std::vector<uint8_t>& bytes, size_t offset, size_t count,
         axisData beat(data, 512, 6, 4, 7, 3,
                       lastChunk && consumed + beatBytes == count, true);
         beat.tkeep = tkeepForBytes(beatBytes);
-        beat.tuser = 0x40 + payload.numBeats;
+        // Sideband is associated with the original source beat, independently
+        // of how many NoC chunks precede this one.
+        beat.tuser = 0x40 + (offset + consumed) / 64;
         payload.add(beat, 1000 + payload.numBeats);
         consumed += beatBytes;
     }

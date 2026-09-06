@@ -1,0 +1,93 @@
+{
+  "generated_by": "ip/scripts/generate_packet_engine.py",
+  "version": 5,
+  "id": "packet_engine/dummy_fifo",
+  "module": "dummy_fifo_packet_engine",
+  "rtl": "smartnic/smartnic_core/packet_engine/dummy_fifo/rtl/dummy_fifo_packet_engine.sv",
+  "dependencies": [
+    "offloads/dummy_fifo",
+    "lib/axis/packet_engine_pipeline",
+    "lib/axil/axil_crossbar"
+  ],
+  "parameters": {
+    "TID_BASE": {
+      "type": "int unsigned",
+      "default": "2 * OFFLOAD_ID"
+    },
+    "STEERING_MODE": {
+      "type": "int",
+      "default": 0
+    },
+    "STEERING_HEADER_BYTES": {
+      "type": "int",
+      "default": 2
+    },
+    "HASH_FIFO_DEPTH": {
+      "type": "int",
+      "default": 64
+    }
+  },
+  "next_hop_entry_format": {
+    "version": 1,
+    "mmio_width_bits": 32,
+    "entry_stride_bytes": 4,
+    "stored_width_bits": 11,
+    "tdest": {
+      "lsb": 0,
+      "width": 10
+    },
+    "nmu_lane": {
+      "lsb": 10,
+      "width": 1,
+      "scope": "path_local"
+    },
+    "reserved_zero_mask": "0xfffff800",
+    "invalid_lane_action": "drop_packet",
+    "legacy_destination_only_lane": 0
+  },
+  "test": {
+    "wrapper": "smartnic/smartnic_core/packet_engine/dummy_fifo/tb/packet_engine_harness.sv",
+    "adapter": "smartnic/smartnic_core/packet_engine/dummy_fifo/tb/packet_engine_adapter.hpp",
+    "config": "smartnic/smartnic_core/packet_engine/dummy_fifo/tb/config.json",
+    "include_dirs": [
+      "ip/offloads/dummy_fifo/tb"
+    ]
+  },
+  "offload": {
+    "name": "dummy_fifo",
+    "id": "offloads/dummy_fifo",
+    "interface": "dummy_fifo",
+    "module": "dummy_fifo",
+    "params": {
+      "DATA_WIDTH": "512",
+      "FIFO_DEPTH": "16",
+      "EXTRA_OUTPUT_REG": "0"
+    },
+    "has_axil_control": false,
+    "parameters": {
+      "DATA_WIDTH": {
+        "type": "int",
+        "default": "512"
+      },
+      "FIFO_DEPTH": {
+        "type": "int",
+        "default": "16"
+      },
+      "EXTRA_OUTPUT_REG": {
+        "type": "bit",
+        "default": "1'b0"
+      }
+    }
+  },
+  "paths": [
+    {
+      "index": 0,
+      "input": "packet_in",
+      "output": "packet_out",
+      "flow_ctrl_base": 0,
+      "flow_ctrl_size": 262144,
+      "next_hop_ctrl_base": 262144,
+      "next_hop_ctrl_size": 65536
+    }
+  ]
+}

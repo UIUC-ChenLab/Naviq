@@ -19,6 +19,7 @@ CpuNocBridge::CpuNocBridge(const Params &p)
       addrRanges(p.addr_ranges.begin(), p.addr_ranges.end()),
       mmioRanges(p.mmio_ranges.begin(), p.mmio_ranges.end()),
       metricsOutputPath(p.metrics_output_path),
+      metricsEveryTransaction(p.metrics_every_transaction),
       scratchReadBurstBase(p.scratch_read_burst_base),
       scratchReadBurstSize(p.scratch_read_burst_size),
       scratchReadBurstBytes(std::max(64u, static_cast<unsigned>(p.scratch_read_burst_bytes))),
@@ -827,7 +828,7 @@ CpuNocBridge::processReadResponse()
                     req.start_tick,
                     curTick()});
         }
-        if (req.is_mmio) {
+        if (req.is_mmio && metricsEveryTransaction) {
             emitMetricsFragment();
         }
         
@@ -864,7 +865,9 @@ CpuNocBridge::processWriteResponse()
         panic("CpuNocBridge: Got B response but no write requests outstanding (ID=%d)", b.id);
     }
     
-    OutstandingRequest& req = *req_it;
+    // The queue entry is erased before completion metrics are recorded.
+    // Retain the request fields instead of accessing an invalidated reference.
+    const OutstandingRequest req = *req_it;
     uint64_t dest_id = req.dest_id;
     
     DPRINTF(NocPacketFlow, "CpuNocBridge: Got B response for id=%d\\n", b.id);
@@ -905,7 +908,7 @@ CpuNocBridge::processWriteResponse()
                 req.start_tick,
                 curTick()});
     }
-    if (req.is_mmio) {
+    if (req.is_mmio && metricsEveryTransaction) {
         emitMetricsFragment();
     }
     releaseAxiIdForDest(dest_id, b.id);

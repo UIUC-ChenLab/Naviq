@@ -1,0 +1,118 @@
+{
+  "generated_by": "ip/scripts/generate_packet_engine.py",
+  "version": 5,
+  "id": "packet_engine/packet_rate_limiter",
+  "module": "packet_rate_limiter_packet_engine",
+  "rtl": "smartnic/smartnic_core/packet_engine/packet_rate_limiter/rtl/packet_rate_limiter_packet_engine.sv",
+  "dependencies": [
+    "offloads/packet_rate_limiter",
+    "lib/axis/packet_engine_pipeline",
+    "lib/axil/axil_crossbar"
+  ],
+  "parameters": {
+    "TID_BASE": {
+      "type": "int unsigned",
+      "default": "2 * OFFLOAD_ID"
+    },
+    "STEERING_MODE": {
+      "type": "int",
+      "default": 0
+    },
+    "STEERING_HEADER_BYTES": {
+      "type": "int",
+      "default": 2
+    },
+    "HASH_FIFO_DEPTH": {
+      "type": "int",
+      "default": 64
+    }
+  },
+  "next_hop_entry_format": {
+    "version": 1,
+    "mmio_width_bits": 32,
+    "entry_stride_bytes": 4,
+    "stored_width_bits": 11,
+    "tdest": {
+      "lsb": 0,
+      "width": 10
+    },
+    "nmu_lane": {
+      "lsb": 10,
+      "width": 1,
+      "scope": "path_local"
+    },
+    "reserved_zero_mask": "0xfffff800",
+    "invalid_lane_action": "drop_packet",
+    "legacy_destination_only_lane": 0
+  },
+  "test": {
+    "wrapper": "smartnic/smartnic_core/packet_engine/packet_rate_limiter/tb/packet_engine_harness.sv",
+    "adapter": "smartnic/smartnic_core/packet_engine/packet_rate_limiter/tb/packet_engine_adapter.hpp",
+    "config": "smartnic/smartnic_core/packet_engine/packet_rate_limiter/tb/config.json",
+    "include_dirs": [
+      "ip/offloads/packet_rate_limiter/tb"
+    ]
+  },
+  "offload": {
+    "name": "packet_rate_limiter",
+    "id": "offloads/packet_rate_limiter",
+    "interface": "packet_rate_limiter",
+    "module": "packet_rate_limiter",
+    "params": {
+      "DATA_WIDTH": "512",
+      "MAX_FLOWS": "4096",
+      "PACKET_FIFO_DEPTH": "64",
+      "PARSER_FIFO_DEPTH": "4",
+      "META_FIFO_DEPTH": "64",
+      "TABLE_ASSOCIATIVITY": "4",
+      "MAX_PACKET_BEATS": "24",
+      "COUNTER_START_VALUE": "0"
+    },
+    "has_axil_control": true,
+    "parameters": {
+      "DATA_WIDTH": {
+        "type": "int unsigned",
+        "default": "512"
+      },
+      "MAX_FLOWS": {
+        "type": "int unsigned",
+        "default": "4096"
+      },
+      "PACKET_FIFO_DEPTH": {
+        "type": "int unsigned",
+        "default": "64"
+      },
+      "PARSER_FIFO_DEPTH": {
+        "type": "int unsigned",
+        "default": "4"
+      },
+      "META_FIFO_DEPTH": {
+        "type": "int unsigned",
+        "default": "64"
+      },
+      "TABLE_ASSOCIATIVITY": {
+        "type": "int unsigned",
+        "default": "4"
+      },
+      "MAX_PACKET_BEATS": {
+        "type": "int unsigned",
+        "default": "24"
+      },
+      "COUNTER_START_VALUE": {
+        "type": "logic [15:0]",
+        "default": "'0"
+      }
+    }
+  },
+  "paths": [
+    {
+      "index": 0,
+      "input": "packet_in",
+      "output": "packet_out",
+      "flow_ctrl_base": 262144,
+      "flow_ctrl_size": 262144,
+      "next_hop_ctrl_base": 524288,
+      "next_hop_ctrl_size": 65536
+    }
+  ]
+}

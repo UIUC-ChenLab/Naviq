@@ -71,7 +71,7 @@ class {class_name} : public AximmRtlSlaveNode<
 def simobject(class_name, data_width, id_width, addr_width):
     return f'''from m5.params import *
 from m5.proxy import *
-from m5.objects import NocNode
+from m5.objects.NocNode import NocNode
 
 
 class {class_name}(NocNode):

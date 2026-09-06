@@ -1,0 +1,9 @@
+name: simple_dual_port_uram
+id: lib/other/simple_dual_port_uram
+rtl:
+  - rtl/simple_dual_port_uram.sv
+deps:
+  []
+tb:
+  tests:
+    - tb/simple_dual_port_uram

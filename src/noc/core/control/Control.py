@@ -13,6 +13,10 @@ class Control(ClockedObject):
     nodes = VectorParam.NocNode("")
     adjacency_list = VectorParam.Int("")
     adjacency_index = VectorParam.Int("")
+    direct_sources = VectorParam.NocNode([], "Direct AXIS link sources, without a NoC interface")
+    direct_targets = VectorParam.NocNode([], "Direct AXIS link targets")
+    direct_source_ports = VectorParam.String([], "Source port endpoint names")
+    direct_target_ports = VectorParam.String([], "Target port endpoint names")
     
     #TODO: create virtual abstract parent class for BramEndpoint so that children can be called here
     # slave_nodes = VectorParam.tileNSU_HBM("")

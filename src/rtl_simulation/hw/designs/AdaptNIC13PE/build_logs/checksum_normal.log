@@ -1,0 +1,13 @@
+  Warning: No .sv files found in /home/scottcs2/Desktop/AdaptNIC_private/Naviq/src/rtl_simulation/hw/designs/AdaptNIC13PE, skipping
+RTL Simulation: Found 1 design(s): pe13_checksum_normal
+
+Verilating pe13_checksum_normal...
+  Cleaning output directory: /home/scottcs2/Desktop/AdaptNIC_private/Naviq/src/rtl_simulation/build/pe13_checksum_normal
+  Running verilator (C++ generation)...
+  Running verilator (JSON generation)...
+  Running generate_noc_cpp.py...
+  Generated gem5 connection plan: /home/scottcs2/Desktop/AdaptNIC_private/Naviq/src/rtl_simulation/build/pe13_checksum_normal/pe13_checksum_normal_gem5_plan.json
+  ✓ Successfully verilated pe13_checksum_normal
+
+✓ All designs verilated successfully
+Output directory: /home/scottcs2/Desktop/AdaptNIC_private/Naviq/src/rtl_simulation/build

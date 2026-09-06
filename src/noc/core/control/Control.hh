@@ -49,6 +49,14 @@ namespace noc{
                 int clockDomainId;
                 EventFunctionWrapper event;
             };
+            struct DirectConnection {
+                NocNode* source;
+                NocNode* target;
+                int sourcePort;
+                int targetPort;
+                int clockDomain;
+            };
+            std::vector<DirectConnection> directConnections;
             std::vector<TickEvent> tickEvents;
             Tick simCycles;
             uint32_t nocClockDomainMhz;

@@ -1,0 +1,10 @@
+name: lookup_table
+id: lib/axil/lookup_table
+rtl:
+  - rtl/lookup_table.sv
+deps:
+  - lib/other/axi
+  - lib/other/bram
+tb:
+  tests:
+    - tb/lookup_table

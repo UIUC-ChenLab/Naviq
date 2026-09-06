@@ -1,0 +1,29 @@
+name: checksum
+id: offloads/checksum
+defaults:
+  top_params:
+    DATA_WIDTH: 512
+    MAX_PACKET_LEN: 12000
+    TOTAL_HDR_BYTES_WIDTH: 16
+    VERIFY_CHECKSUMS: 0
+    FRAGMENT_PACKER_PAGE_COUNT: 8
+rtl:
+  - rtl/build_pseudo_header.sv
+  - rtl/checksum.sv
+deps:
+  - lib/other/axi
+  - lib/axis/oc_adder_tree
+  - lib/other/header_parsers
+  - lib/axis/axis_fifo
+  - lib/axis/axis_multicast
+  - lib/axis/axis_packet_fifo
+  - lib/axis/axis_strip_bytes
+  - lib/axis/axis_synchronize
+  - lib/axis/axis_register_slice
+  - lib/axis/axis_combine_repack
+tb:
+  default_config: tb/config.json
+  tests:
+    - tb/checksum_compute_verify
+    - tb/checksum
+    - tb/checksum_verify

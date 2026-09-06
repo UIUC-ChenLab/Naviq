@@ -1,0 +1,9 @@
+name: mux
+id: lib/other/mux
+rtl:
+  - rtl/mux.sv
+deps:
+  []
+tb:
+  tests:
+    []

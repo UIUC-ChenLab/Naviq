@@ -1,0 +1,30 @@
+name: multicast
+id: offloads/multicast
+defaults:
+  top_params:
+    DATA_WIDTH: 512
+    HASH_WIDTH: 12
+    FLOW_ID_WIDTH: 6
+    FLOW_SELECTOR_TREE_DEPTH: 3
+    PARSER_FRAGMENT_PACKER_PAGE_COUNT: 4
+    MAX_PACKET_BYTES: 1500
+    EXTRA_OUTPUT_REG: 0
+    HASH_TABLE_BASE: 0
+    FLOW_MASK_BASE: 1048576
+    FLOW_TABLE_STRIDE: 65536
+    FLOW_IP_BASE: 1073741824
+rtl:
+  - rtl/multicast.sv
+deps:
+  - lib/other/axi
+  - lib/other/sync_ff_fifo
+  - lib/axis/axis_fifo
+  - lib/axis/parse_and_hash_packet
+  - lib/axil/axil_crossbar
+  - lib/axil/lookup_table
+tb:
+  default_config: tb/config.json
+  tests:
+    - tb/multicast
+  include_dirs:
+    - tb

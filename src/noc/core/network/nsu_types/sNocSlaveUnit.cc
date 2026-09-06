@@ -73,14 +73,26 @@ arrayParamInSecU8(CheckpointIn &cp, const std::string &sec,
 
 } // namespace
 
-namespace
-{
-
-} // namespace
-
-sNocSlaveUnit::sNocSlaveUnit(const Params &p) : NocSlaveUnit(p)
+sNocSlaveUnit::sNocSlaveUnit(const Params &p)
+    : NocSlaveUnit(p), axisReassembleFrames(p.axis_reassemble_frames),
+      axisTidWidth(p.axis_tid_width),
+      axisMaxFrameBytes(p.axis_max_frame_bytes),
+      axisCompleteFrames(p.axis_complete_frames), drainFrameEvent(*this)
 {
     S_DATA_WIDTH = p.data_width;
+    fatal_if(S_DATA_WIDTH == 0 || S_DATA_WIDTH % 8 != 0 || S_DATA_WIDTH > 512,
+             "%s: AXIS data width must be byte aligned and at most 512 bits",
+             name());
+    fatal_if(axisTidWidth > 32, "%s: AXIS TID width must be at most 32", name());
+    fatal_if(axisReassembleFrames &&
+             (axisMaxFrameBytes < S_DATA_WIDTH / 8 || axisCompleteFrames == 0),
+             "%s: AXIS frame storage and completed-frame FIFO must be nonzero",
+             name());
+    if (!p.axis_beat_capture_file.empty()) {
+        beatCapture.open(p.axis_beat_capture_file);
+        fatal_if(!beatCapture, "%s: cannot open AXIS beat capture %s",
+                 name(), p.axis_beat_capture_file);
+    }
 }
 
 void
@@ -104,6 +116,30 @@ sNocSlaveUnit::serialize(CheckpointOut &cp) const
         ::gem5::paramOut(cp, "packet_id", packet_id);
         ::gem5::arrayParamOut(cp, "aggregateData", aggregate.data(),
                               aggregate.size());
+    }
+    {
+        Serializable::ScopedCheckpointSection sec(cp, "axisFrames");
+        paramOut(cp, "version", 2);
+        paramOut(cp, "reassembleFrames", axisReassembleFrames);
+        paramOut(cp, "partialCount", partialFrames.size());
+        paramOut(cp, "completeCount", completeFrames.size());
+        paramOut(cp, "drainScheduled", drainFrameEvent.scheduled());
+        paramOut(cp, "drainWhen", drainFrameEvent.scheduled() ?
+                 drainFrameEvent.when() : Tick(0));
+        size_t index = 0;
+        for (const auto &[key, frame] : partialFrames) {
+            Serializable::ScopedCheckpointSection fs(
+                cp, csprintf("partial%u", unsigned(index++)));
+            paramOut(cp, "source", std::get<0>(key));
+            paramOut(cp, "tid", std::get<1>(key));
+            paramOut(cp, "tdest", std::get<2>(key));
+            serializeFrame(cp, frame);
+        }
+        for (size_t i = 0; i < completeFrames.size(); ++i) {
+            Serializable::ScopedCheckpointSection fs(
+                cp, csprintf("complete%u", unsigned(i)));
+            serializeFrame(cp, completeFrames[i]);
+        }
     }
 }
 
@@ -141,6 +177,79 @@ sNocSlaveUnit::unserialize(CheckpointIn &cp)
                           aggregate.size());
         depacketizeWriteDataAggregateByPacket.emplace(packet_id, aggregate);
     }
+    partialFrames.clear();
+    completeFrames.clear();
+    Serializable::ScopedCheckpointSection fs(cp, "axisFrames");
+    unsigned version = 0;
+    if (!optParamIn(cp, "version", version, false)) {
+        return;
+    }
+    fatal_if(version != 1 && version != 2,
+             "%s: unsupported AXIS frame checkpoint", name());
+    bool reassembleFrames = true;
+    if (version >= 2) {
+        paramIn(cp, "reassembleFrames", reassembleFrames);
+    }
+    size_t partialCount = 0, completeCount = 0;
+    bool drainScheduled = false;
+    Tick drainWhen = 0;
+    paramIn(cp, "partialCount", partialCount);
+    paramIn(cp, "completeCount", completeCount);
+    paramIn(cp, "drainScheduled", drainScheduled);
+    paramIn(cp, "drainWhen", drainWhen);
+    fatal_if((partialCount || completeCount || drainScheduled) &&
+             reassembleFrames != axisReassembleFrames,
+             "%s: cannot change AXIS reassembly mode with pending checkpoint frames",
+             name());
+    fatal_if(completeCount > axisCompleteFrames,
+             "%s: restored AXIS frames exceed configured FIFO", name());
+    for (size_t i = 0; i < partialCount; ++i) {
+        Serializable::ScopedCheckpointSection ps(
+            cp, csprintf("partial%u", unsigned(i)));
+        uint32_t source = 0, tid = 0, tdest = 0;
+        paramIn(cp, "source", source);
+        paramIn(cp, "tid", tid);
+        paramIn(cp, "tdest", tdest);
+        partialFrames.emplace(FrameKey{source, tid, tdest}, unserializeFrame(cp));
+    }
+    for (size_t i = 0; i < completeCount; ++i) {
+        Serializable::ScopedCheckpointSection cs(
+            cp, csprintf("complete%u", unsigned(i)));
+        completeFrames.push_back(unserializeFrame(cp));
+    }
+    if (drainScheduled && !drainFrameEvent.scheduled()) {
+        schedule(drainFrameEvent, std::max(drainWhen, curTick()));
+    }
+}
+
+void
+sNocSlaveUnit::serializeFrame(CheckpointOut &cp, const Frame &frame) const
+{
+    paramOut(cp, "storedBytes", frame.storedBytes);
+    paramOut(cp, "beatCount", frame.beats.size());
+    for (size_t i = 0; i < frame.beats.size(); ++i) {
+        Serializable::ScopedCheckpointSection bs(
+            cp, csprintf("beat%u", unsigned(i)));
+        serializeNocMsgPtr(cp, frame.beats[i]);
+    }
+}
+
+sNocSlaveUnit::Frame
+sNocSlaveUnit::unserializeFrame(CheckpointIn &cp)
+{
+    Frame frame;
+    size_t count = 0;
+    paramIn(cp, "storedBytes", frame.storedBytes);
+    paramIn(cp, "beatCount", count);
+    fatal_if(frame.storedBytes > axisMaxFrameBytes ||
+             count > axisMaxFrameBytes / (S_DATA_WIDTH / 8),
+             "%s: restored AXIS frame exceeds configured maximum", name());
+    for (size_t i = 0; i < count; ++i) {
+        Serializable::ScopedCheckpointSection bs(
+            cp, csprintf("beat%u", unsigned(i)));
+        frame.beats.push_back(unserializeNocMsgPtr(cp));
+    }
+    return frame;
 }
 
 
@@ -211,15 +320,104 @@ sNocSlaveUnit::depacketizeWriteDataFlit(gem5::ruby::garnet::flit<NocMessage, Noc
         *ap, S_DATA_WIDTH, payload_data, flit_id, NPPMsg->getNumFlits(),
         NPPMsg->containsLast(), flit_data, fallback_dbg);
 
-    if (!sendNWriteDataMsgs(createNWriteDataMsgs(
-            std::move(depacketized.payloads), src_nmu, depacketized.debugIds,
-            fallback_dbg))) {
+    auto messages = createNWriteDataMsgs(
+        std::move(depacketized.payloads), src_nmu, depacketized.debugIds,
+        fallback_dbg);
+    // PG313 AXI4-Stream chopping: the NoC delivers 64-byte granules and does
+    // not reconstruct frames. Only an explicitly requested synthetic mode
+    // may hide this interleaving from a legacy endpoint/checker.
+    const bool accepted = axisReassembleFrames ?
+        bufferFrameMsgs(std::move(messages)) : sendNWriteDataMsgs(std::move(messages));
+    if (!accepted) {
         return false;
     }
     if (is_tail_flit) {
         depacketizeWriteDataAggregateByPacket.erase(packet_id);
     }
     return true;
+}
+
+bool
+sNocSlaveUnit::bufferFrameMsgs(std::vector<MsgPtr> messages)
+{
+    if (messages.empty()) {
+        return true;
+    }
+    const auto first = std::static_pointer_cast<NocStreamMsg>(messages.front());
+    const auto firstPayload = first->getPayload();
+    const auto &firstBeat = std::get<axisData>(firstPayload);
+    const uint32_t source = first->getSourceNiID();
+    const FrameKey key{source, firstBeat.tid, firstBeat.tdest};
+    const auto last = std::static_pointer_cast<NocStreamMsg>(messages.back());
+    const auto lastPayload = last->getPayload();
+    const bool completes = std::get<axisData>(lastPayload).tlast;
+
+    // Native routing aliases plus a finite TID domain give every legal stream
+    // its own partial-frame reservation. No shared completed-frame pressure
+    // can take that reservation away while its later NPPs are in the fabric.
+    fatal_if(axisTidWidth < 32 && firstBeat.tid >= (uint64_t(1) << axisTidWidth),
+             "%s: AXIS TID %u exceeds configured axis_tid_width=%u",
+             name(), firstBeat.tid, axisTidWidth);
+    fatal_if(m_net_ptr->getAxisDestNi(source, firstBeat.tdest) != int(m_id),
+             "%s: AXIS frame source %u TDEST %u has no route to this NSU",
+             name(), source, firstBeat.tdest);
+
+    // This is the only capacity backpressure condition. A completed frame can
+    // always drain independently of the stalled final flit, including when
+    // another source's continuation is behind that flit on the same VC.
+    if (completes && completeFrames.size() >= axisCompleteFrames) {
+        if (!drainFrameEvent.scheduled()) {
+            schedule(drainFrameEvent, clockEdge(Cycles(1)));
+        }
+        return false;
+    }
+    auto &frame = partialFrames[key];
+    const uint64_t extraBytes = messages.size() * (S_DATA_WIDTH / 8);
+    fatal_if(frame.storedBytes + extraBytes > axisMaxFrameBytes,
+             "%s: AXIS frame source %u TID %u TDEST %u exceeds "
+             "axis_max_frame_bytes=%llu (missing TLAST or oversized frame)",
+             name(), source, firstBeat.tid, firstBeat.tdest,
+             (unsigned long long)axisMaxFrameBytes);
+    for (const auto &message : messages) {
+        const auto stream = std::static_pointer_cast<NocStreamMsg>(message);
+        const auto payload = stream->getPayload();
+        const auto &beat = std::get<axisData>(payload);
+        panic_if(stream->getSourceNiID() != source ||
+                 beat.tid != firstBeat.tid || beat.tdest != firstBeat.tdest,
+                 "%s: one AXIS NPP contains multiple stream identities", name());
+        frame.beats.push_back(message);
+    }
+    frame.storedBytes += extraBytes;
+    if (completes) {
+        completeFrames.push_back(std::move(frame));
+        partialFrames.erase(key);
+        if (!drainFrameEvent.scheduled()) {
+            schedule(drainFrameEvent, clockEdge(Cycles(1)));
+        }
+    }
+    return true;
+}
+
+void
+sNocSlaveUnit::drainFrame()
+{
+    if (completeFrames.empty()) {
+        return;
+    }
+    auto &frame = completeFrames.front();
+    panic_if(frame.beats.empty(), "%s: empty completed AXIS frame", name());
+    if (sendNWriteDataMsgs({frame.beats.front()})) {
+        frame.beats.pop_front();
+        if (frame.beats.empty()) {
+            completeFrames.pop_front();
+            // A final NPP flit may be waiting for completed-frame capacity,
+            // even when no endpoint MessageBuffer dequeue happens this cycle.
+            dequeueCallback();
+        }
+    }
+    if (!completeFrames.empty()) {
+        schedule(drainFrameEvent, clockEdge(Cycles(1)));
+    }
 }
 
 std::vector<MsgPtr>
@@ -231,6 +429,10 @@ sNocSlaveUnit::createNWriteDataMsgs(std::vector<axisData> payloads,
     std::vector<MsgPtr> ret;
 
     for (size_t i = 0; i < payloads.size(); ++i) {
+        fatal_if(axisTidWidth < 32 &&
+                 payloads[i].tid >= (uint64_t(1) << axisTidWidth),
+                 "%s: AXIS TID %u exceeds configured axis_tid_width=%u",
+                 name(), payloads[i].tid, axisTidWidth);
         auto mp = std::make_unique<MessagePayload>(payloads[i]);
         auto stream_msg = std::shared_ptr<NocStreamMsg>(
             new NocStreamMsg(clockEdge(), nullptr, std::move(mp)));
@@ -288,10 +490,37 @@ sNocSlaveUnit::sendNWriteDataMsgs(std::vector<MsgPtr> Msgs){
                     0,// cyclesToTicks(Cycles(1)),
                     m_net_ptr->getRandomization(),
                     m_net_ptr->getWarmupEnabled());
+        captureBeat(Msgs[i]);
     }
 
     return true;
 
+}
+
+void
+sNocSlaveUnit::captureBeat(const MsgPtr &message)
+{
+    if (!beatCapture.is_open()) {
+        return;
+    }
+    const auto stream = std::static_pointer_cast<NocStreamMsg>(message);
+    const auto payload = stream->getPayload();
+    const auto &beat = std::get<axisData>(payload);
+    beatCapture << "{\"event\":\"endpoint_fifo_enqueue\",\"tick\":" << curTick()
+                << ",\"beat_index\":" << capturedBeats++
+                << ",\"source_nmu\":" << stream->getSourceNiID()
+                << ",\"tid\":" << beat.tid << ",\"tdest\":" << beat.tdest
+                << ",\"tkeep\":" << beat.tkeep
+                << ",\"tlast\":" << (beat.tlast ? "true" : "false")
+                << ",\"bytes\":" << beat.getTotalByteSize() << ",\"hex\":\"";
+    for (size_t i = 0; i < beat.tdata.size(); ++i) {
+        if (beat.tkeep & (uint64_t(1) << i)) {
+            beatCapture << std::hex << std::setw(2) << std::setfill('0')
+                        << unsigned(beat.tdata[i]);
+        }
+    }
+    beatCapture << std::dec << "\"}\n";
+    beatCapture.flush();
 }
 
 void

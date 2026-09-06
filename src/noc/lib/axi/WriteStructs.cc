@@ -395,13 +395,13 @@ axisWriteBuffer::popNextPacket(int* vc, NetworkInterface::OutputPort** oPort,
                     count++;
                     if (count <= n) {
                         tkeepLower |= (1ULL << c); // keep this bit in tkeepLower
-                    } else {
-                        tkeepHigher &= ~(1ULL << c); // clear this bit in tkeepHigher
+                        tkeepHigher &= ~(1ULL << c); // remove consumed bytes from remainder
                     }
                 }
             }
 
             partial.tkeep = tkeepLower;
+            partial.tlast = false; // the original last byte remains in the next NPP
             entry.nppData.tkeep = tkeepHigher;
             entry.numBytesRemaining -= spaceRemaining;
 
@@ -432,6 +432,7 @@ axisWriteBuffer::popNextPacket(int* vc, NetworkInterface::OutputPort** oPort,
 void
 axisWriteBuffer::serialize(CheckpointOut &cp) const
 {
+    ::gem5::paramOut(cp, "axisChopBytes", NPP_SIZE);
     ::gem5::paramOut(cp, "maxBeatSize", maxBeatSize);
     ::gem5::paramOut(cp, "bufferSize", bufferSize);
     ::gem5::paramOut(cp, "currTid", currTid);
@@ -468,12 +469,17 @@ void
 axisWriteBuffer::unserialize(CheckpointIn &cp,
                              const std::vector<NetworkInterface::OutputPort*> &outPorts)
 {
+    size_t checkpointChopBytes = 256; // checkpoints predating the AXIS 64B fix
+    ::gem5::optParamIn(cp, "axisChopBytes", checkpointChopBytes, false);
     ::gem5::paramIn(cp, "maxBeatSize", maxBeatSize);
     ::gem5::paramIn(cp, "bufferSize", bufferSize);
     ::gem5::paramIn(cp, "currTid", currTid);
     ::gem5::paramIn(cp, "currTdest", currTdest);
     ::gem5::paramIn(cp, "transmitting", transmitting);
     ::gem5::paramIn(cp, "nextDequeuePos", nextDequeuePos);
+    fatal_if(checkpointChopBytes != NPP_SIZE && bufferSize,
+             "Cannot restore pending AXIS bytes with a different chop size "
+             "(checkpoint %zu, configured %zu)", checkpointChopBytes, NPP_SIZE);
 
     tlastPositions.clear();
     uint64_t tls = 0;

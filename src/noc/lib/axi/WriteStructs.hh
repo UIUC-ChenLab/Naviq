@@ -210,7 +210,7 @@ struct axisWriteBufferEntry {
 class axisWriteBuffer{
 
     constexpr static size_t MAX_SIZE = 512; // in bytes
-    constexpr static size_t NPP_SIZE = 256; // in bytes
+    constexpr static size_t NPP_SIZE = axisPayload::NPP_MAX_SIZE;
 
     public:
         axisWriteBuffer() : writeBuffer(),
@@ -225,7 +225,7 @@ class axisWriteBuffer{
         void add(const axisData& beat, NetworkInterface::OutputPort *oPort, int vc,
                  int32_t debugId = -1);
         
-        // Collect one NPP (never more than 256 bytes). Packetization must not
+        // Collect one AXIS NPP (never more than 64 bytes). Packetization must not
         // merge adjacent AXIS bytes into a payload larger than this invariant.
         // Packet identity (TID, TDEST, TLAST) is retained while a packet is open.
         std::unique_ptr<axisPayload> popNextPacket(int* vc, NetworkInterface::OutputPort** oPort,

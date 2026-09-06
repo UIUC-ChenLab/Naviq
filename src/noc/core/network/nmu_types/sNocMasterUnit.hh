@@ -42,7 +42,7 @@ struct NPPInfo {
  *
  * Accepted stream beats are buffered until packet boundaries (TLAST, TID, or
  * TDEST) permit an NPP to be emitted.  The buffer never produces a payload
- * larger than 256 bytes, even for a single large AXIS packet.
+ * larger than 64 bytes, even for a single large AXIS packet (PG313 AXIS chop).
  */
 class sNocMasterUnit : public NocMasterUnit
 {

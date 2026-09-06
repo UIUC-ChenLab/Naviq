@@ -1,0 +1,10 @@
+name: axis_packet_fifo
+id: lib/axis/axis_packet_fifo
+rtl:
+  - rtl/axis_packet_fifo.sv
+deps:
+  - lib/other/axi
+  - lib/axis/axis_fifo
+tb:
+  tests:
+    - tb/axis_packet_fifo

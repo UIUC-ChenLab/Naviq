@@ -1,0 +1,11 @@
+name: axis_demux
+id: lib/axis/axis_demux
+rtl:
+  - rtl/axis_beat_demux.sv
+  - rtl/axis_packet_demux.sv
+deps:
+  - lib/other/axi
+  - lib/other/demux
+tb:
+  tests:
+    - tb/axis_demux

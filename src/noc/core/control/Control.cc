@@ -69,6 +69,37 @@ Control::Control(const Params &p)
         clockDomains.push_back(static_cast<int>(nocClockDomainMhz));
     }
 
+    const auto directCount = p.direct_sources.size();
+    panic_if(p.direct_targets.size() != directCount ||
+             p.direct_source_ports.size() != directCount ||
+             p.direct_target_ports.size() != directCount,
+             "Control: incomplete direct AXIS connections");
+    std::vector<std::pair<NocNode*, int>> usedPorts;
+    for (const auto &conn : connections)
+        usedPorts.emplace_back(conn.node, conn.portID);
+    for (size_t i = 0; i < directCount; ++i) {
+        auto *source = p.direct_sources[i];
+        auto *target = p.direct_targets[i];
+        const int sp = source->assignPort(p.direct_source_ports[i]);
+        const int tp = target->assignPort(p.direct_target_ports[i]);
+        const int cd = source->getPortClockDomain(sp);
+        panic_if(cd <= 0 || target->getPortClockDomain(tp) != cd,
+                 "Control: direct links require matching positive endpoint clocks");
+        panic_if(!dynamic_cast<axisMasterState*>(source->getCurrentState(sp)) ||
+                 !dynamic_cast<axisSlaveState*>(target->getCurrentState(tp)),
+                 "Control: direct links must connect an AXIS master to an AXIS slave");
+        for (auto port : {std::make_pair(source, sp), std::make_pair(target, tp)}) {
+            panic_if(std::find(usedPorts.begin(), usedPorts.end(), port) != usedPorts.end(),
+                     "Control: endpoint port is connected more than once");
+            panic_if(std::find(nodes.begin(), nodes.end(), port.first) == nodes.end(),
+                     "Control: direct endpoint is missing from nodes");
+            usedPorts.push_back(port);
+        }
+        directConnections.push_back({source, target, sp, tp, cd});
+        if (std::find(clockDomains.begin(), clockDomains.end(), cd) == clockDomains.end())
+            clockDomains.push_back(cd);
+    }
+
     nodeDone.resize(nodes.size(), 0);
 
     // Events must not move after schedule() stores their address on the event queue.
@@ -119,6 +150,18 @@ void Control::tick(int clockDomain)
             nodesToTick.end()) {
             nodesToTick.push_back(conn.node);
         }
+    }
+
+    // Snapshot both directions before clocking any endpoint, just as for the
+    // NoC boundaries above. update() copies input state and never advances RTL.
+    // A direct wire has no NoC packetization, hidden queues, or extra clock.
+    for (auto &conn : directConnections) {
+        if (conn.clockDomain != clockDomain) continue;
+        conn.source->update(conn.sourcePort, conn.target->getCurrentState(conn.targetPort));
+        conn.target->update(conn.targetPort, conn.source->getCurrentState(conn.sourcePort));
+        for (auto *node : {conn.source, conn.target})
+            if (std::find(nodesToTick.begin(), nodesToTick.end(), node) == nodesToTick.end())
+                nodesToTick.push_back(node);
     }
 
     for (auto *node : nodesToTick) {

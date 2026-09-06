@@ -354,20 +354,65 @@ TEST(AxisWriteBufferTest, SplitsFullNppBeforeTlast)
     int vc = -1;
     NetworkInterface::OutputPort *oport = nullptr;
     int32_t debug_id = -1;
-    std::unique_ptr<axisPayload> first =
-        buffer.popNextPacket(&vc, &oport, &debug_id);
-    ASSERT_NE(first, nullptr);
-    EXPECT_EQ(first->totalBytes, 256);
-    EXPECT_EQ(first->last, 0);
-    EXPECT_EQ(vc, 3);
-    EXPECT_EQ(debug_id, 100);
-    EXPECT_EQ(buffer.getSize(), 64);
+    for (int i = 0; i < 5; ++i) {
+        const auto packet = buffer.popNextPacket(&vc, &oport, &debug_id);
+        ASSERT_NE(packet, nullptr);
+        EXPECT_EQ(packet->totalBytes, 64);
+        EXPECT_EQ(packet->last, i == 4);
+        EXPECT_EQ(vc, 3);
+        EXPECT_EQ(debug_id, 100 + i);
+        EXPECT_EQ(buffer.getSize(), (4 - i) * 64);
+    }
+    EXPECT_EQ(buffer.getSize(), 0);
+}
 
-    std::unique_ptr<axisPayload> second =
-        buffer.popNextPacket(&vc, &oport, &debug_id);
-    ASSERT_NE(second, nullptr);
-    EXPECT_EQ(second->totalBytes, 64);
-    EXPECT_EQ(second->last, 1);
+TEST(AxisWriteBufferTest, SparseKeepSplitPreservesUnconsumedBytesAndLast)
+{
+    axisWriteBuffer buffer;
+    buffer.setHeadReadyHandler([]() {});
+    axisData first(512, 6, 4);
+    first.tvalid = true;
+    first.tlast = false;
+    first.tid = 5;
+    first.tdest = 7;
+    first.tkeep = 0;
+    for (size_t i = 0; i < 17; ++i) {
+        first.tkeep |= uint64_t(1) << (i * 2 + 1);
+    }
+    first.tdata = makeBytes(64);
+    axisData second = first;
+    second.tkeep = maskForBytes(64);
+    second.tlast = true;
+    for (auto &byte : second.tdata) {
+        byte ^= 0xa5;
+    }
+    axisPayload original;
+    original.add(first);
+    original.add(second);
+    buffer.add(first, nullptr, 3, 20);
+    buffer.add(second, nullptr, 3, 21);
+
+    int vc = -1;
+    NetworkInterface::OutputPort *oport = nullptr;
+    const auto head = buffer.popNextPacket(&vc, &oport);
+    const auto tail = buffer.popNextPacket(&vc, &oport);
+    ASSERT_EQ(head->totalBytes, 64);
+    ASSERT_EQ(tail->totalBytes, 17);
+    EXPECT_EQ(head->last, 0);
+    EXPECT_EQ(tail->last, 1);
+    EXPECT_FALSE(head->beats.back().tlast);
+    EXPECT_TRUE(tail->beats.back().tlast);
+    EXPECT_EQ(tail->beats.front().tkeep, maskForBytes(64) ^ maskForBytes(47));
+    std::vector<uint8_t> actual = validAxisBytes(*head);
+    const auto remaining = validAxisBytes(*tail);
+    actual.insert(actual.end(), remaining.begin(), remaining.end());
+    EXPECT_EQ(actual, validAxisBytes(original));
+    for (const auto *packet : {head.get(), tail.get()}) {
+        for (const auto &beat : packet->beats) {
+            EXPECT_EQ(beat.tid, 5);
+            EXPECT_EQ(beat.tdest, 7);
+        }
+    }
     EXPECT_EQ(buffer.getSize(), 0);
 }
 
@@ -388,14 +433,14 @@ TEST_P(AxisWriteBufferSizeTest, PacketizesBoundaryPacketSizes)
         const std::vector<uint8_t> packetBytes = validAxisBytes(packets[i]);
         actual.insert(actual.end(), packetBytes.begin(), packetBytes.end());
         if (i + 1 < packets.size()) {
-            EXPECT_EQ(packets[i].totalBytes, 256);
+            EXPECT_EQ(packets[i].totalBytes, 64);
             EXPECT_EQ(packets[i].last, 0);
         }
     }
 
     EXPECT_EQ(actual, expected);
     EXPECT_EQ(packets.back().last, 1);
-    EXPECT_LE(packets.back().totalBytes, 256);
+    EXPECT_LE(packets.back().totalBytes, 64);
 }
 
 INSTANTIATE_TEST_SUITE_P(
@@ -408,7 +453,7 @@ TEST(AxisWriteBufferTest, PacketizesMtuSizedPacketAsMultipleNpps)
     const std::vector<axisPayload> packets = buildAndDrainAxisPacket(1500);
     ASSERT_GT(packets.size(), 1);
     for (size_t i = 0; i < packets.size(); ++i) {
-        EXPECT_LE(packets[i].totalBytes, 256) << "packet " << i;
+        EXPECT_LE(packets[i].totalBytes, 64) << "packet " << i;
         EXPECT_EQ(packets[i].last, i + 1 == packets.size());
     }
 }

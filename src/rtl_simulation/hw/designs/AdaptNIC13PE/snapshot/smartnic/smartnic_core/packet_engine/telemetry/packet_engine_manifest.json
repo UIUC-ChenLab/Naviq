@@ -1,0 +1,98 @@
+{
+  "generated_by": "ip/scripts/generate_packet_engine.py",
+  "version": 5,
+  "id": "packet_engine/telemetry",
+  "module": "telemetry_packet_engine",
+  "rtl": "smartnic/smartnic_core/packet_engine/telemetry/rtl/telemetry_packet_engine.sv",
+  "dependencies": [
+    "offloads/telemetry",
+    "lib/axis/packet_engine_pipeline",
+    "lib/axil/axil_crossbar"
+  ],
+  "parameters": {
+    "TID_BASE": {
+      "type": "int unsigned",
+      "default": "2 * OFFLOAD_ID"
+    },
+    "STEERING_MODE": {
+      "type": "int",
+      "default": 0
+    },
+    "STEERING_HEADER_BYTES": {
+      "type": "int",
+      "default": 2
+    },
+    "HASH_FIFO_DEPTH": {
+      "type": "int",
+      "default": 64
+    }
+  },
+  "next_hop_entry_format": {
+    "version": 1,
+    "mmio_width_bits": 32,
+    "entry_stride_bytes": 4,
+    "stored_width_bits": 11,
+    "tdest": {
+      "lsb": 0,
+      "width": 10
+    },
+    "nmu_lane": {
+      "lsb": 10,
+      "width": 1,
+      "scope": "path_local"
+    },
+    "reserved_zero_mask": "0xfffff800",
+    "invalid_lane_action": "drop_packet",
+    "legacy_destination_only_lane": 0
+  },
+  "test": {
+    "wrapper": "smartnic/smartnic_core/packet_engine/telemetry/tb/packet_engine_harness.sv",
+    "adapter": "smartnic/smartnic_core/packet_engine/telemetry/tb/packet_engine_adapter.hpp",
+    "config": "smartnic/smartnic_core/packet_engine/telemetry/tb/config.json",
+    "include_dirs": [
+      "ip/offloads/telemetry/tb"
+    ]
+  },
+  "offload": {
+    "name": "telemetry",
+    "id": "offloads/telemetry",
+    "interface": "telemetry",
+    "module": "telemetry",
+    "params": {
+      "NUM_TRACKED_FLOWS": "4096",
+      "TOTAL_BYTES_WIDTH": "32",
+      "TOTAL_PACKETS_WIDTH": "32",
+      "DATA_WIDTH": "512"
+    },
+    "has_axil_control": true,
+    "parameters": {
+      "NUM_TRACKED_FLOWS": {
+        "type": "int unsigned",
+        "default": "4096"
+      },
+      "TOTAL_BYTES_WIDTH": {
+        "type": "int unsigned",
+        "default": "32"
+      },
+      "TOTAL_PACKETS_WIDTH": {
+        "type": "int unsigned",
+        "default": "32"
+      },
+      "DATA_WIDTH": {
+        "type": "int unsigned",
+        "default": "512"
+      }
+    }
+  },
+  "paths": [
+    {
+      "index": 0,
+      "input": "packet_in",
+      "output": "packet_out",
+      "flow_ctrl_base": 262144,
+      "flow_ctrl_size": 262144,
+      "next_hop_ctrl_base": 524288,
+      "next_hop_ctrl_size": 65536
+    }
+  ]
+}

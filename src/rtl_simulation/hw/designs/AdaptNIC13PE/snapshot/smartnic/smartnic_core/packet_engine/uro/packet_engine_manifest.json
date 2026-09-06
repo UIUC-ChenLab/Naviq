@@ -1,0 +1,118 @@
+{
+  "generated_by": "ip/scripts/generate_packet_engine.py",
+  "version": 5,
+  "id": "packet_engine/uro",
+  "module": "uro_packet_engine",
+  "rtl": "smartnic/smartnic_core/packet_engine/uro/rtl/uro_packet_engine.sv",
+  "dependencies": [
+    "offloads/uro",
+    "lib/axis/packet_engine_pipeline",
+    "lib/axil/axil_crossbar"
+  ],
+  "parameters": {
+    "TID_BASE": {
+      "type": "int unsigned",
+      "default": "2 * OFFLOAD_ID"
+    },
+    "STEERING_MODE": {
+      "type": "int",
+      "default": 0
+    },
+    "STEERING_HEADER_BYTES": {
+      "type": "int",
+      "default": 2
+    },
+    "HASH_FIFO_DEPTH": {
+      "type": "int",
+      "default": 64
+    }
+  },
+  "next_hop_entry_format": {
+    "version": 1,
+    "mmio_width_bits": 32,
+    "entry_stride_bytes": 4,
+    "stored_width_bits": 11,
+    "tdest": {
+      "lsb": 0,
+      "width": 10
+    },
+    "nmu_lane": {
+      "lsb": 10,
+      "width": 1,
+      "scope": "path_local"
+    },
+    "reserved_zero_mask": "0xfffff800",
+    "invalid_lane_action": "drop_packet",
+    "legacy_destination_only_lane": 0
+  },
+  "test": {
+    "wrapper": "smartnic/smartnic_core/packet_engine/uro/tb/packet_engine_harness.sv",
+    "adapter": "smartnic/smartnic_core/packet_engine/uro/tb/packet_engine_adapter.hpp",
+    "config": "smartnic/smartnic_core/packet_engine/uro/tb/config.json",
+    "include_dirs": [
+      "ip/offloads/uro/tb"
+    ]
+  },
+  "offload": {
+    "name": "uro",
+    "id": "offloads/uro",
+    "interface": "uro",
+    "module": "uro",
+    "params": {
+      "DATA_WIDTH": "512",
+      "NUM_URO_QUEUES": "8",
+      "TIMEOUT_COUNTER_WIDTH": "16",
+      "TIMEOUT_PRESCALER_WIDTH": "16",
+      "MAX_URO_QUEUE_BYTES": "9000",
+      "INPUT_SELECTOR_DEPTH": "2",
+      "OUTPUT_SELECTOR_DEPTH": "3",
+      "PARSER_FRAGMENT_PACKER_PAGE_COUNT": "8"
+    },
+    "has_axil_control": true,
+    "parameters": {
+      "DATA_WIDTH": {
+        "type": "int",
+        "default": "512"
+      },
+      "NUM_URO_QUEUES": {
+        "type": "int",
+        "default": "32"
+      },
+      "TIMEOUT_COUNTER_WIDTH": {
+        "type": "int",
+        "default": "16"
+      },
+      "TIMEOUT_PRESCALER_WIDTH": {
+        "type": "int",
+        "default": "16"
+      },
+      "MAX_URO_QUEUE_BYTES": {
+        "type": "int",
+        "default": "9000"
+      },
+      "INPUT_SELECTOR_DEPTH": {
+        "type": "int",
+        "default": "2"
+      },
+      "OUTPUT_SELECTOR_DEPTH": {
+        "type": "int",
+        "default": "3"
+      },
+      "PARSER_FRAGMENT_PACKER_PAGE_COUNT": {
+        "type": "int",
+        "default": "8"
+      }
+    }
+  },
+  "paths": [
+    {
+      "index": 0,
+      "input": "packet_in",
+      "output": "packet_out",
+      "flow_ctrl_base": 262144,
+      "flow_ctrl_size": 262144,
+      "next_hop_ctrl_base": 524288,
+      "next_hop_ctrl_size": 65536
+    }
+  ]
+}

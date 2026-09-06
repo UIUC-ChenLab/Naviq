@@ -1,0 +1,15 @@
+name: aes_ctr
+id: lib/crypto/aes_ctr
+rtl:
+  - rtl/aes_sbox.v
+  - rtl/aes_encipher_round_stage.sv
+  - rtl/aes_ctr.sv
+deps:
+  - lib/axis/axis_synchronize
+  - lib/other/bram
+tb:
+  tests:
+    - tb/aes_ctr
+  ldflags:
+    - -LDFLAGS
+    - -lcrypto

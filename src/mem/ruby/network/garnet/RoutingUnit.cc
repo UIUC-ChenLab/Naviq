@@ -366,8 +366,12 @@ RoutingUnit<T_Msg, T_RouteInfo>::outportComputeCustom(T_RouteInfo route,
         return it->second;
     }
     else{
-        fatal("Fatal Error:: No Route exists from this Router.");
-        exit(0);
+        fatal("No custom route at router=%d: src_ni=%d dest_ni=%d vc=%d "
+              "vnet=%d src_router=%d dest_router=%d hops=%d "
+              "inport=%d direction=%s",
+              m_router->get_id(), src_id, dst_id, vc, route.vnet,
+              route.src_router, route.dest_router, route.hops_traversed,
+              inport, inport_dirn);
     }
 }
 

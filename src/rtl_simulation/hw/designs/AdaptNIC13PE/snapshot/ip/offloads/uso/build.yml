@@ -1,0 +1,24 @@
+name: uso
+id: offloads/uso
+defaults:
+  top_params:
+    DATA_WIDTH: 512
+    MAX_SEGMENT_SIZE: 8192
+    MAX_CHUNK_SIZE: 16384
+rtl:
+  - rtl/uso.sv
+deps:
+  - lib/other/axi
+  - lib/other/header_parsers
+  - lib/other/sync_ff_fifo
+  - lib/axis/axis_fifo
+  - lib/axis/axis_multicast
+  - lib/axis/axis_count_beat_size
+  - lib/axis/axis_count_packet_size
+  - lib/axis/axis_combine_repack
+tb:
+  default_config: tb/config.json
+  tests:
+    - tb/uso
+  include_dirs:
+    - tb

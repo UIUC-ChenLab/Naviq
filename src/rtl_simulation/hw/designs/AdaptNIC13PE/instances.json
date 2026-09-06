@@ -1,0 +1,1247 @@
+[
+  {
+    "name": "aes_tx_0",
+    "packet_engine": "aes_ctr_tunnel_tx",
+    "lane_count": 1,
+    "interface_lane_counts": {
+      "packet_in": 1,
+      "packet_out": 1
+    },
+    "parameters": {
+      "NUM_STREAMS": 1,
+      "AXIS_DATA_WIDTH": 512,
+      "OFFLOAD_ID": 0,
+      "TID_BASE": 0,
+      "STEERING_MODE": 0,
+      "STEERING_HEADER_BYTES": 2,
+      "HASH_FIFO_DEPTH": 64,
+      "NUM_FLOWS": 4096,
+      "REBUILD_PACKETS": 1,
+      "NUM_SOURCES": 32,
+      "MAX_PACKET_SIZE_BYTES": 2048,
+      "NOC_FABRIC": "\"VNOC\""
+    },
+    "placement": {
+      "traffic_role": "tx",
+      "slrs": [
+        0
+      ],
+      "pblock": "PE_TX_C1_R0",
+      "clock_regions": [
+        "CLOCKREGION_X3Y3:CLOCKREGION_X6Y4"
+      ],
+      "is_soft": true,
+      "noc_sites": {
+        "u_packet_out_nmu": "NOC_NMU512_X2Y5",
+        "u_ctrl_in_aximm_nsu": "NOC_NSU512_X1Y6",
+        "u_packet_in_nsu": "NOC_NSU512_X1Y5"
+      }
+    },
+    "control_aperture": {
+      "start": 2207613190144,
+      "size": 1048576
+    },
+    "endpoints": [
+      {
+        "name": "u_packet_in_nsu",
+        "instance_path": "u_packet_in_nsu",
+        "protocol": "axis",
+        "role": "nsu",
+        "connections": [
+          {
+            "connect_to": "aes_tx_0.u_packet_in_nsu",
+            "connect_loc": 0,
+            "clock_domain": 400
+          }
+        ],
+        "transport": "noc"
+      },
+      {
+        "name": "u_packet_out_nmu",
+        "instance_path": "u_packet_out_nmu",
+        "protocol": "axis",
+        "role": "nmu",
+        "connections": [
+          {
+            "connect_to": "aes_tx_0.u_packet_out_nmu",
+            "connect_loc": 0,
+            "clock_domain": 400
+          }
+        ],
+        "transport": "noc"
+      },
+      {
+        "name": "u_ctrl_in_aximm_nsu",
+        "instance_path": "u_ctrl_in_aximm_nsu",
+        "protocol": "aximm",
+        "role": "nsu",
+        "connections": [
+          {
+            "connect_to": "aes_tx_0.u_ctrl_in_aximm_nsu",
+            "connect_loc": 0,
+            "clock_domain": 400
+          }
+        ],
+        "transport": "noc"
+      }
+    ]
+  },
+  {
+    "name": "aes_rx_0",
+    "packet_engine": "aes_ctr_tunnel_rx",
+    "lane_count": 1,
+    "interface_lane_counts": {
+      "packet_in": 1,
+      "packet_out": 1
+    },
+    "parameters": {
+      "NUM_STREAMS": 1,
+      "AXIS_DATA_WIDTH": 512,
+      "OFFLOAD_ID": 1,
+      "TID_BASE": 2,
+      "STEERING_MODE": 0,
+      "STEERING_HEADER_BYTES": 2,
+      "HASH_FIFO_DEPTH": 64,
+      "NUM_FLOWS": 4096,
+      "REBUILD_PACKETS": 1,
+      "NUM_SOURCES": 32,
+      "MAX_PACKET_SIZE_BYTES": 2048,
+      "NOC_FABRIC": "\"VNOC\""
+    },
+    "placement": {
+      "traffic_role": "rx",
+      "slrs": [
+        2
+      ],
+      "pblock": "PE_RX_C2_R1",
+      "clock_regions": [
+        "CLOCKREGION_X0Y9:CLOCKREGION_X3Y10"
+      ],
+      "is_soft": true,
+      "noc_sites": {
+        "u_packet_out_nmu": "NOC_NMU512_X1Y17",
+        "u_ctrl_in_aximm_nsu": "NOC_NSU512_X0Y18",
+        "u_packet_in_nsu": "NOC_NSU512_X0Y17"
+      }
+    },
+    "control_aperture": {
+      "start": 2207614238720,
+      "size": 1048576
+    },
+    "endpoints": [
+      {
+        "name": "u_packet_in_nsu",
+        "instance_path": "u_packet_in_nsu",
+        "protocol": "axis",
+        "role": "nsu",
+        "connections": [
+          {
+            "connect_to": "aes_rx_0.u_packet_in_nsu",
+            "connect_loc": 0,
+            "clock_domain": 400
+          }
+        ],
+        "transport": "noc"
+      },
+      {
+        "name": "u_packet_out_nmu",
+        "instance_path": "u_packet_out_nmu",
+        "protocol": "axis",
+        "role": "nmu",
+        "connections": [
+          {
+            "connect_to": "aes_rx_0.u_packet_out_nmu",
+            "connect_loc": 0,
+            "clock_domain": 400
+          }
+        ],
+        "transport": "noc"
+      },
+      {
+        "name": "u_ctrl_in_aximm_nsu",
+        "instance_path": "u_ctrl_in_aximm_nsu",
+        "protocol": "aximm",
+        "role": "nsu",
+        "connections": [
+          {
+            "connect_to": "aes_rx_0.u_ctrl_in_aximm_nsu",
+            "connect_loc": 0,
+            "clock_domain": 400
+          }
+        ],
+        "transport": "noc"
+      }
+    ]
+  },
+  {
+    "name": "aes_tx_1",
+    "packet_engine": "aes_ctr_tunnel_tx",
+    "lane_count": 1,
+    "interface_lane_counts": {
+      "packet_in": 1,
+      "packet_out": 1
+    },
+    "parameters": {
+      "NUM_STREAMS": 1,
+      "AXIS_DATA_WIDTH": 512,
+      "OFFLOAD_ID": 2,
+      "TID_BASE": 4,
+      "STEERING_MODE": 0,
+      "STEERING_HEADER_BYTES": 2,
+      "HASH_FIFO_DEPTH": 64,
+      "NUM_FLOWS": 4096,
+      "REBUILD_PACKETS": 1,
+      "NUM_SOURCES": 32,
+      "MAX_PACKET_SIZE_BYTES": 2048,
+      "NOC_FABRIC": "\"VNOC\""
+    },
+    "placement": {
+      "traffic_role": "tx",
+      "slrs": [
+        0
+      ],
+      "pblock": "PE_TX_C1_R1",
+      "clock_regions": [
+        "CLOCKREGION_X3Y0:CLOCKREGION_X6Y2"
+      ],
+      "is_soft": true,
+      "noc_sites": {
+        "u_packet_out_nmu": "NOC_NMU512_X2Y2",
+        "u_ctrl_in_aximm_nsu": "NOC_NSU512_X1Y3",
+        "u_packet_in_nsu": "NOC_NSU512_X1Y2"
+      }
+    },
+    "control_aperture": {
+      "start": 2207615287296,
+      "size": 1048576
+    },
+    "endpoints": [
+      {
+        "name": "u_packet_in_nsu",
+        "instance_path": "u_packet_in_nsu",
+        "protocol": "axis",
+        "role": "nsu",
+        "connections": [
+          {
+            "connect_to": "aes_tx_1.u_packet_in_nsu",
+            "connect_loc": 0,
+            "clock_domain": 400
+          }
+        ],
+        "transport": "noc"
+      },
+      {
+        "name": "u_packet_out_nmu",
+        "instance_path": "u_packet_out_nmu",
+        "protocol": "axis",
+        "role": "nmu",
+        "connections": [
+          {
+            "connect_to": "aes_tx_1.u_packet_out_nmu",
+            "connect_loc": 0,
+            "clock_domain": 400
+          }
+        ],
+        "transport": "noc"
+      },
+      {
+        "name": "u_ctrl_in_aximm_nsu",
+        "instance_path": "u_ctrl_in_aximm_nsu",
+        "protocol": "aximm",
+        "role": "nsu",
+        "connections": [
+          {
+            "connect_to": "aes_tx_1.u_ctrl_in_aximm_nsu",
+            "connect_loc": 0,
+            "clock_domain": 400
+          }
+        ],
+        "transport": "noc"
+      }
+    ]
+  },
+  {
+    "name": "aes_rx_1",
+    "packet_engine": "aes_ctr_tunnel_rx",
+    "lane_count": 1,
+    "interface_lane_counts": {
+      "packet_in": 1,
+      "packet_out": 1
+    },
+    "parameters": {
+      "NUM_STREAMS": 1,
+      "AXIS_DATA_WIDTH": 512,
+      "OFFLOAD_ID": 3,
+      "TID_BASE": 6,
+      "STEERING_MODE": 0,
+      "STEERING_HEADER_BYTES": 2,
+      "HASH_FIFO_DEPTH": 64,
+      "NUM_FLOWS": 4096,
+      "REBUILD_PACKETS": 1,
+      "NUM_SOURCES": 32,
+      "MAX_PACKET_SIZE_BYTES": 2048,
+      "NOC_FABRIC": "\"VNOC\""
+    },
+    "placement": {
+      "traffic_role": "rx",
+      "slrs": [
+        2
+      ],
+      "pblock": "PE_RX_C1_R0",
+      "clock_regions": [
+        "CLOCKREGION_X3Y9:CLOCKREGION_X5Y10"
+      ],
+      "is_soft": true,
+      "noc_sites": {
+        "u_packet_out_nmu": "NOC_NMU512_X2Y17",
+        "u_ctrl_in_aximm_nsu": "NOC_NSU512_X1Y18",
+        "u_packet_in_nsu": "NOC_NSU512_X1Y17"
+      }
+    },
+    "control_aperture": {
+      "start": 2207616335872,
+      "size": 1048576
+    },
+    "endpoints": [
+      {
+        "name": "u_packet_in_nsu",
+        "instance_path": "u_packet_in_nsu",
+        "protocol": "axis",
+        "role": "nsu",
+        "connections": [
+          {
+            "connect_to": "aes_rx_1.u_packet_in_nsu",
+            "connect_loc": 0,
+            "clock_domain": 400
+          }
+        ],
+        "transport": "noc"
+      },
+      {
+        "name": "u_packet_out_nmu",
+        "instance_path": "u_packet_out_nmu",
+        "protocol": "axis",
+        "role": "nmu",
+        "connections": [
+          {
+            "connect_to": "aes_rx_1.u_packet_out_nmu",
+            "connect_loc": 0,
+            "clock_domain": 400
+          }
+        ],
+        "transport": "noc"
+      },
+      {
+        "name": "u_ctrl_in_aximm_nsu",
+        "instance_path": "u_ctrl_in_aximm_nsu",
+        "protocol": "aximm",
+        "role": "nsu",
+        "connections": [
+          {
+            "connect_to": "aes_rx_1.u_ctrl_in_aximm_nsu",
+            "connect_loc": 0,
+            "clock_domain": 400
+          }
+        ],
+        "transport": "noc"
+      }
+    ]
+  },
+  {
+    "name": "checksum_normal",
+    "packet_engine": "checksum",
+    "lane_count": 2,
+    "interface_lane_counts": {
+      "packet_in": 2,
+      "packet_out": 2
+    },
+    "parameters": {
+      "NUM_STREAMS": 2,
+      "AXIS_DATA_WIDTH": 512,
+      "OFFLOAD_ID": 4,
+      "TID_BASE": 8,
+      "STEERING_MODE": 0,
+      "STEERING_HEADER_BYTES": 2,
+      "HASH_FIFO_DEPTH": 64,
+      "NUM_FLOWS": 4096,
+      "REBUILD_PACKETS": 1,
+      "NUM_SOURCES": 32,
+      "MAX_PACKET_SIZE_BYTES": 2048,
+      "VERIFY_CHECKSUMS": 0,
+      "NOC_FABRIC": "\"VNOC\""
+    },
+    "placement": {
+      "traffic_role": "tx",
+      "slrs": [
+        0
+      ],
+      "pblock": "PE_TX_C2_R1",
+      "clock_regions": [
+        "CLOCKREGION_X5Y0:CLOCKREGION_X9Y2"
+      ],
+      "is_soft": true,
+      "noc_sites": {
+        "u_packet_out_0_nmu": "NOC_NMU512_X3Y2",
+        "u_packet_out_1_nmu": "NOC_NMU512_X3Y1",
+        "u_ctrl_in_aximm_nsu": "NOC_NSU512_X2Y3",
+        "u_packet_in_0_nsu": "NOC_NSU512_X2Y2",
+        "u_packet_in_1_nsu": "NOC_NSU512_X2Y1"
+      }
+    },
+    "control_aperture": {
+      "start": 2207617384448,
+      "size": 1048576
+    },
+    "endpoints": [
+      {
+        "name": "u_packet_in_0_nsu",
+        "instance_path": "u_packet_in_0_nsu",
+        "protocol": "axis",
+        "role": "nsu",
+        "connections": [
+          {
+            "connect_to": "checksum_normal.u_packet_in_0_nsu",
+            "connect_loc": 0,
+            "clock_domain": 400
+          }
+        ],
+        "transport": "noc"
+      },
+      {
+        "name": "u_packet_in_1_nsu",
+        "instance_path": "u_packet_in_1_nsu",
+        "protocol": "axis",
+        "role": "nsu",
+        "connections": [
+          {
+            "connect_to": "checksum_normal.u_packet_in_1_nsu",
+            "connect_loc": 0,
+            "clock_domain": 400
+          }
+        ],
+        "transport": "noc"
+      },
+      {
+        "name": "u_packet_out_0_nmu",
+        "instance_path": "u_packet_out_0_nmu",
+        "protocol": "axis",
+        "role": "nmu",
+        "connections": [
+          {
+            "connect_to": "checksum_normal.u_packet_out_0_nmu",
+            "connect_loc": 0,
+            "clock_domain": 400
+          }
+        ],
+        "transport": "noc"
+      },
+      {
+        "name": "u_packet_out_1_nmu",
+        "instance_path": "u_packet_out_1_nmu",
+        "protocol": "axis",
+        "role": "nmu",
+        "connections": [
+          {
+            "connect_to": "checksum_normal.u_packet_out_1_nmu",
+            "connect_loc": 0,
+            "clock_domain": 400
+          }
+        ],
+        "transport": "noc"
+      },
+      {
+        "name": "u_ctrl_in_aximm_nsu",
+        "instance_path": "u_ctrl_in_aximm_nsu",
+        "protocol": "aximm",
+        "role": "nsu",
+        "connections": [
+          {
+            "connect_to": "checksum_normal.u_ctrl_in_aximm_nsu",
+            "connect_loc": 0,
+            "clock_domain": 400
+          }
+        ],
+        "transport": "noc"
+      }
+    ]
+  },
+  {
+    "name": "checksum_verify",
+    "packet_engine": "checksum",
+    "lane_count": 1,
+    "interface_lane_counts": {
+      "packet_in": 1,
+      "packet_out": 1
+    },
+    "parameters": {
+      "NUM_STREAMS": 1,
+      "AXIS_DATA_WIDTH": 512,
+      "OFFLOAD_ID": 5,
+      "TID_BASE": 10,
+      "STEERING_MODE": 0,
+      "STEERING_HEADER_BYTES": 2,
+      "HASH_FIFO_DEPTH": 64,
+      "NUM_FLOWS": 4096,
+      "REBUILD_PACKETS": 1,
+      "NUM_SOURCES": 32,
+      "MAX_PACKET_SIZE_BYTES": 2048,
+      "VERIFY_CHECKSUMS": 1,
+      "NOC_FABRIC": "\"VNOC\""
+    },
+    "placement": {
+      "traffic_role": "rx",
+      "slrs": [
+        2
+      ],
+      "pblock": "PE_RX_C2_R0",
+      "clock_regions": [
+        "CLOCKREGION_X0Y8:CLOCKREGION_X3Y9"
+      ],
+      "is_soft": true,
+      "noc_sites": {
+        "u_packet_out_nmu": "NOC_NMU512_X1Y14",
+        "u_ctrl_in_aximm_nsu": "NOC_NSU512_X0Y15",
+        "u_packet_in_nsu": "NOC_NSU512_X0Y14"
+      }
+    },
+    "control_aperture": {
+      "start": 2207618433024,
+      "size": 1048576
+    },
+    "endpoints": [
+      {
+        "name": "u_packet_in_nsu",
+        "instance_path": "u_packet_in_nsu",
+        "protocol": "axis",
+        "role": "nsu",
+        "connections": [
+          {
+            "connect_to": "checksum_verify.u_packet_in_nsu",
+            "connect_loc": 0,
+            "clock_domain": 400
+          }
+        ],
+        "transport": "noc"
+      },
+      {
+        "name": "u_packet_out_nmu",
+        "instance_path": "u_packet_out_nmu",
+        "protocol": "axis",
+        "role": "nmu",
+        "connections": [
+          {
+            "connect_to": "checksum_verify.u_packet_out_nmu",
+            "connect_loc": 0,
+            "clock_domain": 400
+          }
+        ],
+        "transport": "noc"
+      },
+      {
+        "name": "u_ctrl_in_aximm_nsu",
+        "instance_path": "u_ctrl_in_aximm_nsu",
+        "protocol": "aximm",
+        "role": "nsu",
+        "connections": [
+          {
+            "connect_to": "checksum_verify.u_ctrl_in_aximm_nsu",
+            "connect_loc": 0,
+            "clock_domain": 400
+          }
+        ],
+        "transport": "noc"
+      }
+    ]
+  },
+  {
+    "name": "multicast",
+    "packet_engine": "multicast",
+    "lane_count": 2,
+    "interface_lane_counts": {
+      "packet_in": 1,
+      "packet_out": 2
+    },
+    "parameters": {
+      "NUM_STREAMS": 2,
+      "AXIS_DATA_WIDTH": 512,
+      "OFFLOAD_ID": 6,
+      "TID_BASE": 12,
+      "STEERING_MODE": 0,
+      "STEERING_HEADER_BYTES": 2,
+      "HASH_FIFO_DEPTH": 64,
+      "NUM_FLOWS": 4096,
+      "REBUILD_PACKETS": 1,
+      "NUM_SOURCES": 32,
+      "MAX_PACKET_SIZE_BYTES": 2048,
+      "NOC_FABRIC": "\"VNOC\""
+    },
+    "placement": {
+      "traffic_role": "tx",
+      "slrs": [
+        0
+      ],
+      "pblock": "PE_TX_C2_R0",
+      "clock_regions": [
+        "CLOCKREGION_X5Y3:CLOCKREGION_X9Y4"
+      ],
+      "is_soft": true,
+      "noc_sites": {
+        "u_packet_out_0_nmu": "NOC_NMU512_X3Y5",
+        "u_packet_out_1_nmu": "NOC_NMU512_X3Y4",
+        "u_ctrl_in_aximm_nsu": "NOC_NSU512_X2Y6",
+        "u_packet_in_nsu": "NOC_NSU512_X2Y5"
+      }
+    },
+    "control_aperture": {
+      "start": 2207619481600,
+      "size": 1048576
+    },
+    "endpoints": [
+      {
+        "name": "u_packet_in_nsu",
+        "instance_path": "u_packet_in_nsu",
+        "protocol": "axis",
+        "role": "nsu",
+        "connections": [
+          {
+            "connect_to": "multicast.u_packet_in_nsu",
+            "connect_loc": 0,
+            "clock_domain": 400
+          }
+        ],
+        "transport": "noc"
+      },
+      {
+        "name": "u_packet_out_0_nmu",
+        "instance_path": "u_packet_out_0_nmu",
+        "protocol": "axis",
+        "role": "nmu",
+        "connections": [
+          {
+            "connect_to": "multicast.u_packet_out_0_nmu",
+            "connect_loc": 0,
+            "clock_domain": 400
+          }
+        ],
+        "transport": "noc"
+      },
+      {
+        "name": "u_packet_out_1_nmu",
+        "instance_path": "u_packet_out_1_nmu",
+        "protocol": "axis",
+        "role": "nmu",
+        "connections": [
+          {
+            "connect_to": "multicast.u_packet_out_1_nmu",
+            "connect_loc": 0,
+            "clock_domain": 400
+          }
+        ],
+        "transport": "noc"
+      },
+      {
+        "name": "u_ctrl_in_aximm_nsu",
+        "instance_path": "u_ctrl_in_aximm_nsu",
+        "protocol": "aximm",
+        "role": "nsu",
+        "connections": [
+          {
+            "connect_to": "multicast.u_ctrl_in_aximm_nsu",
+            "connect_loc": 0,
+            "clock_domain": 400
+          }
+        ],
+        "transport": "noc"
+      }
+    ]
+  },
+  {
+    "name": "overloaded_nat",
+    "packet_engine": "overloaded_nat",
+    "lane_count": 1,
+    "interface_lane_counts": {
+      "tx_packet_in": 1,
+      "tx_packet_out": 1,
+      "rx_packet_in": 1,
+      "rx_packet_out": 1
+    },
+    "parameters": {
+      "NUM_STREAMS": 2,
+      "AXIS_DATA_WIDTH": 512,
+      "OFFLOAD_ID": 7,
+      "TID_BASE": 14,
+      "STEERING_MODE": 0,
+      "STEERING_HEADER_BYTES": 2,
+      "HASH_FIFO_DEPTH": 64,
+      "NUM_FLOWS": 4096,
+      "REBUILD_PACKETS": 1,
+      "NUM_SOURCES": 32,
+      "MAX_PACKET_SIZE_BYTES": 2048,
+      "LANES_PER_PATH": 1,
+      "NOC_FABRIC": "\"VNOC\""
+    },
+    "placement": {
+      "traffic_role": "both",
+      "slrs": [
+        1
+      ],
+      "pblock": "PE_SLR1_NAT",
+      "clock_regions": [
+        "CLOCKREGION_X3Y5:CLOCKREGION_X6Y7"
+      ],
+      "is_soft": false,
+      "noc_sites": {
+        "u_tx_packet_out_nmu": "NOC_NMU512_X2Y11",
+        "u_rx_packet_out_nmu": "NOC_NMU512_X1Y10",
+        "u_ctrl_in_aximm_nsu": "NOC_NSU512_X2Y12",
+        "u_tx_packet_in_nsu": "NOC_NSU512_X1Y11",
+        "u_rx_packet_in_nsu": "NOC_NSU512_X2Y10"
+      }
+    },
+    "control_aperture": {
+      "start": 2207620530176,
+      "size": 1048576
+    },
+    "endpoints": [
+      {
+        "name": "u_tx_packet_in_nsu",
+        "instance_path": "u_tx_packet_in_nsu",
+        "protocol": "axis",
+        "role": "nsu",
+        "connections": [
+          {
+            "connect_to": "overloaded_nat.u_tx_packet_in_nsu",
+            "connect_loc": 0,
+            "clock_domain": 400
+          }
+        ],
+        "transport": "noc"
+      },
+      {
+        "name": "u_tx_packet_out_nmu",
+        "instance_path": "u_tx_packet_out_nmu",
+        "protocol": "axis",
+        "role": "nmu",
+        "connections": [
+          {
+            "connect_to": "overloaded_nat.u_tx_packet_out_nmu",
+            "connect_loc": 0,
+            "clock_domain": 400
+          }
+        ],
+        "transport": "noc"
+      },
+      {
+        "name": "u_rx_packet_in_nsu",
+        "instance_path": "u_rx_packet_in_nsu",
+        "protocol": "axis",
+        "role": "nsu",
+        "connections": [
+          {
+            "connect_to": "overloaded_nat.u_rx_packet_in_nsu",
+            "connect_loc": 0,
+            "clock_domain": 400
+          }
+        ],
+        "transport": "noc"
+      },
+      {
+        "name": "u_rx_packet_out_nmu",
+        "instance_path": "u_rx_packet_out_nmu",
+        "protocol": "axis",
+        "role": "nmu",
+        "connections": [
+          {
+            "connect_to": "overloaded_nat.u_rx_packet_out_nmu",
+            "connect_loc": 0,
+            "clock_domain": 400
+          }
+        ],
+        "transport": "noc"
+      },
+      {
+        "name": "u_ctrl_in_aximm_nsu",
+        "instance_path": "u_ctrl_in_aximm_nsu",
+        "protocol": "aximm",
+        "role": "nsu",
+        "connections": [
+          {
+            "connect_to": "overloaded_nat.u_ctrl_in_aximm_nsu",
+            "connect_loc": 0,
+            "clock_domain": 400
+          }
+        ],
+        "transport": "noc"
+      }
+    ]
+  },
+  {
+    "name": "packet_rate_limiter",
+    "packet_engine": "packet_rate_limiter",
+    "lane_count": 1,
+    "interface_lane_counts": {
+      "packet_in": 1,
+      "packet_out": 1
+    },
+    "parameters": {
+      "NUM_STREAMS": 1,
+      "AXIS_DATA_WIDTH": 512,
+      "OFFLOAD_ID": 8,
+      "TID_BASE": 16,
+      "STEERING_MODE": 0,
+      "STEERING_HEADER_BYTES": 2,
+      "HASH_FIFO_DEPTH": 64,
+      "NUM_FLOWS": 4096,
+      "REBUILD_PACKETS": 1,
+      "NUM_SOURCES": 32,
+      "MAX_PACKET_SIZE_BYTES": 2048,
+      "NOC_FABRIC": "\"VNOC\""
+    },
+    "placement": {
+      "traffic_role": "tx",
+      "slrs": [
+        0
+      ],
+      "pblock": "PE_TX_C0_R1",
+      "clock_regions": [
+        "CLOCKREGION_X0Y0:CLOCKREGION_X3Y2"
+      ],
+      "is_soft": true,
+      "noc_sites": {
+        "u_packet_out_nmu": "NOC_NMU512_X1Y2",
+        "u_ctrl_in_aximm_nsu": "NOC_NSU512_X0Y3",
+        "u_packet_in_nsu": "NOC_NSU512_X0Y2"
+      }
+    },
+    "control_aperture": {
+      "start": 2207621578752,
+      "size": 1048576
+    },
+    "endpoints": [
+      {
+        "name": "u_packet_in_nsu",
+        "instance_path": "u_packet_in_nsu",
+        "protocol": "axis",
+        "role": "nsu",
+        "connections": [
+          {
+            "connect_to": "packet_rate_limiter.u_packet_in_nsu",
+            "connect_loc": 0,
+            "clock_domain": 400
+          }
+        ],
+        "transport": "noc"
+      },
+      {
+        "name": "u_packet_out_nmu",
+        "instance_path": "u_packet_out_nmu",
+        "protocol": "axis",
+        "role": "nmu",
+        "connections": [
+          {
+            "connect_to": "packet_rate_limiter.u_packet_out_nmu",
+            "connect_loc": 0,
+            "clock_domain": 400
+          }
+        ],
+        "transport": "noc"
+      },
+      {
+        "name": "u_ctrl_in_aximm_nsu",
+        "instance_path": "u_ctrl_in_aximm_nsu",
+        "protocol": "aximm",
+        "role": "nsu",
+        "connections": [
+          {
+            "connect_to": "packet_rate_limiter.u_ctrl_in_aximm_nsu",
+            "connect_loc": 0,
+            "clock_domain": 400
+          }
+        ],
+        "transport": "noc"
+      }
+    ]
+  },
+  {
+    "name": "telemetry",
+    "packet_engine": "telemetry",
+    "lane_count": 1,
+    "interface_lane_counts": {
+      "packet_in": 1,
+      "packet_out": 1
+    },
+    "parameters": {
+      "NUM_STREAMS": 1,
+      "AXIS_DATA_WIDTH": 512,
+      "OFFLOAD_ID": 9,
+      "TID_BASE": 18,
+      "STEERING_MODE": 0,
+      "STEERING_HEADER_BYTES": 2,
+      "HASH_FIFO_DEPTH": 64,
+      "NUM_FLOWS": 4096,
+      "REBUILD_PACKETS": 1,
+      "NUM_SOURCES": 32,
+      "MAX_PACKET_SIZE_BYTES": 2048,
+      "NOC_FABRIC": "\"VNOC\""
+    },
+    "placement": {
+      "traffic_role": "rx",
+      "slrs": [
+        2
+      ],
+      "pblock": "PE_RX_C1_R1",
+      "clock_regions": [
+        "CLOCKREGION_X3Y8:CLOCKREGION_X6Y9"
+      ],
+      "is_soft": true,
+      "noc_sites": {
+        "u_packet_out_nmu": "NOC_NMU512_X2Y14",
+        "u_ctrl_in_aximm_nsu": "NOC_NSU512_X1Y15",
+        "u_packet_in_nsu": "NOC_NSU512_X1Y14"
+      }
+    },
+    "control_aperture": {
+      "start": 2207622627328,
+      "size": 1048576
+    },
+    "endpoints": [
+      {
+        "name": "u_packet_in_nsu",
+        "instance_path": "u_packet_in_nsu",
+        "protocol": "axis",
+        "role": "nsu",
+        "connections": [
+          {
+            "connect_to": "telemetry.u_packet_in_nsu",
+            "connect_loc": 0,
+            "clock_domain": 400
+          }
+        ],
+        "transport": "noc"
+      },
+      {
+        "name": "u_packet_out_nmu",
+        "instance_path": "u_packet_out_nmu",
+        "protocol": "axis",
+        "role": "nmu",
+        "connections": [
+          {
+            "connect_to": "telemetry.u_packet_out_nmu",
+            "connect_loc": 0,
+            "clock_domain": 400
+          }
+        ],
+        "transport": "noc"
+      },
+      {
+        "name": "u_ctrl_in_aximm_nsu",
+        "instance_path": "u_ctrl_in_aximm_nsu",
+        "protocol": "aximm",
+        "role": "nsu",
+        "connections": [
+          {
+            "connect_to": "telemetry.u_ctrl_in_aximm_nsu",
+            "connect_loc": 0,
+            "clock_domain": 400
+          }
+        ],
+        "transport": "noc"
+      }
+    ]
+  },
+  {
+    "name": "uro",
+    "packet_engine": "uro",
+    "lane_count": 1,
+    "interface_lane_counts": {
+      "packet_in": 1,
+      "packet_out": 1
+    },
+    "parameters": {
+      "NUM_STREAMS": 1,
+      "AXIS_DATA_WIDTH": 512,
+      "OFFLOAD_ID": 10,
+      "TID_BASE": 20,
+      "STEERING_MODE": 0,
+      "STEERING_HEADER_BYTES": 2,
+      "HASH_FIFO_DEPTH": 64,
+      "NUM_FLOWS": 4096,
+      "REBUILD_PACKETS": 1,
+      "NUM_SOURCES": 32,
+      "MAX_PACKET_SIZE_BYTES": 2048,
+      "NOC_FABRIC": "\"VNOC\""
+    },
+    "placement": {
+      "traffic_role": "rx",
+      "slrs": [
+        0
+      ],
+      "pblock": "PE_RX_C0_R0",
+      "clock_regions": [
+        "CLOCKREGION_X0Y0:CLOCKREGION_X4Y4"
+      ],
+      "is_soft": true,
+      "noc_sites": {
+        "u_ctrl_in_aximm_nsu": "NOC_NSU512_X0Y0",
+        "u_packet_in_nsu": "NOC_NSU512_X0Y5"
+      }
+    },
+    "control_aperture": {
+      "start": 2207623675904,
+      "size": 1048576
+    },
+    "host_attachment": "uro",
+    "endpoints": [
+      {
+        "name": "u_packet_in_nsu",
+        "instance_path": "u_dut.u_packet_in_nsu",
+        "protocol": "axis",
+        "role": "nsu",
+        "connections": [
+          {
+            "connect_to": "uro.u_packet_in_nsu",
+            "connect_loc": 0,
+            "clock_domain": 400
+          }
+        ],
+        "transport": "noc"
+      },
+      {
+        "name": "u_packet_out_nmu",
+        "instance_path": "u_packet_out_nmu",
+        "protocol": "axis",
+        "role": "nmu",
+        "connections": [
+          {
+            "connect_to": "uro.u_packet_out_nmu",
+            "connect_loc": 0,
+            "clock_domain": 400
+          }
+        ],
+        "transport": "direct",
+        "flat_prefix": "local",
+        "rtl_port": "packet_out_local"
+      },
+      {
+        "name": "u_ctrl_in_aximm_nsu",
+        "instance_path": "u_dut.u_ctrl_in_aximm_nsu",
+        "protocol": "aximm",
+        "role": "nsu",
+        "connections": [
+          {
+            "connect_to": "uro.u_ctrl_in_aximm_nsu",
+            "connect_loc": 0,
+            "clock_domain": 400
+          }
+        ],
+        "transport": "noc"
+      }
+    ]
+  },
+  {
+    "name": "uso",
+    "packet_engine": "uso",
+    "lane_count": 1,
+    "interface_lane_counts": {
+      "packet_in": 1,
+      "packet_out": 1
+    },
+    "parameters": {
+      "NUM_STREAMS": 1,
+      "AXIS_DATA_WIDTH": 512,
+      "OFFLOAD_ID": 11,
+      "TID_BASE": 22,
+      "STEERING_MODE": 0,
+      "STEERING_HEADER_BYTES": 2,
+      "HASH_FIFO_DEPTH": 64,
+      "NUM_FLOWS": 4096,
+      "REBUILD_PACKETS": 1,
+      "NUM_SOURCES": 32,
+      "MAX_PACKET_SIZE_BYTES": 2048,
+      "NOC_FABRIC": "\"VNOC\""
+    },
+    "placement": {
+      "traffic_role": "tx",
+      "slrs": [
+        0
+      ],
+      "pblock": "PE_TX_C0_R0",
+      "clock_regions": [
+        "CLOCKREGION_X0Y2:CLOCKREGION_X4Y4"
+      ],
+      "is_soft": true,
+      "noc_sites": {
+        "u_packet_out_nmu": "NOC_NMU512_X1Y5",
+        "u_ctrl_in_aximm_nsu": "NOC_NSU512_X0Y6"
+      }
+    },
+    "control_aperture": {
+      "start": 2207624724480,
+      "size": 1048576
+    },
+    "host_attachment": "uso",
+    "endpoints": [
+      {
+        "name": "u_packet_in_nsu",
+        "instance_path": "u_packet_in_nsu",
+        "protocol": "axis",
+        "role": "nsu",
+        "connections": [
+          {
+            "connect_to": "uso.u_packet_in_nsu",
+            "connect_loc": 0,
+            "clock_domain": 400
+          }
+        ],
+        "transport": "direct",
+        "flat_prefix": "local",
+        "rtl_port": "packet_in_local"
+      },
+      {
+        "name": "u_packet_out_nmu",
+        "instance_path": "u_dut.u_packet_out_nmu",
+        "protocol": "axis",
+        "role": "nmu",
+        "connections": [
+          {
+            "connect_to": "uso.u_packet_out_nmu",
+            "connect_loc": 0,
+            "clock_domain": 400
+          }
+        ],
+        "transport": "noc"
+      },
+      {
+        "name": "u_ctrl_in_aximm_nsu",
+        "instance_path": "u_dut.u_ctrl_in_aximm_nsu",
+        "protocol": "aximm",
+        "role": "nsu",
+        "connections": [
+          {
+            "connect_to": "uso.u_ctrl_in_aximm_nsu",
+            "connect_loc": 0,
+            "clock_domain": 400
+          }
+        ],
+        "transport": "noc"
+      }
+    ]
+  },
+  {
+    "name": "dummy_loopback",
+    "packet_engine": "dummy_fifo",
+    "lane_count": 2,
+    "interface_lane_counts": {
+      "packet_in": 2,
+      "packet_out": 2
+    },
+    "parameters": {
+      "NUM_STREAMS": 2,
+      "AXIS_DATA_WIDTH": 512,
+      "OFFLOAD_ID": 12,
+      "TID_BASE": 24,
+      "STEERING_MODE": 0,
+      "STEERING_HEADER_BYTES": 2,
+      "HASH_FIFO_DEPTH": 64,
+      "NUM_FLOWS": 4096,
+      "REBUILD_PACKETS": 1,
+      "NUM_SOURCES": 32,
+      "MAX_PACKET_SIZE_BYTES": 2048,
+      "NOC_FABRIC": "\"VNOC\""
+    },
+    "placement": {
+      "traffic_role": "midpoint",
+      "slrs": [
+        1
+      ],
+      "pblock": "PE_SLR1_FIFO",
+      "clock_regions": [
+        "CLOCKREGION_X7Y5:CLOCKREGION_X9Y7"
+      ],
+      "is_soft": false,
+      "noc_sites": {
+        "u_packet_out_0_nmu": "NOC_NMU512_X3Y10",
+        "u_packet_out_1_nmu": "NOC_NMU512_X3Y9",
+        "u_ctrl_in_aximm_nsu": "NOC_NSU512_X3Y11",
+        "u_packet_in_0_nsu": "NOC_NSU512_X3Y10",
+        "u_packet_in_1_nsu": "NOC_NSU512_X3Y9"
+      }
+    },
+    "control_aperture": {
+      "start": 2207625773056,
+      "size": 1048576
+    },
+    "endpoints": [
+      {
+        "name": "u_packet_in_0_nsu",
+        "instance_path": "u_packet_in_0_nsu",
+        "protocol": "axis",
+        "role": "nsu",
+        "connections": [
+          {
+            "connect_to": "dummy_loopback.u_packet_in_0_nsu",
+            "connect_loc": 0,
+            "clock_domain": 400
+          }
+        ],
+        "transport": "noc"
+      },
+      {
+        "name": "u_packet_in_1_nsu",
+        "instance_path": "u_packet_in_1_nsu",
+        "protocol": "axis",
+        "role": "nsu",
+        "connections": [
+          {
+            "connect_to": "dummy_loopback.u_packet_in_1_nsu",
+            "connect_loc": 0,
+            "clock_domain": 400
+          }
+        ],
+        "transport": "noc"
+      },
+      {
+        "name": "u_packet_out_0_nmu",
+        "instance_path": "u_packet_out_0_nmu",
+        "protocol": "axis",
+        "role": "nmu",
+        "connections": [
+          {
+            "connect_to": "dummy_loopback.u_packet_out_0_nmu",
+            "connect_loc": 0,
+            "clock_domain": 400
+          }
+        ],
+        "transport": "noc"
+      },
+      {
+        "name": "u_packet_out_1_nmu",
+        "instance_path": "u_packet_out_1_nmu",
+        "protocol": "axis",
+        "role": "nmu",
+        "connections": [
+          {
+            "connect_to": "dummy_loopback.u_packet_out_1_nmu",
+            "connect_loc": 0,
+            "clock_domain": 400
+          }
+        ],
+        "transport": "noc"
+      },
+      {
+        "name": "u_ctrl_in_aximm_nsu",
+        "instance_path": "u_ctrl_in_aximm_nsu",
+        "protocol": "aximm",
+        "role": "nsu",
+        "connections": [
+          {
+            "connect_to": "dummy_loopback.u_ctrl_in_aximm_nsu",
+            "connect_loc": 0,
+            "clock_domain": 400
+          }
+        ],
+        "transport": "noc"
+      }
+    ]
+  }
+]

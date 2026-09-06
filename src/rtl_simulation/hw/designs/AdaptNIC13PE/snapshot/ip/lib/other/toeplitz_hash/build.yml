@@ -1,0 +1,11 @@
+name: toeplitz_hash
+id: lib/other/toeplitz_hash
+rtl:
+  - rtl/toeplitz_hash.sv
+deps:
+  []
+tb:
+  tests:
+    - tb/toeplitz_hash
+  include_dirs:
+    - tb/common

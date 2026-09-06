@@ -1,7 +1,10 @@
 module xpm_nsu_strm #(
     parameter int DATA_WIDTH = 256,
-    parameter int TDEST_WIDTH = 12,
-    parameter int TID_WIDTH = 16
+    parameter int DST_ID_WIDTH = 12,
+    parameter int ID_WIDTH = 16,
+    parameter string NOC_FABRIC = "VNOC",
+    parameter int TDEST_WIDTH = DST_ID_WIDTH,
+    parameter int TID_WIDTH = ID_WIDTH
 ) (
     input logic m_axis_aclk /* verilator public_flat */,
     output logic [DATA_WIDTH-1:0] m_axis_tdata /* verilator public_flat */,

@@ -31,14 +31,22 @@ depacketizeMmWriteDataFlit(
     uint8_t flitId,
     uint8_t numFlits,
     const std::array<uint8_t, 16>& flitData,
-    uint64_t flitStrobe)
+    uint64_t flitStrobe,
+    uint32_t transferBytes)
 {
     MmWriteDataDepacketizedFlit result;
     const int bytesBefore = static_cast<int>(flitId) * 16;
     const bool isTailFlit = ((numFlits - 1) == flitId);
 
     if (slaveDataWidthBytes < 16) {
-        const uint8_t beatsPerFlit = 16 / slaveDataWidthBytes;
+        // The final NoC flit may contain padding beyond AWLEN/AWSIZE. Keep
+        // real zero-strobe beats, but never emit the flit's padding as AXI W.
+        const uint32_t bytesInFlit = transferBytes
+            ? std::min(16u, transferBytes > static_cast<uint32_t>(bytesBefore)
+                ? transferBytes - bytesBefore : 0u)
+            : 16u;
+        const uint8_t beatsPerFlit =
+            (bytesInFlit + slaveDataWidthBytes - 1) / slaveDataWidthBytes;
         for (uint8_t i = 0; i < beatsPerFlit; ++i) {
             const int beatStart =
                 bytesBefore + static_cast<int>(i) * slaveDataWidthBytes;
@@ -57,6 +65,7 @@ depacketizeMmWriteDataFlit(
 
             aximmRWData beat;
             beat.cmd = AximmCommand::WRITE;
+            beat.valid = true;
             beat.id = axiId;
             beat.last = isTailFlit && (i == (beatsPerFlit - 1));
             beat.data = payloadData;

@@ -146,6 +146,34 @@ TEST(MmWriteDataDepacketizerTest, EmitsShortSingleFlitBurstOnEqualWidthSlave)
     EXPECT_EQ(result.debugRanges[0].validBytes, 2);
 }
 
+TEST(MmWriteDataDepacketizerTest, DoesNotTurnFlitPaddingIntoControlWrites)
+{
+    MmWriteDataAssemblyState state;
+    auto result = depacketizeMmWriteDataFlit(
+        4, 0, 0x83ffc, state, 0, 1, flitBytes(0x40), 0xf, 4);
+    ASSERT_EQ(result.payloads.size(), 1);
+    EXPECT_TRUE(result.payloads[0].valid);
+    EXPECT_TRUE(result.payloads[0].last);
+    EXPECT_EQ(result.payloads[0].wstrb, 0xf);
+    EXPECT_EQ(result.payloads[0].data[3], 0x43);
+}
+
+TEST(MmWriteDataDepacketizerTest, KeepsRealZeroStrobeBeatsBeforePartialTail)
+{
+    MmWriteDataAssemblyState state;
+    auto first = depacketizeMmWriteDataFlit(
+        4, 0, 0, state, 0, 2, flitBytes(0x20), 0, 20);
+    ASSERT_EQ(first.payloads.size(), 4);
+    for (const auto &beat : first.payloads) EXPECT_TRUE(beat.valid);
+    EXPECT_FALSE(first.payloads.back().last);
+    auto tail = depacketizeMmWriteDataFlit(
+        4, 0, 0, state, 1, 2, flitBytes(0x30), 0, 20);
+    ASSERT_EQ(tail.payloads.size(), 1);
+    EXPECT_TRUE(tail.payloads[0].valid);
+    EXPECT_TRUE(tail.payloads[0].last);
+    EXPECT_EQ(tail.payloads[0].wstrb, 0);
+}
+
 } // anonymous namespace
 } // namespace garnet
 } // namespace noc

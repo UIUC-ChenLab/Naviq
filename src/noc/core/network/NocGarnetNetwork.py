@@ -6,12 +6,14 @@ from m5.objects.ClockedObject import ClockedObject
 from m5.objects.NocNetwork import NocNetwork
 from m5.params import *
 from m5.proxy import *
+from m5.SimObject import PyBindMethod
 
 
 class NocGarnetNetwork(NocNetwork):
     type = "NocGarnetNetwork"
     cxx_header = "noc/core/network/NocGarnetNetwork.hh"
     cxx_class = "gem5::noc::garnet::NocGarnetNetwork"
+    cxx_exports = [PyBindMethod("hasOutstandingTransactions")]
     # abstract = True
 
     num_rows = Param.Int(0, "number of rows if 2D (mesh/torus/..) topology")

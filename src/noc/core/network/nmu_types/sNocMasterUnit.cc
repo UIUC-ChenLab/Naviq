@@ -212,6 +212,10 @@ sNocMasterUnit::unserialize(CheckpointIn &cp)
     paramInRootOrNiInp0(cp, obj, "currPacketId", currNPPInfo.packet_id);
     paramInRootOrNiInp0(cp, obj, "currVc", currNPPInfo.vc);
     paramInRootOrNiInp0(cp, obj, "currNumFlits", currNPPInfo.num_flits);
+    fatal_if(currNPPInfo.valid &&
+             currNPPInfo.num_flits > axisPayload::NPP_MAX_SIZE / 16,
+             "%s: checkpoint contains an AXIS NPP larger than the 64-byte chop",
+             name());
     paramInRootOrNiInp0(cp, obj, "currLastFlitSize",
         currNPPInfo.last_flit_size_bytes);
     int router_id = -1;
@@ -290,7 +294,10 @@ sNocMasterUnit::bufferHeadReadyHandler() {
     packet = writeBuffer.popNextPacket(&vc, &currNPPInfo.oPort, &dbg_id);
     
     // flit per 16B of write data, +1 for any <16B left over if not divisible by 16
-    // flit is 128 bits of data, npp is 256 bytes
+    // Each AXIS NPP is at most 64 bytes, independently arbitrated in the NoC.
+    panic_if(packet->totalBytes <= 0 ||
+             packet->totalBytes > axisPayload::NPP_MAX_SIZE,
+             "sNocMasterUnit: AXIS NPP must contain 1..64 valid bytes");
     currNPPInfo.num_flits = (packet->totalBytes / 16) + (packet->totalBytes % 16 == 0 ? 0 : 1);
     currNPPInfo.last_flit_size_bytes = packet->totalBytes % 16 == 0 ? 16 : packet->totalBytes % 16;
 

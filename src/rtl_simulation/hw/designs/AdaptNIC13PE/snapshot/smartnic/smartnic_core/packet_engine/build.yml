@@ -1,0 +1,26 @@
+name: packet_engine_pipeline
+id: lib/axis/packet_engine_pipeline
+rtl:
+  - rtl/packet_engine_ingress_pipeline.sv
+  - rtl/packet_engine_egress_pipeline.sv
+deps:
+  - lib/other/axi
+  - lib/axis/axis_packet_arbiter
+  - lib/axis/axis_packet_rebuilder
+  - lib/axis/axis_multicast
+  - lib/axis/axis_packet_fifo
+  - lib/axis/axis_strip_repack
+  - lib/axis/axis_combine_repack
+  - lib/axis/axis_demux
+  - lib/other/header_parsers
+  - lib/other/toeplitz_hash
+  - lib/other/sync_ff_fifo
+  - lib/other/sync_bram_fifo
+  - lib/axil/axil_hash_table
+  - lib/axil/lookup_table
+  - lib/axil/axil_dummy_okay_slave
+tb:
+  tests:
+    - tb/packet_engine_ingress_pipeline
+    - tb/packet_engine_egress_pipeline
+    - tb/packet_engine_ingress_convergence

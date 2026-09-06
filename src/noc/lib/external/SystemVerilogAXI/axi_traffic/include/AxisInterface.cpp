@@ -14,7 +14,8 @@ AxisInterface::AxisInterface(size_t tdata_width, size_t tid_width, size_t tdest_
     tready_(false),
 	tdata_(std::make_shared<std::vector<uint8_t>>(tdata_width / 8, 0), tdata_width / 8, 0),
 	tkeep_(std::vector<UBit>(tdata_width / 8, UBit(1, 0))),
-	tuser_(std::make_shared<std::vector<uint8_t>>(tuser_width / 8, 0), tuser_width / 8, 0)
+    // A partial final byte still carries real sideband bits (e.g. a lane bit).
+	tuser_(std::make_shared<std::vector<uint8_t>>((tuser_width + 7) / 8, 0), (tuser_width + 7) / 8, 0)
 {
 }
 
@@ -59,10 +60,11 @@ void AxisInterface::setTKeep(const std::vector<UBit>& keep) {
 }
 
 void AxisInterface::setTUser(const DataView& user) {
-    tuser_ = user;
-    if (tuser_.size() != tuser_width_ / 8) {
-        throw std::runtime_error("tuser_ size does not match tuser_width_ (in Bytes)" + std::to_string(tuser_.size()) + " != " + std::to_string(tuser_width_ / 8));
+    const size_t user_bytes = (tuser_width_ + 7) / 8;
+    if (user.size() != user_bytes) {
+        throw std::runtime_error("tuser_ size does not match tuser_width_ (in Bytes)" + std::to_string(user.size()) + " != " + std::to_string(user_bytes));
     }
+    tuser_ = user;
 }
 
 void AxisInterface::clear() {
@@ -72,4 +74,3 @@ void AxisInterface::clear() {
     tvalid_ = false;
     tready_ = false;
 }
-

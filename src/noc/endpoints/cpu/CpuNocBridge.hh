@@ -24,6 +24,7 @@ class CpuNocBridge : public NocNode
     CpuNocBridge(const Params &p);
     
     void init() override;
+    void flushMetrics() const { emitMetricsFragment(); }
 
     /** gem5 port interface */
     Port& getPort(const std::string &if_name, PortID idx) override;
@@ -126,6 +127,7 @@ class CpuNocBridge : public NocNode
     std::vector<AddrRange> secondaryFunctionalRanges;
     bool runConsistencyCheck;
     std::string metricsOutputPath;
+    bool metricsEveryTransaction;
     
     void startup() override;
 

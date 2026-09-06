@@ -193,6 +193,9 @@ class NocGarnetNetwork : public gem5::noc::NocNetwork
 
     NocTrafficMonitor& getTrafficMonitor() { return m_traffic_monitor; }
     const NocTrafficMonitor& getTrafficMonitor() const { return m_traffic_monitor; }
+    bool hasOutstandingTransactions() const {
+        return m_traffic_monitor.hasOutstandingTransactions();
+    }
 
     void serialize(CheckpointOut &cp) const override;
     void unserialize(CheckpointIn &cp) override;

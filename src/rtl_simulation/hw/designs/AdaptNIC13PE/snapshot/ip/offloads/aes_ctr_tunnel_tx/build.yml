@@ -1,0 +1,38 @@
+name: aes_ctr_tunnel_tx
+id: offloads/aes_ctr_tunnel_tx
+defaults:
+  top_params:
+    DATA_WIDTH: 512
+    SA_TABLE_DEPTH: 1024
+    SA_ID_WIDTH: 10
+    HASH_WIDTH: 12
+rtl:
+  - rtl/aes_ctr_tunnel_tx_pkg.sv
+  - rtl/aes_ctr_tx_ingress.sv
+  - rtl/aes_ctr_tx_egress.sv
+  - rtl/aes_ctr_tunnel_tx.sv
+deps:
+  - lib/other/axi
+  - lib/other/bram
+  - lib/other/toeplitz_hash
+  - lib/other/header_parsers
+  - lib/axil/axil_crossbar
+  - lib/axil/axil_hash_table
+  - lib/axis/axis_fifo
+  - lib/axis/axis_combine_repack
+  - lib/axis/axis_serializer
+  - lib/axis/axis_multicast
+  - lib/axis/axis_fragment_packer
+  - lib/crypto/aes_ctr
+tb:
+  default_config: tb/config.json
+  tests:
+    - tb/aes_ctr_tunnel_tx
+  include_dirs:
+    - ../common/include
+    - tb
+  ldflags:
+    - -LDFLAGS
+    - -lcrypto
+  verilator_flags:
+    - -Wno-ASCRANGE

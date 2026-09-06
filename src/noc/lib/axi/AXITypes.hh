@@ -290,12 +290,12 @@ struct aximmMasterState : public State {
     }
 };
 
-// esentially a vector of n axisDatas that add up to 256 bytes (size of one NPP)
-// with some other metadata that makes coding easier
+// AXIS NoC packets carry at most 64 valid bytes (PG313 AXI4-Stream chopping).
+// AXI-MM transaction chopping has its own, independent size limits.
 struct axisPayload {
-    static constexpr uint32_t NPP_MAX_SIZE = 256; // in bytes
+    static constexpr uint32_t NPP_MAX_SIZE = 64; // in bytes
 
-    int numBeats = 0; // how many axisData objects make up the 256 bytes
+    int numBeats = 0; // number of source beats contributing to this AXIS NPP
     std::vector<axisData> beats;
     // Debug correlation ids aligned 1:1 with `beats`.
     // Intended for probing/latency measurement when multiple beats are packed

@@ -1,0 +1,14 @@
+name: axis_fifo
+id: lib/axis/axis_fifo
+rtl:
+  - rtl/axis_fifo.sv
+  - rtl/axis_ff_fifo_cut.sv
+deps:
+  - lib/other/axi
+  - lib/other/sync_bram_fifo
+  - lib/other/sync_ff_fifo
+tb:
+  tests:
+    - tb/axis_fifo
+    - tb/axis_fifo_ff
+    - tb/axis_fifo_cut_ready

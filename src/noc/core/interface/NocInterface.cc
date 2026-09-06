@@ -241,7 +241,8 @@ NocInterface::nodeSideUpdate(State* inputNodeState) {
                 if (optInfo.has_value()) {
                     const ResponseInfo& info = optInfo.value();
                     if (info.dataValid && !info.dataBytes.empty()) {
-                        m_netwk_ptr->getTrafficMonitor().checkWriteData(protocol, info.src, info.dataBytes);
+                        m_netwk_ptr->getTrafficMonitor().checkWriteData(
+                            protocol, info.src, info.dataBytes, m_version);
                     }
                     if (info.responseEnd) {
                         if (info.type == ResponseInfo::Type::WRITE) { m_netwk_ptr->getTrafficMonitor().recordWriteResponseEnd(protocol, info.src, info.tlast, info.tdest, static_cast<int>(info.dataBytes.size()), m_version, info.id, curTick() + cyclesToTicks(info.delay)); }
@@ -335,8 +336,14 @@ NocInterface::recordTrafficMonitorForOutgoing(const MessageParams& params) {
             params.data.value());
     }
     if (!params.beatBytes.empty()) {
+        int axisTdest = -1;
+        if (params.data.has_value()) {
+            if (const auto* axis = std::get_if<axisData>(&params.data.value())) {
+                axisTdest = axis->tdest;
+            }
+        }
         m_netwk_ptr->getTrafficMonitor().logWriteData(
-            protocol, m_version, params.beatBytes);
+            protocol, m_version, params.beatBytes, axisTdest);
     }
 }
 

@@ -74,76 +74,114 @@ template <typename T_Msg, typename T_RouteInfo>
 void
 NocSwitchAllocator<T_Msg, T_RouteInfo>::wakeup()
 {
-    // Pipelined pass-through for point-to-point switch types (NCRB, NIDB, RPTR).
-    // These have only 2 ports and act as simple pipelined FIFOs: each VC is
-    // processed independently with no locking or arbitration. A flit only stalls
-    // if the downstream switch has no credits available.
+    // Preserve the NCRB/NIDB/RPTR pipeline, but arbitrate where configured
+    // paths converge. Different input ports must not interleave NPPs on one
+    // output VC: downstream route caches and assemblers hold one NPP per VC.
     Nps_Type nps = m_router->get_nps_type();
     if (nps == Nps_Type::NCRB || nps == Nps_Type::NIDB || nps == Nps_Type::RPTR) {
-        DPRINTF(RubyNetwork, "Router %d [%s] pipelined pass-through SA stage\n",
-                        m_router->get_id(),
-                        NpsTypeToString(nps).c_str());
-        bool need_rewakeup = false;
+        const bool use_internal_pipe = m_router->usesInternalIngressPipeline();
+        using Request = std::pair<int, int>; // (inport, invc)
+        std::vector<std::vector<Request>> requests(m_num_outports);
+
         for (int inport = 0; inport < m_num_inports; ++inport) {
             auto iu = m_router->getInputUnit(inport);
             for (int invc = 0; invc < m_num_vcs; ++invc) {
-                bool use_internal_pipe = (nps == Nps_Type::NIDB ||
-                                          nps == Nps_Type::NCRB) &&
-                    m_router->usesInternalIngressPipeline();
+                const bool ready = use_internal_pipe ?
+                    m_router->hasReadyInternalFlit(inport, invc, curTick()) :
+                    iu->need_stage(invc, gem5::ruby::garnet::SA_, curTick());
+                if (!ready) continue;
 
-                if (use_internal_pipe) {
-                    if (!m_router->hasReadyInternalFlit(inport, invc, curTick())) {
-                        continue;
-                    }
-                } else if (!iu->need_stage(
-                               invc, gem5::ruby::garnet::flit_stage::SA_,
-                               curTick())) {
-                    continue;
-                }
-
-                auto peek_flit = use_internal_pipe ?
+                auto flit = use_internal_pipe ?
                     m_router->peekInternalFlit(inport, invc) :
                     iu->peekTopFlit(invc);
-                if (!peek_flit) continue;
+                if (!flit) continue;
+                const int outport = m_router->route_compute(
+                    flit->get_route(), inport, iu->get_direction(), invc);
+                panic_if(outport < 0 || outport >= m_num_outports,
+                    "Router %d pass-through has invalid output %d",
+                    m_router->get_id(), outport);
 
-                int outport = m_router->route_compute(
-                    peek_flit->get_route(), inport, iu->get_direction(), invc);
+                const Request request{inport, invc};
+                // Unseen requesters enter as least recently served. Merely
+                // falling back to them when the existing LRU list is empty
+                // would starve a newly active input under sustained traffic.
+                auto &lru = m_outport_lru_list[outport];
+                auto &lru_map = m_outport_lru_map[outport];
+                if (lru_map.find(request) == lru_map.end()) {
+                    lru.push_front(request);
+                    lru_map.emplace(request, lru.begin());
+                }
 
-                auto ou = m_router->getOutputUnit(outport);
-
-                // Check downstream credit — stall this VC if none available
-                if (!ou->has_noccredit(invc)) {
-                    DPRINTF(RubyNetwork, "Router %d pass-through: no credit for "
-                            "inport %d invc %d -> outport %d, stalling\n",
-                            m_router->get_id(), inport, invc, outport);
-                    need_rewakeup = true;
+                const auto &owner = m_output_vc_lock[outport][invc];
+                if (owner.first != -1 && owner != request) continue;
+                if (!m_router->getOutputUnit(outport)->has_noccredit(invc))
                     continue;
-                }
-
-                // Credit available — dequeue and forward
-                auto t_flit = use_internal_pipe ?
-                    m_router->getInternalFlit(inport, invc) :
-                    iu->getTopFlit(invc);
-                ou->decrement_credit(invc);
-
-                Tick when = curTick();
-                t_flit->set_outport(outport);
-                t_flit->set_vc(invc);
-                t_flit->advance_stage(gem5::ruby::garnet::ST_, when);
-                m_router->grant_switch(inport, t_flit);
-
-                if (!use_internal_pipe) {
-                    bool is_tail = (t_flit->get_type() == gem5::ruby::garnet::TAIL_ ||
-                                t_flit->get_type() == gem5::ruby::garnet::HEAD_TAIL_);
-                    iu->increment_credit(invc, is_tail, curTick());
-                }
-                m_router->schedule_wakeup(Cycles(1));
+                requests[outport].push_back(request);
+                trace_arbitration("request", outport, inport, invc, 0, flit);
             }
         }
-        // If any VC stalled on credits, rewakeup next cycle to retry
-        if (need_rewakeup) {
-            m_router->schedule_wakeup(Cycles(1));
+
+        // One grant per output models the physical link. Also limit each
+        // input to one grant: CrossbarSwitch drains one flit per input per
+        // cycle, so a tail cannot linger there after its VC lock is released
+        // while another input's next head overtakes it. Rotate output order
+        // to share an input fairly when its VCs request different outputs.
+        std::vector<bool> input_granted(m_num_inports, false);
+        const int first_outport = m_num_outports ?
+            static_cast<uint64_t>(m_router->curCycle()) % m_num_outports : 0;
+        bool granted = false;
+        for (int offset = 0; offset < m_num_outports; ++offset) {
+            const int outport = (first_outport + offset) % m_num_outports;
+            Request winner{-1, -1};
+            for (const auto &request : m_outport_lru_list[outport]) {
+                if (!input_granted[request.first] &&
+                    std::find(requests[outport].begin(), requests[outport].end(),
+                              request) != requests[outport].end()) {
+                    winner = request;
+                    break;
+                }
+            }
+            if (winner.first == -1) continue;
+
+            const int inport = winner.first;
+            const int invc = winner.second;
+            auto iu = m_router->getInputUnit(inport);
+            auto flit = use_internal_pipe ?
+                m_router->getInternalFlit(inport, invc) :
+                iu->getTopFlit(invc);
+            const bool is_tail =
+                flit->get_type() == gem5::ruby::garnet::TAIL_ ||
+                flit->get_type() == gem5::ruby::garnet::HEAD_TAIL_;
+
+            trace_arbitration("grant", outport, inport, invc, 0, flit);
+            m_router->getOutputUnit(outport)->decrement_credit(invc);
+            flit->set_outport(outport);
+            flit->set_vc(invc);
+            flit->advance_stage(gem5::ruby::garnet::ST_, curTick());
+            m_router->grant_switch(inport, flit);
+            gem5::noc::garnet::nocProbeFromRouter(
+                m_router, "router.flit.sa_grant", flit);
+
+            if (is_tail)
+                release_lock(outport, invc);
+            else
+                acquire_lock(outport, invc, inport, invc);
+
+            // Internal NCRB/NIDB ingress already returned this credit when
+            // staging the flit. RPTR/direct ingress returns it only here.
+            // grant_request() cannot be reused because it always returns one.
+            if (!use_internal_pipe) {
+                iu->increment_credit(invc, is_tail, curTick());
+                if (is_tail) iu->set_vc_idle(invc, curTick());
+            }
+            update_lru(outport, inport, invc);
+            input_granted[inport] = true;
+            granted = true;
         }
+        if (granted) m_router->schedule_wakeup(Cycles(1));
+        // Retry ready flits held by credits, packet ownership or arbitration;
+        // future pipeline-ready events retain their original scheduling.
+        check_for_wakeup();
         return;
     }
 
@@ -211,7 +249,30 @@ NocSwitchAllocator<T_Msg, T_RouteInfo>::wakeup()
     }
 
     // --- Stage 2: Arbitrate for each Output Port ---
-    for (int outport = 0; outport < m_num_outports; ++outport) {
+    // CrossbarSwitch traverses one flit per physical input per cycle. Granting
+    // different VCs from that input to multiple outputs would queue flits in
+    // the crossbar after their output-VC locks have already been released;
+    // another input's HEAD could then overtake a queued TAIL. Share inputs
+    // across outputs and rotate the output order to avoid fixed preference.
+    std::vector<bool> input_granted(m_num_inports, false);
+    const int first_outport = m_num_outports ?
+        static_cast<uint64_t>(m_router->curCycle()) % m_num_outports : 0;
+    for (int offset = 0; offset < m_num_outports; ++offset) {
+        const int outport = (first_outport + offset) % m_num_outports;
+        // Filter both token classes before selecting/reloading one. A served
+        // input must not suppress another eligible input on this output.
+        const auto already_granted = [&input_granted](const auto &request) {
+            return input_granted[std::get<0>(request)];
+        };
+        auto &without_tokens = m_requesters_without_tokens[outport];
+        auto &with_tokens = m_requesters_with_tokens[outport];
+        without_tokens.erase(std::remove_if(without_tokens.begin(),
+            without_tokens.end(), already_granted), without_tokens.end());
+        with_tokens.erase(std::remove_if(with_tokens.begin(),
+            with_tokens.end(), already_granted), with_tokens.end());
+        m_requester_without_tokens_exists[outport] = !without_tokens.empty();
+        m_requester_with_tokens_exists[outport] = !with_tokens.empty();
+        int granted_inport = -1;
         if (m_requester_without_tokens_exists[outport] && !m_requester_with_tokens_exists[outport]) {
             DPRINTF(RubyNetwork, "Router %d Outport %d: Triggering Token Reload.\n", m_router->get_id(), outport);
             for(const auto& vc_pair : m_requesters_without_tokens[outport]) {
@@ -220,12 +281,14 @@ NocSwitchAllocator<T_Msg, T_RouteInfo>::wakeup()
                 int reload_invc = std::get<1>(vc_pair);
                 m_tokens[outport][reload_inport][reload_invc] = m_initial_tokens[outport][reload_inport][reload_invc];
             }
-            arbitrate_for_output_port(m_requesters_without_tokens[outport], outport);
+            granted_inport = arbitrate_for_output_port(
+                m_requesters_without_tokens[outport], outport);
         }
         else{
-            arbitrate_for_output_port(m_requesters_with_tokens[outport], outport);
+            granted_inport = arbitrate_for_output_port(
+                m_requesters_with_tokens[outport], outport);
         }
-
+        if (granted_inport >= 0) input_granted[granted_inport] = true;
     }
 
     check_for_wakeup();
@@ -233,11 +296,11 @@ NocSwitchAllocator<T_Msg, T_RouteInfo>::wakeup()
 
 // Main arbitration logic for a single output port
 template <typename T_Msg, typename T_RouteInfo>
-void
+int
 NocSwitchAllocator<T_Msg, T_RouteInfo>::arbitrate_for_output_port(const std::vector<std::tuple<int, int, int>> current_requests, int outport)
 {
     if (current_requests.empty()) {
-        return; // No requests for this output port
+        return -1; // No requests for this output port
     }
 
     // Separate requests by priority (Assuming 1=High, 0=Low for simplicity)
@@ -330,6 +393,7 @@ NocSwitchAllocator<T_Msg, T_RouteInfo>::arbitrate_for_output_port(const std::vec
         grant_request(outport, win_inport, win_invc, win_invc, t_flit);
         update_lru(outport, win_inport, win_invc);
     }
+    return winner.first;
 }
 
 // Check all NPS eligibility conditions for a request

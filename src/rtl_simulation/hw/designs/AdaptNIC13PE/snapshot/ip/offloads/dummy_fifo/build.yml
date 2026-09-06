@@ -1,0 +1,16 @@
+name: dummy_fifo
+id: offloads/dummy_fifo
+defaults:
+  top_params:
+    DATA_WIDTH: 512
+    FIFO_DEPTH: 16
+    EXTRA_OUTPUT_REG: 0
+rtl:
+  - rtl/dummy_fifo.sv
+deps:
+  - lib/other/axi
+  - lib/axis/axis_fifo
+tb:
+  default_config: tb/config.json
+  tests:
+    - tb/dummy_fifo

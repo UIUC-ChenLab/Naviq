@@ -45,7 +45,7 @@ class NocSwitchAllocator : public gem5::ruby::Consumer
     void check_for_wakeup();
     int get_vnet (int invc);
     void print(std::ostream& out) const {};
-    void arbitrate_for_output_port(const std::vector<std::tuple<int, int, int>> current_requests, int outport);
+    int arbitrate_for_output_port(const std::vector<std::tuple<int, int, int>> current_requests, int outport);
     bool is_eligible(int inport, int invc, int outport, gem5::ruby::garnet::flit<T_Msg, T_RouteInfo>* t_flit); // Check all conditions
     int get_request_priority(int inport, int invc, gem5::ruby::garnet::flit<T_Msg, T_RouteInfo>* t_flit); // Implement priority logic
     void update_lru(int outport, int win_inport, int win_invc);

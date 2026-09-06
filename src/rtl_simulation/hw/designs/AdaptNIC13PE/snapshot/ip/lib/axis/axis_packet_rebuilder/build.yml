@@ -1,0 +1,15 @@
+name: axis_packet_rebuilder
+id: lib/axis/axis_packet_rebuilder
+rtl:
+  - rtl/rebuilder_ingress.sv
+  - rtl/rebuilder_hierarchical_arbiter.sv
+  - rtl/uram_egress.sv
+  - rtl/axis_packet_rebuilder.sv
+deps:
+  - lib/other/axi
+  - lib/other/simple_dual_port_uram
+  - lib/axis/axis_fifo
+tb:
+  tests:
+    - tb/axis_packet_rebuilder
+    - tb/rebuilder_hierarchical_arbiter
