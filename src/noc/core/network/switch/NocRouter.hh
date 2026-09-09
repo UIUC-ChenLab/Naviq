@@ -116,6 +116,17 @@ class NocRouter : public gem5::ruby::garnet::Router<T_Msg, T_RouteInfo>
     gem5::ruby::garnet::flit<T_Msg, T_RouteInfo>*
     getInternalFlit(int inport, int invc);
 
+    // One eight-flit pool per incoming physical link, shared by its VCs.
+    // The opposite link direction has a separate pool at its receiver.
+    static constexpr int InternalIngressCapacity = 8;
+    int getInternalIngressCapacity() const { return InternalIngressCapacity; }
+    int getInternalIngressOccupancy(int inport, int invc) const;
+    int getInternalIngressLinkOccupancy(int inport) const;
+
+    void regStats() override;
+    bool functionalRead(Packet *pkt, gem5::ruby::WriteMask &mask);
+    uint32_t functionalWrite(Packet *pkt);
+
     void collateStats();
     void resetStats();
 
@@ -143,6 +154,13 @@ class NocRouter : public gem5::ruby::garnet::Router<T_Msg, T_RouteInfo>
     bool m_core_logic_processed_this_tick;
     std::vector<std::vector<gem5::ruby::garnet::flitBuffer<T_Msg, T_RouteInfo>>>
         m_internalIngressBuffers;
+    std::vector<int> m_internalIngressOccupancy;
+    std::vector<int> m_internalIngressNextVc;
+    statistics::Vector m_internalIngressAccepted;
+    statistics::Vector m_internalIngressDrained;
+    statistics::Vector m_internalIngressBlockedCycles;
+    statistics::Vector m_internalIngressPeak;
+    statistics::AverageVector m_internalIngressAverage;
 
     gem5::noc::NocProbe* m_nocProbe = nullptr;
 };

@@ -35,6 +35,7 @@
 #include "noc/core/network/NocSystem.hh"
 
 #include <cassert>
+#include <sstream>
 
 #include "base/cast.hh"
 #include "base/compiler.hh"
@@ -1360,6 +1361,20 @@ NocGarnetNetwork::get_effective_vc_buffer_depth(
 }
 
 uint32_t
+NocGarnetNetwork::get_ni_receive_credit_depth(
+    int router_id, int physical_vc) const
+{
+    fatal_if(router_id < 0 || size_t(router_id) >= m_routers.size(),
+             "%s: NI receive credit lookup has invalid router %d",
+             name(), router_id);
+    auto *router = m_routers[router_id];
+    // makeExtOutLink/makeNocExtOutLink use the attaching router's class
+    // for its local output credits. Honor explicit VC-depth overrides too.
+    return get_effective_physical_vc_buffer_depth(
+        physical_vc, router->get_vc_per_vnet(), router->get_nps_type());
+}
+
+uint32_t
 NocGarnetNetwork::get_effective_physical_vc_buffer_depth(
     int physical_vc,
     uint32_t consumerVcs,
@@ -1396,6 +1411,48 @@ NocGarnetNetwork::trafficMonitorOutstandingPoll()
     if (p > 0) {
         schedule(m_trafficMonitorOutstandingPollEvent, curTick() + p);
     }
+}
+
+std::string
+NocGarnetNetwork::linkTrafficMetrics() const
+{
+    std::ostringstream out;
+    out << "[";
+    bool first = true;
+    for (const auto* link : m_networklinks) {
+        if (!first) out << ",";
+        first = false;
+        out << "{\"name\":\"" << link->name() << "\",\"link_id\":" << link->get_id()
+            << ",\"flits\":" << link->getLinkUtilization()
+            << ",\"width_bits\":" << link->bitWidth
+            << ",\"clock_period_ticks\":" << link->clockPeriod() << ",\"vc_flits\":[";
+        bool firstVc = true;
+        for (const auto count : link->getVcLoad()) {
+            if (!firstVc) out << ",";
+            firstVc = false;
+            out << count;
+        }
+        out << "]}";
+    }
+    out << "]";
+    return out.str();
+}
+
+bool
+NocGarnetNetwork::hasOutstandingTransactions() const
+{
+    if (m_traffic_monitor.hasOutstandingTransactions())
+        return true;
+
+    // Include staged NCRB/NIDB flits explicitly in the endpoint drain check,
+    // even when a producer has no corresponding traffic-monitor transaction.
+    for (auto *router : m_routers) {
+        for (int in = 0; in < router->get_num_inports(); ++in) {
+            if (router->getInternalIngressLinkOccupancy(in) > 0)
+                return true;
+        }
+    }
+    return false;
 }
 
 void
@@ -1506,6 +1563,8 @@ NocGarnetNetwork::npsQueueTraceSample()
             auto *iu = router->getInputUnit(in);
             if (iu->getCreditQueue()->getSize() > 0)
                 any = true;
+            if (router->getInternalIngressLinkOccupancy(in) > 0)
+                any = true;
             for (int vc = 0; vc < nvcs; ++vc) {
                 if (iu->getVcOccupancy(vc) > 0)
                     any = true;
@@ -1530,6 +1589,16 @@ NocGarnetNetwork::npsQueueTraceSample()
                     writeCsvField(out, nocname);
                     out << ',' << nps_str << ",data_vc," << in << ',' << vc
                         << ',' << d << '\n';
+                }
+                // Each staged flit appears once, under its VC. Summing these
+                // rows per input gives the shared internal link occupancy.
+                const int internal_depth =
+                    router->getInternalIngressOccupancy(in, vc);
+                if (internal_depth > 0) {
+                    out << t << ',' << cycle << ',' << rid << ',';
+                    writeCsvField(out, nocname);
+                    out << ',' << nps_str << ",internal_ingress," << in
+                        << ',' << vc << ',' << internal_depth << '\n';
                 }
             }
         }

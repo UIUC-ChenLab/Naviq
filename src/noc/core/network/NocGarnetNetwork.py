@@ -13,7 +13,7 @@ class NocGarnetNetwork(NocNetwork):
     type = "NocGarnetNetwork"
     cxx_header = "noc/core/network/NocGarnetNetwork.hh"
     cxx_class = "gem5::noc::garnet::NocGarnetNetwork"
-    cxx_exports = [PyBindMethod("hasOutstandingTransactions")]
+    cxx_exports = [PyBindMethod("hasOutstandingTransactions"), PyBindMethod("linkTrafficMetrics")]
     # abstract = True
 
     num_rows = Param.Int(0, "number of rows if 2D (mesh/torus/..) topology")

@@ -193,9 +193,8 @@ class NocGarnetNetwork : public gem5::noc::NocNetwork
 
     NocTrafficMonitor& getTrafficMonitor() { return m_traffic_monitor; }
     const NocTrafficMonitor& getTrafficMonitor() const { return m_traffic_monitor; }
-    bool hasOutstandingTransactions() const {
-        return m_traffic_monitor.hasOutstandingTransactions();
-    }
+    bool hasOutstandingTransactions() const;
+    std::string linkTrafficMetrics() const;
 
     void serialize(CheckpointOut &cp) const override;
     void unserialize(CheckpointIn &cp) override;
@@ -271,6 +270,7 @@ class NocGarnetNetwork : public gem5::noc::NocNetwork
          int physical_vc,
          uint32_t consumerVcs,
          gem5::noc::garnet::Nps_Type nps_type) const;
+     uint32_t get_ni_receive_credit_depth(int router_id, int physical_vc) const;
      void traceNsuReadDrain(
          const char *event,
          int nsu_id,

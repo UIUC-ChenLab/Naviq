@@ -30,6 +30,7 @@
 */
 #include "noc/core/network/NocNetworkInterface.hh"
 #include "noc/core/network/NocNetwork.hh"
+#include "noc/core/network/NppReceive.hh"
 #include "noc/debug/NocProbe.hh"
 #include <algorithm>
 #include <cstring>
@@ -616,6 +617,45 @@ NetworkInterface::wakeup()
                     num_assemblers;
                 if (assemblers[vc].empty()) {
                     continue;
+                }
+
+                auto *first = assemblers[vc].front();
+                if (std::holds_alternative<axisPayload>(
+                        first->get_msg_ptr()->getData())) {
+                    // AXIS NPPs contain at most four flits. Do not hold the
+                    // shared protocol drain while their tails are still in
+                    // the NoC: another VC may need to drain to free those
+                    // tails' upstream shared buffers. Router source locks
+                    // remain per output VC through the packet's tail. Once
+                    // selected here, this NPP still drains under the existing
+                    // head-to-tail lock, including downstream backpressure.
+                    // MM packets can exceed both the receive credit window
+                    // and assembler depth; retain their streaming behavior.
+                    const int receive_window = std::min<uint32_t>(
+                        kNppAssemblerMaxFlits,
+                        m_net_ptr->get_ni_receive_credit_depth(
+                            iPort->routerID(), vc));
+                    const auto check = checkNppReceivePrefix(
+                        assemblers[vc], axisPayload::NPP_MAX_SIZE / 16,
+                        receive_window, [](auto *flit) {
+                            const auto type = flit->get_type();
+                            return NppReceiveFlit{
+                                flit->getPacketID(), flit->get_src_ni_id(),
+                                flit->get_vc(), flit->get_id(), flit->get_size(),
+                                type == gem5::ruby::garnet::HEAD_ ||
+                                    type == gem5::ruby::garnet::HEAD_TAIL_,
+                                type == gem5::ruby::garnet::TAIL_ ||
+                                    type == gem5::ruby::garnet::HEAD_TAIL_};
+                        });
+                    fatal_if(check.status == NppReceiveStatus::Invalid ||
+                             check.status == NppReceiveStatus::InsufficientWindow,
+                        "%s: AXIS receive packet %d on input %d VC %d: %s "
+                        "(packet flits %d, receive window %d)",
+                        name(), first->getPacketID(), in_port_idx, vc,
+                        check.reason, first->get_size(), receive_window);
+                    if (check.status == NppReceiveStatus::Incomplete) {
+                        continue;
+                    }
                 }
 
                 m_locked_assembler_input_port = in_port_idx;

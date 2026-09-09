@@ -155,7 +155,11 @@ NocRouter<T_Msg, T_RouteInfo>::init()
         m_internalIngressBuffers.resize(
             this->get_num_inports(),
             std::vector<gem5::ruby::garnet::flitBuffer<T_Msg, T_RouteInfo>>(
-                this->get_num_vcs()));
+                this->get_num_vcs(),
+                gem5::ruby::garnet::flitBuffer<T_Msg, T_RouteInfo>(
+                    InternalIngressCapacity)));
+        m_internalIngressOccupancy.assign(this->get_num_inports(), 0);
+        m_internalIngressNextVc.assign(this->get_num_inports(), 0);
     }
 
     initNpsOccCsv();
@@ -205,6 +209,10 @@ NocRouter<T_Msg, T_RouteInfo>::sumPhysicalNpsInputBufferStats(
 
     for (int pi = 0; pi < this->get_num_inports(); pi++) {
         auto *iu = this->getInputUnit(pi);
+        if (usesInternalIngressPipeline()) {
+            occSum += getInternalIngressLinkOccupancy(pi);
+            maxCapSum += InternalIngressCapacity;
+        }
         if (!noc_net) {
             int portOcc = 0;
             int portMaxCap = 0;
@@ -245,9 +253,8 @@ NocRouter<T_Msg, T_RouteInfo>::npsOccMaybeLogAfterCoreCycle()
 
         int occ_sum = 0;
         int max_cap_sum = 0;
-        // Match the physical NPS storage model: 4 bidirectional ports, each
-        // with per-port VC FIFOs. Count only InputUnit VC flit buffers and use
-        // the NPS credit depth as the FIFO depth for each VC.
+        // Count input VC buffers plus one shared internal pool per incoming
+        // NCRB/NIDB link. Internal capacity is not multiplied by VC count.
         sumPhysicalNpsInputBufferStats(occ_sum, max_cap_sum);
 
         npsOccAllCsv << curTick() << ',' << safe_name << ','
@@ -275,10 +282,6 @@ NocRouter<T_Msg, T_RouteInfo>::wakeup()
         this->input_unit_wakeup(inport);
     }
 
-    if (usesInternalIngressPipeline()) {
-        stageInternalIngressFlits();
-    }
-
     int num_outports = this->get_num_outports();
     // check for incoming credits (using inherited m_output_unit)
     for (int outport = 0; outport < num_outports; outport++) {
@@ -294,6 +297,12 @@ NocRouter<T_Msg, T_RouteInfo>::wakeup()
     if (!m_core_logic_processed_this_tick) {
         DPRINTF(RubyNetwork, "Router %d [%s] tick %lld: Performing core SA/ST logic.\n",
                 this->get_id(), m_name.c_str(), gem5::curTick());
+
+        // Stage at most once per cycle even if several link/credit events
+        // wake the router at the same tick. One admission per physical input.
+        if (usesInternalIngressPipeline()) {
+            stageInternalIngressFlits();
+        }
 
         // Switch Allocation: Considers all flits now present in InputUnits
         nocswitchAllocator.wakeup();
@@ -318,6 +327,19 @@ NocRouter<T_Msg, T_RouteInfo>::wakeup()
     } else {
         DPRINTF(RubyNetwork, "Router %d [%s] tick %lld: Core SA/ST logic already performed. Skipping.\n",
                 this->get_id(), m_name.c_str(), gem5::curTick());
+        // A link event may deliver a new flit after this tick's admission.
+        // Retry next cycle rather than waiting the input's full SA delay
+        // and then imposing the internal pipeline delay a second time.
+        if (usesInternalIngressPipeline()) {
+            for (int inport = 0; inport < this->get_num_inports(); ++inport) {
+                for (int vc = 0; vc < this->get_num_vcs(); ++vc) {
+                    if (this->getInputUnit(inport)->isReady(vc, curTick())) {
+                        this->schedule_wakeup(Cycles(1));
+                        return;
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -330,12 +352,27 @@ NocRouter<T_Msg, T_RouteInfo>::stageInternalIngressFlits()
 
     for (int inport = 0; inport < this->get_num_inports(); ++inport) {
         auto input_unit = this->getInputUnit(inport);
-        for (int invc = 0; invc < this->get_num_vcs(); ++invc) {
-            auto& internal_buffer = m_internalIngressBuffers[inport][invc];
-
+        if (m_internalIngressOccupancy[inport] > m_internalIngressPeak[inport].value())
+            m_internalIngressPeak[inport] = m_internalIngressOccupancy[inport];
+        const int num_vcs = this->get_num_vcs();
+        for (int offset = 0; offset < num_vcs; ++offset) {
+            const int invc = (m_internalIngressNextVc[inport] + offset) % num_vcs;
             if (!input_unit->isReady(invc, curTick())) {
                 continue;
             }
+
+            // Reserve storage before popping the input or returning a credit.
+            // All VCs share eight slots, and no downstream-ready bypass is
+            // needed. A slot freed by SA later this cycle is used next cycle.
+            panic_if(m_internalIngressOccupancy[inport] > InternalIngressCapacity,
+                "%s internal ingress link %d exceeded capacity", this->name(), inport);
+            if (m_internalIngressOccupancy[inport] == InternalIngressCapacity) {
+                ++m_internalIngressBlockedCycles[inport];
+                break;
+            }
+            auto& internal_buffer = m_internalIngressBuffers[inport][invc];
+            panic_if(internal_buffer.isFull(),
+                "%s internal ingress VC accounting mismatch", this->name());
 
             auto t_flit = input_unit->peekTopFlit(invc);
             if (!t_flit) {
@@ -361,6 +398,12 @@ NocRouter<T_Msg, T_RouteInfo>::stageInternalIngressFlits()
             }
             t_flit->advance_stage(gem5::ruby::garnet::SA_, ready_time);
             internal_buffer.insert(t_flit);
+            const int occupancy = ++m_internalIngressOccupancy[inport];
+            ++m_internalIngressAccepted[inport];
+            m_internalIngressAverage[inport] = occupancy;
+            if (occupancy > m_internalIngressPeak[inport].value())
+                m_internalIngressPeak[inport] = occupancy;
+            m_internalIngressNextVc[inport] = (invc + 1) % num_vcs;
 
             DPRINTF(RubyNetwork,
                 "Router %d [%s] staged internal ingress flit PacketID %d FlitID %d "
@@ -372,6 +415,7 @@ NocRouter<T_Msg, T_RouteInfo>::stageInternalIngressFlits()
             if (ingress_delay > Cycles(0)) {
                 this->schedule_wakeup(ingress_delay);
             }
+            break;
         }
     }
 }
@@ -404,7 +448,74 @@ NocRouter<T_Msg, T_RouteInfo>::getInternalFlit(int inport, int invc)
     if (internal_buffer.isEmpty()) {
         return nullptr;
     }
+    panic_if(m_internalIngressOccupancy[inport] <= 0,
+        "%s internal ingress link %d occupancy underflow", this->name(), inport);
+    --m_internalIngressOccupancy[inport];
+    ++m_internalIngressDrained[inport];
+    m_internalIngressAverage[inport] = m_internalIngressOccupancy[inport];
     return internal_buffer.getTopFlit();
+}
+
+template <typename T_Msg, typename T_RouteInfo>
+int
+NocRouter<T_Msg, T_RouteInfo>::getInternalIngressOccupancy(int inport, int invc) const
+{
+    return usesInternalIngressPipeline() ?
+        m_internalIngressBuffers.at(inport).at(invc).getSize() : 0;
+}
+
+template <typename T_Msg, typename T_RouteInfo>
+int
+NocRouter<T_Msg, T_RouteInfo>::getInternalIngressLinkOccupancy(int inport) const
+{
+    return usesInternalIngressPipeline() ? m_internalIngressOccupancy.at(inport) : 0;
+}
+
+template <typename T_Msg, typename T_RouteInfo>
+void
+NocRouter<T_Msg, T_RouteInfo>::regStats()
+{
+    gem5::ruby::garnet::Router<T_Msg, T_RouteInfo>::regStats();
+    // Legacy stats objects join the global list at construction, including
+    // non-pipeline routers. Every vector must be initialized before enable().
+    const int ports = std::max(1, this->get_num_inports());
+    m_internalIngressAccepted.init(ports).name(this->name() + ".internal_ingress_accepted")
+        .flags(statistics::nozero)
+        .desc("Flits admitted to the shared internal pool, per incoming link");
+    m_internalIngressDrained.init(ports).name(this->name() + ".internal_ingress_drained")
+        .flags(statistics::nozero)
+        .desc("Flits removed by switch allocation, per incoming link");
+    m_internalIngressBlockedCycles.init(ports).name(this->name() + ".internal_ingress_blocked_cycles")
+        .flags(statistics::nozero)
+        .desc("NoC cycles with a ready input blocked by the full eight-flit pool");
+    m_internalIngressPeak.init(ports).name(this->name() + ".internal_ingress_peak")
+        .flags(statistics::nozero)
+        .desc("Maximum simultaneous internal flits, summed over VCs per link");
+    m_internalIngressAverage.init(ports).name(this->name() + ".internal_ingress_average")
+        .flags(statistics::nozero)
+        .desc("Time-average internal flit occupancy per incoming link");
+}
+
+template <typename T_Msg, typename T_RouteInfo>
+bool
+NocRouter<T_Msg, T_RouteInfo>::functionalRead(Packet *pkt, WriteMask &mask)
+{
+    bool read = gem5::ruby::garnet::Router<T_Msg, T_RouteInfo>::functionalRead(pkt, mask);
+    for (auto& port : m_internalIngressBuffers)
+        for (auto& buffer : port)
+            read = buffer.functionalRead(pkt, mask) || read;
+    return read;
+}
+
+template <typename T_Msg, typename T_RouteInfo>
+uint32_t
+NocRouter<T_Msg, T_RouteInfo>::functionalWrite(Packet *pkt)
+{
+    uint32_t count = gem5::ruby::garnet::Router<T_Msg, T_RouteInfo>::functionalWrite(pkt);
+    for (auto& port : m_internalIngressBuffers)
+        for (auto& buffer : port)
+            count += buffer.functionalWrite(pkt);
+    return count;
 }
 
 
@@ -557,6 +668,12 @@ NocRouter<T_Msg, T_RouteInfo>::serialize(CheckpointOut &cp) const
     paramOutNpsType(cp, "nr_nps_type", m_nps_type);
     SERIALIZE_SCALAR(m_last_tick_processed_core_logic);
     SERIALIZE_SCALAR(m_core_logic_processed_this_tick);
+    if (usesInternalIngressPipeline()) {
+        paramOut(cp, "nr_internal_ingress_capacity", InternalIngressCapacity);
+        for (size_t port = 0; port < m_internalIngressNextVc.size(); ++port)
+            paramOut(cp, csprintf("nr_internal_rr_%d", port),
+                     m_internalIngressNextVc[port]);
+    }
     // Same IniFile sectioning issue: emit allocator scalars before the base
     // serializer opens nested sections.
     nocswitchAllocator.serializeNocCheckpoint(cp);
@@ -565,6 +682,13 @@ NocRouter<T_Msg, T_RouteInfo>::serialize(CheckpointOut &cp) const
     // (input/output units, crossbar buffers, allocator RR state) survive
     // checkpoints.
     gem5::ruby::garnet::Router<T_Msg, T_RouteInfo>::serialize(cp);
+    for (int port = 0; port < static_cast<int>(m_internalIngressBuffers.size()); ++port) {
+        for (size_t vc = 0; vc < m_internalIngressBuffers[port].size(); ++vc) {
+            Serializable::ScopedCheckpointSection section(
+                cp, csprintf("internalIngress%d_vc%d", port, vc));
+            m_internalIngressBuffers[port][vc].serializeForNocNetworkCheckpoint(cp);
+        }
+    }
 }
 
 template <typename T_Msg, typename T_RouteInfo>
@@ -580,6 +704,42 @@ NocRouter<T_Msg, T_RouteInfo>::unserialize(CheckpointIn &cp)
     UNSERIALIZE_SCALAR(m_last_tick_processed_core_logic);
     UNSERIALIZE_SCALAR(m_core_logic_processed_this_tick);
     nocswitchAllocator.unserializeNocCheckpoint(cp);
+    if (usesInternalIngressPipeline()) {
+        int capacity = 0;
+        // Older checkpoints did not save these queues, even when occupied.
+        // They cannot safely restore a bounded-link model.
+        paramIn(cp, "nr_internal_ingress_capacity", capacity);
+        fatal_if(capacity != InternalIngressCapacity,
+            "%s checkpoint internal ingress capacity differs from %d",
+            this->name(), InternalIngressCapacity);
+        for (int port = 0; port < this->get_num_inports(); ++port) {
+            paramIn(cp, csprintf("nr_internal_rr_%d", port),
+                    m_internalIngressNextVc[port]);
+            fatal_if(m_internalIngressNextVc[port] < 0 ||
+                     m_internalIngressNextVc[port] >= this->get_num_vcs(),
+                "%s checkpoint contains invalid ingress arbitration state", this->name());
+            int occupancy = 0;
+            for (int vc = 0; vc < this->get_num_vcs(); ++vc) {
+                auto& buffer = m_internalIngressBuffers[port][vc];
+                Serializable::ScopedCheckpointSection section(
+                    cp, csprintf("internalIngress%d_vc%d", port, vc));
+                buffer.unserializeForNocNetworkCheckpoint(cp);
+                buffer.setMaxSize(InternalIngressCapacity);
+                occupancy += buffer.getSize();
+                if (!buffer.isEmpty()) {
+                    auto *front = buffer.peekTopFlit();
+                    const Tick ready = std::max({this->clockEdge(Cycles(1)),
+                        front->get_time(), front->get_stage().second});
+                    this->schedule_wakeup(this->ticksToCycles(ready - curTick()));
+                }
+            }
+            fatal_if(occupancy > InternalIngressCapacity,
+                "%s checkpoint exceeds internal ingress link capacity", this->name());
+            m_internalIngressOccupancy[port] = occupancy;
+            m_internalIngressAverage[port] = occupancy;
+            m_internalIngressPeak[port] = occupancy;
+        }
+    }
 }
 
 template <typename T_Msg, typename T_RouteInfo>
