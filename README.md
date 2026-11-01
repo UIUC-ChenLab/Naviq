@@ -73,8 +73,6 @@ topology paths from old notes.
 - [Repository layout](docs/NOC_LAYOUT.md)
 - [Artifact policy](docs/NOC_ARTIFACT_POLICY.md)
 - [Archive index](archive/noc/INDEX.md)
-- [Maintenance backlog](docs/NOC_MAINTENANCE_BACKLOG.md)
-- [Release status and limitations](docs/NOC_RELEASE_NOTES.md)
 
 ## Upstream gem5
 
