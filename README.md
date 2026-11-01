@@ -75,7 +75,6 @@ topology paths from old notes.
 - [Archive index](archive/noc/INDEX.md)
 - [Maintenance backlog](docs/NOC_MAINTENANCE_BACKLOG.md)
 - [Release status and limitations](docs/NOC_RELEASE_NOTES.md)
-- [Publication checklist](docs/NOC_PUBLICATION.md)
 
 ## Upstream gem5
 
