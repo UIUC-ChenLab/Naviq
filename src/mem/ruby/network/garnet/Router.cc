@@ -64,8 +64,9 @@ template class Router<gem5::noc::NocMessage, gem5::noc::garnet::NocRouteInfo>;
 // template class OutputUnit<gem5::noc::NocMessage, gem5::noc::garnet::NocRouteInfo>;
 
 template <typename T_Msg, typename T_RouteInfo>
-Router<T_Msg, T_RouteInfo>::Router(const Params &p)
-  : BasicRouter(p), Consumer(this), m_latency(p.latency),
+Router<T_Msg, T_RouteInfo>::Router(const Params &p,
+                                 Event::Priority wakeup_priority)
+  : BasicRouter(p), Consumer(this, wakeup_priority), m_latency(p.latency),
     m_virtual_networks(p.virt_nets), m_vc_per_vnet(p.vcs_per_vnet),
     m_num_vcs(m_virtual_networks * m_vc_per_vnet), m_bit_width(p.width),
     m_network_ptr(nullptr), routingUnit(this), switchAllocator(this),

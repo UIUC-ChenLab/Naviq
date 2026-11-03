@@ -95,7 +95,8 @@ class Router : public BasicRouter, public Consumer
         GarnetNetwork
     >;
 
-    Router(const Params &p);
+    Router(const Params &p,
+           Event::Priority wakeup_priority = Event::Default_Pri);
 
     ~Router() = default;
 
