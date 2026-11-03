@@ -1,7 +1,7 @@
 # Naviq NoC Simulator
 
 Naviq is a public gem5 fork with a cycle-level AMD NoC extension. It supports
-AXIS and AXI-MM traffic, BRAM, DDR, HBM, CPU, SmartNIC, and optional RTL
+AXIS and AXI-MM traffic, BRAM, DDR, HBM, CPU, and optional RTL
 experiments. `main` is the supported public branch; integration work is
 validated through pull requests before it is merged.
 
@@ -73,9 +73,6 @@ topology paths from old notes.
 - [Repository layout](docs/NOC_LAYOUT.md)
 - [Artifact policy](docs/NOC_ARTIFACT_POLICY.md)
 - [Archive index](archive/noc/INDEX.md)
-- [Maintenance backlog](docs/NOC_MAINTENANCE_BACKLOG.md)
-- [Release status and limitations](docs/NOC_RELEASE_NOTES.md)
-- [Publication checklist](docs/NOC_PUBLICATION.md)
 
 ## Upstream gem5
 
