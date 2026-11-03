@@ -54,3 +54,38 @@ two VCs sharing each pool, a long deterministic sink hold, stopped upstream
 sources, exact packet recovery, and complete draining. Its trace and statistics
 checks require the shared peak to reach exactly eight without exceeding it.
 It also retains the existing same-VC passthrough arbitration regression.
+
+# Output token reloads
+
+For token-arbitrated NPS outputs, a reload replaces every input/VC counter for
+that output with its configured initial budget, including idle, credit-blocked,
+and packet-lock-blocked inputs. Other outputs keep their existing counters.
+The current model initializes every budget to 16; it does not yet import NPI
+QoS weights. Reload eligibility still uses the filtered request set: at least
+one requester has zero tokens and none has positive tokens. Packet locks,
+credit checks, and LRU grant selection still apply after the reload.
+
+A focused regression uses the real allocator and native arbitration trace:
+
+```sh
+NOC_CSV_OUTPUT_DIR=m5out/token-reload/noc_csv \
+NOC_GRAPH_OUTPUT_DIR=m5out/token-reload/graphs \
+build/X86/gem5.fast --outdir=m5out/token-reload \
+  src/noc/testing/generic/axis_shared_nsu_interleaving_smoke.py \
+  --shared-vc --packets-per-source 128 --frame-sizes 65,140,176,192 \
+  --frame-destinations 0 \
+  --sink-ready-percent 100 --nps-queue-trace 1
+python3 src/noc/testing/generic/verify_output_token_reload.py m5out/token-reload
+```
+
+The scenario checks exact packet bytes and complete drainage. The trace checker
+requires a refill while another input is blocked by a packet lock, checks the
+waiting input's restored budget, and verifies that its waiting flit is granted
+after the owner's tail. Omitting `--shared-vc` and using a fresh output directory
+with checker option `--coverage cross-vc` also checks refresh across VCs.
+
+The token cases use one TDEST while retaining both TIDs. With mixed TDESTs,
+legal AXIS interleaving can currently trip `NocInterface::ProtocolChecker`'s
+single channel-wide `packetDest` state. The focused tests keep that checker
+enabled and still reconstruct and check every packet independently by TID.
+The shared-NSU test's default mixed-destination behavior is unchanged.

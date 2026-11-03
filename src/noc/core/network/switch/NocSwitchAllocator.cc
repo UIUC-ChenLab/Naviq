@@ -275,12 +275,12 @@ NocSwitchAllocator<T_Msg, T_RouteInfo>::wakeup()
         int granted_inport = -1;
         if (m_requester_without_tokens_exists[outport] && !m_requester_with_tokens_exists[outport]) {
             DPRINTF(RubyNetwork, "Router %d Outport %d: Triggering Token Reload.\n", m_router->get_id(), outport);
-            for(const auto& vc_pair : m_requesters_without_tokens[outport]) {
-
-                int reload_inport = std::get<0>(vc_pair);
-                int reload_invc = std::get<1>(vc_pair);
-                m_tokens[outport][reload_inport][reload_invc] = m_initial_tokens[outport][reload_inport][reload_invc];
-            }
+            // Reload the entire output's token bank, including requesters
+            // hidden by credits, packet ownership, or another output's grant.
+            // Otherwise a lock owner can repeatedly refill mid-packet while
+            // a waiting input stays at zero after each packet boundary.
+            // Grant eligibility still comes from the filtered request list.
+            m_tokens[outport] = m_initial_tokens[outport];
             granted_inport = arbitrate_for_output_port(
                 m_requesters_without_tokens[outport], outport);
         }

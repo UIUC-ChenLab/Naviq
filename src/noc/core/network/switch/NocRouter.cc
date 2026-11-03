@@ -50,8 +50,14 @@ using gem5::ruby::PortDirection;
 using gem5::ruby::NetDest;
 using gem5::ruby::WriteMask;
 
+// Link, credit, and NI deliveries use Default_Pri. Evaluate routers after
+// those callbacks at the same tick so every arrival due on this edge is
+// visible to the single SA/ST pass. Outgoing transfers still start next
+// cycle; this changes event ordering, not link latency or issue width.
 namespace
 {
+
+constexpr Event::Priority kNocRouterEvaluatePriority = Event::Default_Pri + 1;
 
 constexpr const char *kRuntimeTraceDir = "src/noc/out/csv";
 constexpr const char *kNpsOccTracePath = "src/noc/out/csv/nps_occ_all.csv";
@@ -94,7 +100,8 @@ template class NocRouter<NocMessage, NocRouteInfo>;
 template <typename T_Msg, typename T_RouteInfo>
 NocRouter<T_Msg, T_RouteInfo>::NocRouter(const Params &p)
   // Call BASE Router constructor FIRST
-  : gem5::ruby::garnet::Router<T_Msg, T_RouteInfo>(p),
+  : gem5::ruby::garnet::Router<T_Msg, T_RouteInfo>(
+        p, kNocRouterEvaluatePriority),
     // Initialize in the same order as members are declared in NocRouter.hh
     m_name(p.nocname),
     m_nps_type(Nps_Type::VNOC),
