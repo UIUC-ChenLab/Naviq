@@ -32,6 +32,7 @@ constexpr const char *kRuntimeTraceDir = "src/noc/out/csv";
 struct DeferredEndpointCkpt {
     bool has_axis_write_buf = false;
     std::vector<uint8_t> axis_write_buf;
+    std::map<int, std::vector<uint8_t>> axis_destination_buffers;
     bool has_axis_outstanding_writes = false;
     std::vector<std::vector<TransactionInfo>> axis_outstanding_writes;
     bool has_axi_outstanding_txns = false;
@@ -293,6 +294,25 @@ NocTrafficMonitor::axisHighLatencyWarning(
               << " tdest " << tdest << ", " << noc_cycles << " NoC cycles ("
               << latency_ticks << " ticks)"
               << "\033[0m" << std::endl;
+}
+
+bool
+NocTrafficMonitor::hasOutstandingTransactions() const
+{
+    for (const auto &node : m_nodeInfo) {
+        if (node.role != Role::MASTER || !node.monitorValues) continue;
+        if (const auto *axi = dynamic_cast<const AXIMonitorValues*>(node.monitorValues)) {
+            for (const auto &q : axi->m_outstandingReads) if (!q.empty()) return true;
+            for (const auto &q : axi->m_outstandingWrites) if (!q.empty()) return true;
+        } else if (const auto *axis = dynamic_cast<const AXISMonitorValues*>(node.monitorValues)) {
+            for (const auto &q : axis->m_axisWrites) if (!q.empty()) return true;
+            if (!axis->m_writeDataBuffer.empty()) return true;
+            for (const auto& q : axis->m_writeDataBuffers) {
+                if (!q.second.empty()) return true;
+            }
+        }
+    }
+    return false;
 }
 
 void
@@ -565,13 +585,33 @@ NocTrafficMonitor::serializeEndpointCheckpoint(CheckpointOut &cp,
     ::gem5::paramOut(cp, "tm_axis_has_write_buf", tm_axis_has_write_buf);
     ::gem5::paramOut(cp, "tm_axis_has_outstanding_writes", tm_axis_has_outstanding);
     ::gem5::paramOut(cp, "tm_axi_has_outstanding_txns", tm_axi_has_outstanding);
+    // Parent-section fields must precede every scoped checkpoint section.
+    if (tm_axis_has_outstanding) {
+        ::gem5::paramOut(cp, "tm_axis_outstanding_tdest_n",
+                        static_cast<uint64_t>(tm_axis_outstanding.size()));
+    }
+    if (tm_axi_has_outstanding) {
+        ::gem5::paramOut(cp, "tm_axi_id_n",
+                        static_cast<uint64_t>(tm_axi_out_reads.size()));
+    }
 
     if (tm_axis_has_write_buf) {
         ::gem5::arrayParamOut(cp, "tm_axis_write_buf", tm_axis_write_buf);
+        const int local = getLocalNmuIndex(initiatorId);
+        const auto* axis = static_cast<const AXISMonitorValues*>(
+            m_nodeInfo[local].monitorValues);
+        ::gem5::paramOut(cp, "tm_axis_destination_buf_n",
+                        static_cast<uint64_t>(axis->m_writeDataBuffers.size()));
+        size_t index = 0;
+        for (const auto& item : axis->m_writeDataBuffers) {
+            Serializable::ScopedCheckpointSection sec(
+                cp, csprintf("tm_axis_destination_buf_%d", static_cast<int>(index++)));
+            ::gem5::paramOut(cp, "destination", item.first);
+            const std::vector<uint8_t> bytes(item.second.begin(), item.second.end());
+            ::gem5::arrayParamOut(cp, "bytes", bytes);
+        }
     }
     if (tm_axis_has_outstanding) {
-        ::gem5::paramOut(cp, "tm_axis_outstanding_tdest_n",
-                        (uint64_t)tm_axis_outstanding.size());
         for (size_t tdest = 0; tdest < tm_axis_outstanding.size(); ++tdest) {
             const auto &vec = tm_axis_outstanding[tdest];
             Serializable::ScopedCheckpointSection sec(
@@ -587,7 +627,6 @@ NocTrafficMonitor::serializeEndpointCheckpoint(CheckpointOut &cp,
         }
     }
     if (tm_axi_has_outstanding) {
-        ::gem5::paramOut(cp, "tm_axi_id_n", (uint64_t)tm_axi_out_reads.size());
         for (size_t id = 0; id < tm_axi_out_reads.size(); ++id) {
             Serializable::ScopedCheckpointSection sec(
                 cp, csprintf("tm_axi_id_%d", (int)id));
@@ -639,6 +678,15 @@ NocTrafficMonitor::unserializeEndpointCheckpointStash(CheckpointIn &cp,
 
     if (tm_axis_has_buf) {
         ::gem5::arrayParamIn(cp, "tm_axis_write_buf", stash.axis_write_buf);
+        uint64_t destination_count = 0;
+        optParamIn(cp, "tm_axis_destination_buf_n", destination_count, false);
+        for (uint64_t index = 0; index < destination_count; ++index) {
+            Serializable::ScopedCheckpointSection sec(
+                cp, csprintf("tm_axis_destination_buf_%d", static_cast<int>(index)));
+            int destination;
+            ::gem5::paramIn(cp, "destination", destination);
+            ::gem5::arrayParamIn(cp, "bytes", stash.axis_destination_buffers[destination]);
+        }
         DPRINTF(NocPacketFlow, "TM ckpt stash: node %d axis_write_buf bytes=%zu\n",
                 (int)initiatorId, stash.axis_write_buf.size());
     }
@@ -740,6 +788,11 @@ NocTrafficMonitor::applyDeferredEndpointCheckpoint(gem5::ruby::NodeID initiatorI
             DPRINTF(NocPacketFlow, "TM ckpt apply: node %d importing axis_write_buf bytes=%zu\n",
                     (int)initiatorId, d.axis_write_buf.size());
             importAxisWriteDataBuffer(initiatorId, d.axis_write_buf);
+            auto* axis = static_cast<AXISMonitorValues*>(m_nodeInfo[local].monitorValues);
+            axis->m_writeDataBuffers.clear();
+            for (const auto& item : d.axis_destination_buffers) {
+                axis->m_writeDataBuffers[item.first].assign(item.second.begin(), item.second.end());
+            }
         }
         if (d.has_axis_outstanding_writes) {
             importAxisOutstandingWrites(initiatorId, d.axis_outstanding_writes);
@@ -755,7 +808,8 @@ NocTrafficMonitor::applyDeferredEndpointCheckpoint(gem5::ruby::NodeID initiatorI
     }
 }
 
-void NocTrafficMonitor::logWriteData(std::string protocol, gem5::ruby::NodeID initiatorID, const std::vector<uint8_t>& beatBytes) {
+void NocTrafficMonitor::logWriteData(std::string protocol, gem5::ruby::NodeID initiatorID,
+                                   const std::vector<uint8_t>& beatBytes, int axisTdest) {
     if (protocol == "AXIS") {
         int local = getLocalNmuIndex(initiatorID);
         if (local < 0 || local >= static_cast<int>(m_nodeInfo.size())) {
@@ -764,36 +818,21 @@ void NocTrafficMonitor::logWriteData(std::string protocol, gem5::ruby::NodeID in
         auto* axisVals = static_cast<AXISMonitorValues*>(m_nodeInfo[local].monitorValues);
         if (!axisVals) panic("Monitor: AXIS node without AXISMonitorValues");
 
-        for (uint8_t b : beatBytes) axisVals->m_writeDataBuffer.push_back(b);
-        {
-            std::ostringstream oss;
-            oss << std::hex << std::setfill('0');
-            for (size_t i = 0; i < beatBytes.size(); ++i) {
-                oss << std::setw(2) << static_cast<unsigned int>(beatBytes[i]);
-                if (i + 1 < beatBytes.size()) oss << " ";
-            }
-            // std::cout << "Monitor: logWriteData AXIS NMU " << initiatorID
-            //           << " enqueued " << beatBytes.size() << " bytes: "
-            //           << oss.str() << std::endl;
-        }
+        panic_if(axisTdest >= 0 && !m_net,
+                 "Monitor: AXIS destination lookup requires network context");
+        const int receiverID = axisTdest < 0 ? -1 :
+            m_net->getAxisDestNi(initiatorID, axisTdest);
+        auto& buffer = receiverID < 0 ? axisVals->m_writeDataBuffer :
+                                       axisVals->m_writeDataBuffers[receiverID];
+        buffer.insert(buffer.end(), beatBytes.begin(), beatBytes.end());
     } else {
         panic("NocTrafficMonitor::logWriteData: Unsupported protocol %s", protocol.c_str());
     }
 }
 
-void NocTrafficMonitor::checkWriteData(std::string protocol, gem5::ruby::NodeID initiatorID, const std::vector<uint8_t>& incomingBytes) {
+void NocTrafficMonitor::checkWriteData(std::string protocol, gem5::ruby::NodeID initiatorID,
+                                     const std::vector<uint8_t>& incomingBytes, int receiverID) {
     if (protocol == "AXIS") {
-        {
-            std::ostringstream oss;
-            oss << std::hex << std::setfill('0');
-            for (size_t i = 0; i < incomingBytes.size(); ++i) {
-                oss << std::setw(2) << static_cast<unsigned int>(incomingBytes[i]);
-                if (i + 1 < incomingBytes.size()) oss << " ";
-            }
-            // std::cout << "Monitor: checkWriteData AXIS NMU " << initiatorID
-            //           << " checking " << incomingBytes.size() << " bytes: "
-            //           << oss.str() << std::endl;
-        }
         int local = getLocalNmuIndex(initiatorID);
         if (local < 0 || local >= static_cast<int>(m_nodeInfo.size())) {
             panic("NocTrafficMonitor::checkWriteData: AXIS node %d not registered (no local index)", (int)initiatorID);
@@ -801,13 +840,17 @@ void NocTrafficMonitor::checkWriteData(std::string protocol, gem5::ruby::NodeID 
         auto* axisVals = static_cast<AXISMonitorValues*>(m_nodeInfo[local].monitorValues);
         if (!axisVals) panic("Monitor: AXIS node without AXISMonitorValues");
 
-        auto& write_deque = axisVals->m_writeDataBuffer;
+        // Legacy checkpoint bytes precede newly injected traffic. New traffic
+        // is checked independently for each physical destination.
+        const bool legacy = receiverID < 0 || !axisVals->m_writeDataBuffer.empty();
+        auto& write_deque = legacy ? axisVals->m_writeDataBuffer :
+                                    axisVals->m_writeDataBuffers[receiverID];
         size_t num_bytes = incomingBytes.size();
 
         if (write_deque.size() < num_bytes) {
-            panic("NocTrafficMonitor::checkWriteData: Not enough data in write_deque! "
-                  "Deque size: %zu, incoming: %zu",
-                  write_deque.size(), num_bytes);
+            panic("NocTrafficMonitor::checkWriteData: source %d destination %d: "
+                  "not enough expected data (queued %zu, incoming %zu)",
+                  initiatorID, receiverID, write_deque.size(), num_bytes);
         }
 
         std::ptrdiff_t mismatch_idx = -1;
@@ -842,14 +885,16 @@ void NocTrafficMonitor::checkWriteData(std::string protocol, gem5::ruby::NodeID 
                 if (i + 1 < cmp_n) actualStr += " ";
             }
 
-            panic("NocTrafficMonitor::checkWriteData: AXIS data mismatch at byte %ld (showing first %ld bytes).\nExpected:\n%s\nActual:\n%s",
-                 mismatch_idx, cmp_n, expectedStr.c_str(), actualStr.c_str());
+            panic("NocTrafficMonitor::checkWriteData: source %d destination %d: "
+                  "AXIS data mismatch at byte %ld (showing first %ld bytes).\nExpected:\n%s\nActual:\n%s",
+                 initiatorID, receiverID, mismatch_idx, cmp_n, expectedStr.c_str(), actualStr.c_str());
         }
 
         // Consume the compared bytes (min of expected/incoming)
         size_t consume_n = std::min(write_deque.size(), num_bytes);
         write_deque.erase(write_deque.begin(),
                           write_deque.begin() + consume_n);
+        if (!legacy && write_deque.empty()) axisVals->m_writeDataBuffers.erase(receiverID);
         
     } else {
         panic("NocTrafficMonitor::checkWriteData: Unsupported protocol %s",

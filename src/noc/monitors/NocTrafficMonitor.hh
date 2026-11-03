@@ -109,8 +109,10 @@ public:
     void setDetailedMetrics(bool b) { m_detailed_metrics = b; }
 
     // Protocol-agnostic data logging/checking: pass raw valid bytes for the beat
-    void logWriteData(std::string protocol, gem5::ruby::NodeID initiatorID, const std::vector<uint8_t>& beatBytes);
-    void checkWriteData(std::string protocol, gem5::ruby::NodeID initiatorID, const std::vector<uint8_t>& incomingBytes);
+    void logWriteData(std::string protocol, gem5::ruby::NodeID initiatorID,
+                      const std::vector<uint8_t>& beatBytes, int axisTdest = -1);
+    void checkWriteData(std::string protocol, gem5::ruby::NodeID initiatorID,
+                        const std::vector<uint8_t>& incomingBytes, int receiverID = -1);
 
     // Called when AR or AW is sent from NMU/Initiator
     // Now derives id/cmd/size from payload
@@ -181,6 +183,7 @@ public:
 
     /** Scan outstanding queues and warn on stuck transactions (call from periodic event). */
     void pollOutstandingTransactions(Tick now) const;
+    bool hasOutstandingTransactions() const;
 
     /** Wall-clock spacing for idle CSV heartbeats (NoC ticks); 0 if disabled. */
     Tick csvHeartbeatPeriodTicks() const;
@@ -225,6 +228,9 @@ private:
         // Per-tdest outstanding write transactions for AXI-Stream.
         // Index by tdest; grows dynamically when new tdest values are seen.
         std::vector<std::deque<TransactionInfo>> m_axisWrites;
+        // NoC paths to different receivers may complete in a different order.
+        std::map<int, std::deque<uint8_t>> m_writeDataBuffers;
+        // Retained for loading older checkpoints with a single ordered stream.
         std::deque<uint8_t> m_writeDataBuffer;
 
         AXISMonitorValues() = default;
